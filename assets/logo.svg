@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" width="240" height="48">
+  <rect width="48" height="48" rx="10" fill="#0E6E8C"/>
+  <path d="M9 33c9-1.5 13.5-6 16.5-12 2.1-4.2 3.6-8.1 6.9-10.8.8-.6 1.8.3 1.4 1.2-1.5 3-2.1 6-1.8 9.3l5.1 2.2c.9.4.8 1.7-.2 2l-5.4 1.5C30 31.5 25.5 36.6 18.5 37.6c-3.4.6-6.9.3-9-.3-.9-.3-.9-1.5 0-1.7z" fill="#fff"/>
+  <text x="60" y="30" font-family="Arial, sans-serif" font-size="21" font-weight="800" fill="#12242C">Entrol Fishing</text>
+  <text x="61" y="42" font-family="Arial, sans-serif" font-size="8.5" letter-spacing="2.6" fill="#48626D">WEIHAI · CARBON ROD OEM</text>
+</svg>
