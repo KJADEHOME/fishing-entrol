@@ -611,13 +611,14 @@ def render_body(wa_url, form_endpoint, path=None):
             continue
         display_step += 1
         fields = "".join(_field_html(f) for f in fl)
+        extra = g.get("extra", "")
+        extra_line = ("        %s\n" % extra) if extra else ""
         groups.append("""
       <fieldset class="cfg-group">
         <h3><span class="cfg-step">%d</span>%s</h3>
         <p class="cfg-note">%s</p>
         <div class="cfg-fields">%s</div>
-%s
-      </fieldset>""" % (display_step, g["title"], g["note"], fields, g.get("extra", "")))
+%s      </fieldset>""" % (display_step, g["title"], g["note"], fields, extra_line))
 
     # The page needs rods (for the "start from a model" prefill) and the line,
     # lure and reel rows (for the accessory picker), so ship a slimmed full
