@@ -439,3 +439,18 @@ table.spec td:first-child { font-weight: 700; color: var(--color-primary-dark); 
 .cfg-moq table.inline { width: 100%; border-collapse: collapse; margin-top: 6px; font-size: 0.8rem; }
 .cfg-moq table.inline td { padding: 3px 0; border-bottom: 1px dashed #CFE1E9; }
 .cfg-moq table.inline td:last-child { text-align: right; font-weight: 700; }
+
+
+/* configurator: two commercial paths (OEM program vs one custom rod) */
+.form-field[hidden], fieldset.cfg-group[hidden] { display: none !important; }
+.cfg-path-lab { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 8px; }
+.cfg-path-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cfg-path { display: block; position: relative; padding: 14px 16px 14px 42px; cursor: pointer;
+  border: 1.5px solid #CFE1E9; border-radius: 10px; background: #fff; transition: border-color .15s; }
+.cfg-path input { position: absolute; left: 15px; top: 17px; margin: 0; }
+.cfg-path:hover { border-color: var(--color-primary, #0E6E8C); }
+.cfg-path:has(input:checked) { border-color: var(--color-primary, #0E6E8C);
+  background: #F2F8FA; box-shadow: inset 0 0 0 1px var(--color-primary, #0E6E8C); }
+.cfg-path-t { display: block; font-weight: 700; font-size: 0.92rem; color: #123; }
+.cfg-path-s { display: block; font-size: 0.78rem; color: #5B6B75; margin-top: 3px; line-height: 1.45; }
+@media (max-width: 640px) { .cfg-path-row { grid-template-columns: 1fr; } }

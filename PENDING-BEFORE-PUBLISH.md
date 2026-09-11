@@ -143,6 +143,33 @@
 - [ ] 美国市场暂未做专门页面（301 关税），如后续主推美国需先做关税测算
 - [ ] `python scripts/smoke_test.py` 全绿后再部署
 
+## 5.1 产品库（Supabase）上线前必须补齐（2026-09-12 新增）
+
+- [ ] **Supabase 项目还没建**：表结构已写好 `supabase/migrations/0001_product_catalog.sql`，
+      种子数据 `supabase/seed.sql`（71 SKU）。需要提供 `SUPABASE_URL` + `SUPABASE_SERVICE_KEY`
+      后跑 `python scripts/catalog.py push`。**不推也能上线**——站点构建只读本地
+      `scripts/catalog_data.py`，Supabase 只是为了让人在后台表格里改产品
+- [ ] **价格全部为空（`price_oem_usd` / `price_custom_usd` = null），这是故意的**。
+      页面对空价格的渲染是 "quoted per build"，不会编数字。**拿到工厂/配套厂报价后再填**，
+      填完重跑 `catalog.py json` + `sitegen.py`
+- [ ] **轮/线/饵是中性规格 SKU，没有品牌名**（`LINE-PE08-8S-150M`、`LURE-HARD-MINNOW-110` 这类）。
+      这是刻意遵守"全站去工厂品牌"的既定策略。若后续拿到配套厂目录且对方书面同意，
+      再补 `brand` 列；**补之前不要在页面上写任何第三方品牌名**
+- [ ] **轮的参数只有型号尺寸（1000–6000 / Baitcaster 100–200），没有齿比、刹车力、自重**。
+      这些我手上没有可核实数据，宁缺勿编。让配套厂发规格表后补进 `specs` jsonb
+- [ ] **两个同型号不同调性的竿需要工厂确认**：`ASJS631`（MAX 300 g / MAX 220 g）和
+      `ASJC631`（MAX 300 g / MAX 120 g）在工厂参数表里是同一个型号出现两次。
+      我拆成了 4 个 SKU（`-220` / `-300` / `-120` 后缀）并在 `notes` 里标注，
+      **报价前必须问清客户要的是哪一个**
+- [ ] **单支定制（custom path）的商务条款是我按行业惯例写的，需你确认**：
+      1 支起订 / 20–25 天 / 50% 定金 / 刻字后不可退换 / 运费按目的地另报。
+      尤其是"不可退换"和"50% 定金"两条是对客承诺，改文案在
+      `script.js` 的 `renderMoq()` custom 分支
+- [ ] **单支定制真接单前要算清物流**：单竿空运/快递到欧美的运费可能接近竿价，
+      建议先问 2–3 家货代拿 1.3–1.6 m 硬管的门到门报价，再决定这个路径要不要对外开放
+- [ ] 产品库字段如后续要加（例如交货港口、装箱数、HS 编码），
+      改 `catalog_data.py` → 跑 `catalog.py seed` 重新生成 seed.sql，**不要手改 seed.sql**
+
 ## 6. 已知限制（MVP 范围外，不要在原型阶段补）
 
 - 无博客、无多语言、无国家落地页（按 prompt 第二节要求砍掉）

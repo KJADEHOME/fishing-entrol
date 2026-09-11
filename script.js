@@ -139,6 +139,99 @@
     var rodSel = cfgForm.querySelector('select[name="rod_type"]');
     if (preset && ROD_PRESET[preset[1]] && rodSel) rodSel.value = ROD_PRESET[preset[1]];
 
+    /* ---------- two paths: OEM program vs a single custom rod ---------- */
+    var CATALOG = [];
+    try {
+      var rawCat = document.getElementById('catalog-data');
+      if (rawCat) CATALOG = JSON.parse(rawCat.textContent || '[]');
+    } catch (e) { CATALOG = []; }
+
+    function currentPath() {
+      var r = cfgForm.querySelector('input[name="build_path"]:checked');
+      return r ? r.value : 'oem';
+    }
+
+    function applyPath() {
+      var p = currentPath();
+      cfgForm.querySelectorAll('fieldset[data-path]').forEach(function (fs) {
+        var on = fs.getAttribute('data-path') === p;
+        fs.hidden = !on;
+        fs.querySelectorAll('select, input, textarea').forEach(function (c) { c.disabled = !on; });
+      });
+      cfgForm.querySelectorAll('.cfg-only-oem, .cfg-only-custom').forEach(function (d) {
+        var on = d.classList.contains('cfg-only-' + p);
+        d.hidden = !on;
+        var c = d.querySelector('select, input, textarea');
+        if (c) c.disabled = !on;
+      });
+      var note = document.getElementById('cfg-qty-note');
+      if (note) {
+        note.textContent = p === 'custom'
+          ? 'One rod is one rod — tell us how many you want and where they are going. There is no '
+            + 'minimum, and freight is quoted to your door before anything is built.'
+          : 'Two different minimums apply, and it is worth knowing which one you are buying before '
+            + 'we quote: rod-only programs run from 300 pieces per model, while anything that puts '
+            + 'a reel, line or lures in the carton starts at 500 — and 1,000 if those components '
+            + 'also carry your brand. Mixed rod models in one container are always fine.';
+      }
+    }
+
+    function setSel(name, value) {
+      var s = cfgForm.querySelector('select[name="' + name + '"]');
+      if (!s || s.disabled || !value || value === '—') return;
+      for (var i = 0; i < s.options.length; i++) {
+        if (s.options[i].value === value) { s.value = value; return; }
+      }
+    }
+
+    var MODEL_TYPE = {
+      spinning: 'Spinning rod',
+      casting: 'Casting / baitcasting rod',
+      carp: 'Carp rod',
+      boat: 'Boat & jigging rod',
+      jigging: 'Boat & jigging rod',
+      surf: 'Surf / rock rod'
+    };
+
+    function applyModel() {
+      var sel = cfgForm.querySelector('select[name="base_model"]');
+      if (!sel) return;
+      var info = document.getElementById('cfg-model-info');
+      if (!info) {
+        info = document.createElement('p');
+        info.className = 'form-hint';
+        info.id = 'cfg-model-info';
+        if (sel.parentNode) sel.parentNode.appendChild(info);
+      }
+      if (!sel.value) { info.textContent = ''; return; }
+      var rod = null;
+      for (var i = 0; i < CATALOG.length; i++) {
+        if (CATALOG[i].sku === sel.value) { rod = CATALOG[i]; break; }
+      }
+      if (!rod) { info.textContent = ''; return; }
+      var s = rod.specs || {};
+      setSel('rod_type', MODEL_TYPE[rod.subcategory]);
+      if (typeof s.length_m === 'number') {
+        setSel('length', s.length_m.toFixed(2) + ' m (' + s.length_ft + ')');
+      }
+      setSel('sections', typeof s.sections === 'number'
+        ? s.sections + (s.sections === 1 ? ' piece' : ' pieces') : s.sections);
+      setSel('power', s.power);
+      setSel('action', s.action);
+      setSel('lure_weight', s.cast_weight_g);
+      setSel('line_rating', s.line_rating);
+      setSel('reel_type', s.reel_type);
+      setSel('handle_material', s.handle);
+      info.textContent = 'Loaded ' + rod.sku + ' — ' + rod.name
+        + '. Everything below is now editable.';
+    }
+
+    cfgForm.addEventListener('change', function (e) {
+      if (!e.target) return;
+      if (e.target.name === 'build_path') { applyPath(); renderSummary(); }
+      if (e.target.name === 'base_model') { applyModel(); renderSummary(); }
+    });
+
     var listEl = document.getElementById('cfg-list');
     var countEl = document.getElementById('cfg-count');
     var sumInput = document.getElementById('cfg-summary-input');
@@ -148,19 +241,31 @@
       return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 
+    // Text inputs worth echoing in the summary panel. Name, email and the free
+    // text box are submitted but not repeated back to the buyer.
+    var TEXT_FIELDS = ['engraving', 'ship_to', 'company'];
+
     function cfgItems() {
       var out = [];
       cfgForm.querySelectorAll('select[name]').forEach(function (s) {
-        if (!s.value) return;
+        if (!s.value || s.disabled) return;
         var lab = cfgForm.querySelector('label[for="' + s.id + '"]');
         var k = lab ? lab.textContent.replace(/\s*\*$/, '').trim() : s.name;
         out.push([k, s.value]);
+      });
+      TEXT_FIELDS.forEach(function (n) {
+        var i = cfgForm.querySelector('input[name="' + n + '"]');
+        if (!i || !i.value || i.disabled) return;
+        var lab = cfgForm.querySelector('label[for="' + i.id + '"]');
+        out.push([lab ? lab.textContent.replace(/\s*\*$/, '').trim() : n, i.value]);
       });
       return out;
     }
 
     function renderSummary() {
       var items = cfgItems();
+      var isCustom = currentPath() === 'custom';
+      items.unshift(['Ordering as', isCustom ? 'One custom rod' : 'OEM / private-label program']);
       if (countEl) {
         countEl.textContent = items.length + ' option' + (items.length === 1 ? '' : 's') + ' selected';
       }
@@ -173,7 +278,8 @@
       if (sumInput) sumInput.value = text;
       if (subjInput) {
         var mkt = cfgForm.querySelector('select[name="target_market"]');
-        subjInput.value = 'OEM configurator — ' + (rodSel && rodSel.value ? rodSel.value : 'rod')
+        subjInput.value = (isCustom ? 'Custom rod build' : 'OEM configurator') + ' — '
+          + (rodSel && rodSel.value ? rodSel.value : 'rod')
           + (mkt && mkt.value ? ' — ' + mkt.value : '');
       }
       renderWarnings();
@@ -523,6 +629,21 @@
     function renderMoq() {
       var el = document.getElementById('cfg-moq');
       if (!el) return;
+      if (currentPath() === 'custom') {
+        el.innerHTML = '<strong>One rod, priced before we start</strong>'
+          + '<table class="inline">'
+          + '<tr><td>Minimum</td><td>1 rod</td></tr>'
+          + '<tr><td>Build time</td><td>20–25 days, then shipping</td></tr>'
+          + '<tr><td>Freight</td><td>Quoted to your country before we start</td></tr>'
+          + '<tr><td>Payment</td><td>50% to book the build, balance before shipping</td></tr>'
+          + '</table>'
+          + '<p style="margin:8px 0 0">A single rod costs more per piece than a production order '
+          + 'because there is no run to spread the set-up across, and the blank, guides and trim '
+          + 'are chosen for you alone. Because it is built to your measurements and engraving, '
+          + '<strong>it cannot be returned or exchanged</strong> unless it arrives damaged — we '
+          + 'photograph every build before it is packed.</p>';
+        return;
+      }
       var kit = val('kit_option'), kb = val('kit_brand');
       var isKit = kit && !/Rod only/.test(kit);
       var isFull = /Full retail kit/.test(kit);
@@ -547,6 +668,7 @@
       el.innerHTML = html;
     }
 
+    applyPath();
     cfgForm.addEventListener('change', renderSummary);
     renderSummary();
 
@@ -590,7 +712,9 @@
         body: JSON.stringify(payload)
       }).then(function (res) {
         if (st) {
-          st.textContent = 'Specification received — ' + items.length + ' options logged. We reply with pricing, MOQ and sample cost within one business day (GMT+8).';
+          st.textContent = currentPath() === 'custom'
+            ? 'Build request received — ' + items.length + ' options logged. We reply with a build sheet, a price and a freight quote within one business day (GMT+8).'
+            : 'Specification received — ' + items.length + ' options logged. We reply with pricing, MOQ and sample cost within one business day (GMT+8).';
           st.classList.add('show');
         }
       }).catch(function () {

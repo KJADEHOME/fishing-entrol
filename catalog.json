@@ -1,0 +1,2069 @@
+[
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRS721LXF",
+  "model": "CRS721LXF",
+  "subcategory": "spinning",
+  "name": "7'2\" Light spinning rod — 4–10 lb",
+  "image": "assets/images/spinning-rod-01.webp",
+  "specs": {
+   "length_m": 2.19,
+   "length_ft": "7'2\"",
+   "closed_cm": 219,
+   "sections": 1,
+   "weight_g": 100,
+   "power": "Light",
+   "action": "Fast",
+   "line_rating": "4–10 lb",
+   "cast_weight_g": "3–10",
+   "tip_mm": 1.7,
+   "butt_mm": 11.1,
+   "reel_type": "Spinning reel",
+   "handle": "Cork"
+  },
+  "sort_order": 10
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRS731MLF",
+  "model": "CRS731MLF",
+  "subcategory": "spinning",
+  "name": "7'3\" Medium-Light spinning rod — 6–12 lb",
+  "image": "assets/images/spinning-rod-02.webp",
+  "specs": {
+   "length_m": 2.21,
+   "length_ft": "7'3\"",
+   "closed_cm": 221,
+   "sections": 1,
+   "weight_g": 108,
+   "power": "Medium-Light",
+   "action": "Fast",
+   "line_rating": "6–12 lb",
+   "cast_weight_g": "5–14",
+   "tip_mm": 1.8,
+   "butt_mm": 11.5,
+   "reel_type": "Spinning reel",
+   "handle": "Cork"
+  },
+  "sort_order": 11
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRS741MF",
+  "model": "CRS741MF",
+  "subcategory": "spinning",
+  "name": "7'4\" Medium spinning rod — 8–17 lb",
+  "image": "assets/images/spinning-rod-03.webp",
+  "specs": {
+   "length_m": 2.23,
+   "length_ft": "7'4\"",
+   "closed_cm": 223,
+   "sections": 1,
+   "weight_g": 105,
+   "power": "Medium",
+   "action": "Fast",
+   "line_rating": "8–17 lb",
+   "cast_weight_g": "7–21",
+   "tip_mm": 1.9,
+   "butt_mm": 11.5,
+   "reel_type": "Spinning reel",
+   "handle": "Cork"
+  },
+  "sort_order": 12
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRS751MHF",
+  "model": "CRS751MHF",
+  "subcategory": "spinning",
+  "name": "7'5\" Medium-Heavy spinning rod — 10–20 lb",
+  "image": "assets/images/spinning-rod-04.webp",
+  "specs": {
+   "length_m": 2.26,
+   "length_ft": "7'5\"",
+   "closed_cm": 226,
+   "sections": 1,
+   "weight_g": 131,
+   "power": "Medium-Heavy",
+   "action": "Fast",
+   "line_rating": "10–20 lb",
+   "cast_weight_g": "10–28",
+   "tip_mm": 1.8,
+   "butt_mm": 12.0,
+   "reel_type": "Spinning reel",
+   "handle": "Cork"
+  },
+  "sort_order": 13
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRC721MF",
+  "model": "CRC721MF",
+  "subcategory": "casting",
+  "name": "7'2\" Medium baitcasting rod — 8–14 lb",
+  "image": "assets/images/spinning-rod-05.webp",
+  "specs": {
+   "length_m": 2.19,
+   "length_ft": "7'2\"",
+   "closed_cm": 219,
+   "sections": 1,
+   "weight_g": 119,
+   "power": "Medium",
+   "action": "Fast",
+   "line_rating": "8–14 lb",
+   "cast_weight_g": "7–21",
+   "tip_mm": 1.7,
+   "butt_mm": 11.6,
+   "reel_type": "Baitcasting reel",
+   "handle": "Cork"
+  },
+  "sort_order": 20
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRC741MHF",
+  "model": "CRC741MHF",
+  "subcategory": "casting",
+  "name": "7'4\" Medium-Heavy baitcasting rod — 8–17 lb",
+  "image": "assets/images/spinning-rod-06.webp",
+  "specs": {
+   "length_m": 2.23,
+   "length_ft": "7'4\"",
+   "closed_cm": 223,
+   "sections": 1,
+   "weight_g": 126,
+   "power": "Medium-Heavy",
+   "action": "Fast",
+   "line_rating": "8–17 lb",
+   "cast_weight_g": "10–28",
+   "tip_mm": 1.8,
+   "butt_mm": 12.0,
+   "reel_type": "Baitcasting reel",
+   "handle": "Cork"
+  },
+  "sort_order": 21
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "CRC761XH",
+  "model": "CRC761XH",
+  "subcategory": "casting",
+  "name": "7'6\" Extra-Heavy baitcasting rod — 10–25 lb",
+  "image": "assets/images/spinning-rod-02.webp",
+  "specs": {
+   "length_m": 2.29,
+   "length_ft": "7'6\"",
+   "closed_cm": 229,
+   "sections": 1,
+   "weight_g": 135,
+   "power": "Extra-Heavy",
+   "action": "Fast",
+   "line_rating": "10–25 lb",
+   "cast_weight_g": "14–42",
+   "tip_mm": 2.3,
+   "butt_mm": 12.7,
+   "reel_type": "Baitcasting reel",
+   "handle": "Cork"
+  },
+  "sort_order": 22
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "PRC-9300",
+  "model": "PRC-9300",
+  "subcategory": "carp",
+  "name": "9'0\" carp rod — 3.0 lb test curve",
+  "image": "assets/images/carp-rod-01.webp",
+  "specs": {
+   "length_m": 2.7,
+   "length_ft": "9'0\"",
+   "closed_cm": 140,
+   "sections": 2,
+   "weight_g": 256,
+   "power": "3.0 lb test curve",
+   "action": "Progressive",
+   "line_rating": "—",
+   "cast_weight_g": "—",
+   "tip_mm": 2.6,
+   "butt_mm": 14.9,
+   "reel_type": "Spinning reel",
+   "handle": "Slim EVA + duplon"
+  },
+  "sort_order": 30
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "PRC-10300",
+  "model": "PRC-10300",
+  "subcategory": "carp",
+  "name": "10'0\" carp rod — 3.0 lb test curve",
+  "image": "assets/images/carp-rod-02.webp",
+  "specs": {
+   "length_m": 3.0,
+   "length_ft": "10'0\"",
+   "closed_cm": 156,
+   "sections": 2,
+   "weight_g": 315,
+   "power": "3.0 lb test curve",
+   "action": "Progressive",
+   "line_rating": "—",
+   "cast_weight_g": "—",
+   "tip_mm": 2.7,
+   "butt_mm": 16.0,
+   "reel_type": "Spinning reel",
+   "handle": "Slim EVA + duplon"
+  },
+  "sort_order": 31
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "PRC-12275",
+  "model": "PRC-12275",
+  "subcategory": "carp",
+  "name": "12'0\" carp rod — 2.75 lb test curve",
+  "image": "assets/images/carp-rod-03.webp",
+  "specs": {
+   "length_m": 3.6,
+   "length_ft": "12'0\"",
+   "closed_cm": 186,
+   "sections": 2,
+   "weight_g": 386,
+   "power": "2.75 lb test curve",
+   "action": "Progressive",
+   "line_rating": "—",
+   "cast_weight_g": "—",
+   "tip_mm": 2.7,
+   "butt_mm": 16.4,
+   "reel_type": "Spinning reel",
+   "handle": "Slim EVA + duplon"
+  },
+  "sort_order": 32
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "PRC-12300",
+  "model": "PRC-12300",
+  "subcategory": "carp",
+  "name": "12'0\" carp rod — 3.0 lb test curve",
+  "image": "assets/images/carp-rod-04.webp",
+  "specs": {
+   "length_m": 3.6,
+   "length_ft": "12'0\"",
+   "closed_cm": 186,
+   "sections": 2,
+   "weight_g": 421,
+   "power": "3.0 lb test curve",
+   "action": "Progressive",
+   "line_rating": "—",
+   "cast_weight_g": "—",
+   "tip_mm": 2.7,
+   "butt_mm": 16.8,
+   "reel_type": "Spinning reel",
+   "handle": "Slim EVA + duplon"
+  },
+  "sort_order": 33
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "MPB66HC",
+  "model": "MPB66HC",
+  "subcategory": "boat",
+  "name": "6'6\" boat rod — 20–50 lb class",
+  "image": "assets/images/saltwater-rod-01.webp",
+  "specs": {
+   "length_m": 1.98,
+   "length_ft": "6'6\"",
+   "closed_cm": 198,
+   "sections": 1,
+   "weight_g": 444,
+   "power": "Heavy",
+   "action": "Moderate-Fast",
+   "line_rating": "20–50 lb",
+   "cast_weight_g": "50–150",
+   "tip_mm": 3.0,
+   "butt_mm": 12.0,
+   "reel_type": "Conventional / overhead",
+   "handle": "EVA"
+  },
+  "sort_order": 40
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "MPB66XHC",
+  "model": "MPB66XHC",
+  "subcategory": "boat",
+  "name": "6'6\" boat rod — 60–100 lb class",
+  "image": "assets/images/saltwater-rod-02.webp",
+  "specs": {
+   "length_m": 1.98,
+   "length_ft": "6'6\"",
+   "closed_cm": 198,
+   "sections": 1,
+   "weight_g": 465,
+   "power": "Extra-Heavy",
+   "action": "Moderate-Fast",
+   "line_rating": "60–100 lb",
+   "cast_weight_g": "80–200",
+   "tip_mm": 3.3,
+   "butt_mm": 12.7,
+   "reel_type": "Conventional / overhead",
+   "handle": "EVA"
+  },
+  "sort_order": 41
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "MPB66XXHC",
+  "model": "MPB66XXHC",
+  "subcategory": "boat",
+  "name": "6'6\" boat rod — 80–200 lb class",
+  "image": "assets/images/saltwater-rod-03.webp",
+  "specs": {
+   "length_m": 1.98,
+   "length_ft": "6'6\"",
+   "closed_cm": 198,
+   "sections": 1,
+   "weight_g": 508,
+   "power": "Extra-Heavy",
+   "action": "Moderate-Fast",
+   "line_rating": "80–200 lb",
+   "cast_weight_g": "120–300",
+   "tip_mm": 3.7,
+   "butt_mm": 13.7,
+   "reel_type": "Conventional / overhead",
+   "handle": "EVA"
+  },
+  "sort_order": 42
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "ASJS581-550",
+  "model": "ASJS581",
+  "subcategory": "jigging",
+  "name": "5'8\" slow-pitch jigging rod — spinning, max 550 g",
+  "image": "assets/images/saltwater-rod-04.webp",
+  "specs": {
+   "length_m": 1.73,
+   "length_ft": "5'8\"",
+   "closed_cm": 127,
+   "sections": "1.5 (jointed)",
+   "weight_g": 152,
+   "power": "Heavy",
+   "action": "Slow-pitch",
+   "line_rating": "PE 2.5–4",
+   "cast_weight_g": "max 550",
+   "tip_mm": 2.7,
+   "butt_mm": 12.7,
+   "reel_type": "Spinning reel",
+   "handle": "EVA"
+  },
+  "sort_order": 50
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "ASJS631-300",
+  "model": "ASJS631",
+  "subcategory": "jigging",
+  "name": "6'3\" slow-pitch jigging rod — spinning, max 300 g",
+  "image": "assets/images/saltwater-rod-05.webp",
+  "specs": {
+   "length_m": 1.91,
+   "length_ft": "6'3\"",
+   "closed_cm": 145,
+   "sections": "1.5 (jointed)",
+   "weight_g": 144,
+   "power": "Medium-Heavy",
+   "action": "Slow-pitch",
+   "line_rating": "PE 1.5–2.5",
+   "cast_weight_g": "max 300",
+   "tip_mm": 2.1,
+   "butt_mm": 11.5,
+   "reel_type": "Spinning reel",
+   "handle": "EVA"
+  },
+  "sort_order": 51
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "ASJS631-220",
+  "model": "ASJS631",
+  "subcategory": "jigging",
+  "name": "6'3\" light jigging rod — spinning, max 220 g",
+  "image": "assets/images/saltwater-rod-06.webp",
+  "specs": {
+   "length_m": 1.91,
+   "length_ft": "6'3\"",
+   "closed_cm": 145,
+   "sections": "1.5 (jointed)",
+   "weight_g": 131,
+   "power": "Medium",
+   "action": "Slow-pitch",
+   "line_rating": "PE 1.0–2.0",
+   "cast_weight_g": "max 220",
+   "tip_mm": 1.9,
+   "butt_mm": 11.5,
+   "reel_type": "Spinning reel",
+   "handle": "EVA",
+   "notes": "Same model code as ASJS631-300 in the factory sheet but a lighter blank — confirm which one the customer means before quoting."
+  },
+  "sort_order": 52
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "ASJC581-550",
+  "model": "ASJC581",
+  "subcategory": "jigging",
+  "name": "5'8\" slow-pitch jigging rod — casting, max 550 g",
+  "image": "assets/images/saltwater-rod-07.webp",
+  "specs": {
+   "length_m": 1.73,
+   "length_ft": "5'8\"",
+   "closed_cm": 127,
+   "sections": "1.5 (jointed)",
+   "weight_g": 160,
+   "power": "Heavy",
+   "action": "Slow-pitch",
+   "line_rating": "PE 2.5–4",
+   "cast_weight_g": "max 550",
+   "tip_mm": 2.7,
+   "butt_mm": 12.5,
+   "reel_type": "Baitcasting reel",
+   "handle": "EVA"
+  },
+  "sort_order": 53
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "ASJC631-300",
+  "model": "ASJC631",
+  "subcategory": "jigging",
+  "name": "6'3\" slow-pitch jigging rod — casting, max 300 g",
+  "image": "assets/images/saltwater-rod-08.webp",
+  "specs": {
+   "length_m": 1.91,
+   "length_ft": "6'3\"",
+   "closed_cm": 145,
+   "sections": "1.5 (jointed)",
+   "weight_g": 152,
+   "power": "Medium-Heavy",
+   "action": "Slow-pitch",
+   "line_rating": "PE 1.5–2.5",
+   "cast_weight_g": "max 300",
+   "tip_mm": 2.0,
+   "butt_mm": 11.6,
+   "reel_type": "Baitcasting reel",
+   "handle": "EVA"
+  },
+  "sort_order": 54
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "ASJC631-120",
+  "model": "ASJC631",
+  "subcategory": "jigging",
+  "name": "6'3\" light jigging rod — casting, max 120 g",
+  "image": "assets/images/saltwater-rod-04.webp",
+  "specs": {
+   "length_m": 1.91,
+   "length_ft": "6'3\"",
+   "closed_cm": 145,
+   "sections": "1.5 (jointed)",
+   "weight_g": 138,
+   "power": "Medium-Light",
+   "action": "Slow-pitch",
+   "line_rating": "PE 0.5–1.5",
+   "cast_weight_g": "max 120",
+   "tip_mm": 1.8,
+   "butt_mm": 11.0,
+   "reel_type": "Baitcasting reel",
+   "handle": "EVA",
+   "notes": "Same model code as ASJC631-300 in the factory sheet but a lighter blank — confirm which one the customer means before quoting."
+  },
+  "sort_order": 55
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "AGSF4203",
+  "model": "AGSF4203",
+  "subcategory": "surf",
+  "name": "13'9\" surf rod — 120–250 g cast",
+  "image": "assets/images/rock-surf-rod-01.webp",
+  "specs": {
+   "length_m": 4.2,
+   "length_ft": "13'9\"",
+   "closed_cm": 148,
+   "sections": "3 (plug-in)",
+   "weight_g": 578,
+   "power": "Heavy",
+   "action": "Fast",
+   "line_rating": "—",
+   "cast_weight_g": "120–250",
+   "tip_mm": 3.17,
+   "butt_mm": 23.4,
+   "reel_type": "Spinning reel",
+   "handle": "Anti-slip EVA"
+  },
+  "sort_order": 60
+ },
+ {
+  "category": "rod",
+  "brand_mode": "customer",
+  "moq_oem": 300,
+  "moq_custom": 1,
+  "lead_time_oem_days": 40,
+  "lead_time_custom_days": 25,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Factory parameter sheet",
+  "sku": "AGSF4503",
+  "model": "AGSF4503",
+  "subcategory": "surf",
+  "name": "14'9\" surf rod — 150–280 g cast",
+  "image": "assets/images/rock-surf-rod-02.webp",
+  "specs": {
+   "length_m": 4.5,
+   "length_ft": "14'9\"",
+   "closed_cm": 158,
+   "sections": "3 (plug-in)",
+   "weight_g": 658,
+   "power": "Heavy",
+   "action": "Fast",
+   "line_rating": "—",
+   "cast_weight_g": "150–280",
+   "tip_mm": 3.26,
+   "butt_mm": 24.2,
+   "reel_type": "Spinning reel",
+   "handle": "Anti-slip EVA"
+  },
+  "sort_order": 61
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE06-8S-150M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 0.6 braid — 8-strand, 150 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "0.6",
+   "strand": 8,
+   "length_m": 150,
+   "colour": "Dark green"
+  },
+  "sort_order": 100,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE08-8S-150M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 0.8 braid — 8-strand, 150 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "0.8",
+   "strand": 8,
+   "length_m": 150,
+   "colour": "Dark green"
+  },
+  "sort_order": 101,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE10-8S-150M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 1.0 braid — 8-strand, 150 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "1.0",
+   "strand": 8,
+   "length_m": 150,
+   "colour": "Dark green"
+  },
+  "sort_order": 102,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE12-8S-150M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 1.2 braid — 8-strand, 150 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "1.2",
+   "strand": 8,
+   "length_m": 150,
+   "colour": "Dark green"
+  },
+  "sort_order": 103,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE15-8S-200M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 1.5 braid — 8-strand, 200 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "1.5",
+   "strand": 8,
+   "length_m": 200,
+   "colour": "Dark green"
+  },
+  "sort_order": 104,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE20-8S-200M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 2.0 braid — 8-strand, 200 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "2.0",
+   "strand": 8,
+   "length_m": 200,
+   "colour": "Dark green"
+  },
+  "sort_order": 105,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE30-8S-300M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 3.0 braid — 8-strand, 300 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "3.0",
+   "strand": 8,
+   "length_m": 300,
+   "colour": "Dark green"
+  },
+  "sort_order": 106,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE40-8S-300M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 4.0 braid — 8-strand, 300 m, Dark green",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "4.0",
+   "strand": 8,
+   "length_m": 300,
+   "colour": "Dark green"
+  },
+  "sort_order": 107,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE08-4S-150M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 0.8 braid — 4-strand, 150 m, Multi-colour",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "0.8",
+   "strand": 4,
+   "length_m": 150,
+   "colour": "Multi-colour"
+  },
+  "sort_order": 120,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE10-4S-150M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 1.0 braid — 4-strand, 150 m, Multi-colour",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "1.0",
+   "strand": 4,
+   "length_m": 150,
+   "colour": "Multi-colour"
+  },
+  "sort_order": 121,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE15-4S-200M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 1.5 braid — 4-strand, 200 m, Multi-colour",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "1.5",
+   "strand": 4,
+   "length_m": 200,
+   "colour": "Multi-colour"
+  },
+  "sort_order": 122,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE20-4S-200M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 2.0 braid — 4-strand, 200 m, Multi-colour",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "2.0",
+   "strand": 4,
+   "length_m": 200,
+   "colour": "Multi-colour"
+  },
+  "sort_order": 123,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-PE30-4S-300M",
+  "category": "line",
+  "subcategory": "braid",
+  "name": "PE 3.0 braid — 4-strand, 300 m, Multi-colour",
+  "specs": {
+   "material": "PE braid",
+   "pe_no": "3.0",
+   "strand": 4,
+   "length_m": 300,
+   "colour": "Multi-colour"
+  },
+  "sort_order": 124,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-FC06-30M",
+  "category": "line",
+  "subcategory": "leader",
+  "name": "Fluorocarbon leader — 6 lb, 30 m",
+  "specs": {
+   "material": "Fluorocarbon",
+   "lb_test": 6,
+   "length_m": 30
+  },
+  "sort_order": 140,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-FC10-30M",
+  "category": "line",
+  "subcategory": "leader",
+  "name": "Fluorocarbon leader — 10 lb, 30 m",
+  "specs": {
+   "material": "Fluorocarbon",
+   "lb_test": 10,
+   "length_m": 30
+  },
+  "sort_order": 141,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-FC16-50M",
+  "category": "line",
+  "subcategory": "leader",
+  "name": "Fluorocarbon leader — 16 lb, 50 m",
+  "specs": {
+   "material": "Fluorocarbon",
+   "lb_test": 16,
+   "length_m": 50
+  },
+  "sort_order": 142,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-FC20-50M",
+  "category": "line",
+  "subcategory": "leader",
+  "name": "Fluorocarbon leader — 20 lb, 50 m",
+  "specs": {
+   "material": "Fluorocarbon",
+   "lb_test": 20,
+   "length_m": 50
+  },
+  "sort_order": 143,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-FC30-50M",
+  "category": "line",
+  "subcategory": "leader",
+  "name": "Fluorocarbon leader — 30 lb, 50 m",
+  "specs": {
+   "material": "Fluorocarbon",
+   "lb_test": 30,
+   "length_m": 50
+  },
+  "sort_order": 144,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-FC40-50M",
+  "category": "line",
+  "subcategory": "leader",
+  "name": "Fluorocarbon leader — 40 lb, 50 m",
+  "specs": {
+   "material": "Fluorocarbon",
+   "lb_test": 40,
+   "length_m": 50
+  },
+  "sort_order": 145,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-NY08-150M",
+  "category": "line",
+  "subcategory": "mono",
+  "name": "Nylon monofilament — 8 lb, 150 m",
+  "specs": {
+   "material": "Nylon",
+   "lb_test": 8,
+   "length_m": 150
+  },
+  "sort_order": 160,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-NY12-150M",
+  "category": "line",
+  "subcategory": "mono",
+  "name": "Nylon monofilament — 12 lb, 150 m",
+  "specs": {
+   "material": "Nylon",
+   "lb_test": 12,
+   "length_m": 150
+  },
+  "sort_order": 161,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-NY17-200M",
+  "category": "line",
+  "subcategory": "mono",
+  "name": "Nylon monofilament — 17 lb, 200 m",
+  "specs": {
+   "material": "Nylon",
+   "lb_test": 17,
+   "length_m": 200
+  },
+  "sort_order": 162,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LINE-NY25-200M",
+  "category": "line",
+  "subcategory": "mono",
+  "name": "Nylon monofilament — 25 lb, 200 m",
+  "specs": {
+   "material": "Nylon",
+   "lb_test": 25,
+   "length_m": 200
+  },
+  "sort_order": 163,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-SOFT-GRUB-3",
+  "category": "lure",
+  "subcategory": "soft",
+  "name": "Curly tail grub — 3\", 5 g",
+  "specs": {
+   "lure_type": "soft",
+   "weight_g": 5,
+   "length_mm": 76,
+   "colour": "Mixed natural",
+   "rig": "Jig head rig"
+  },
+  "sort_order": 200,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-SOFT-SHAD-4",
+  "category": "lure",
+  "subcategory": "soft",
+  "name": "Paddle tail shad — 4\", 10 g",
+  "specs": {
+   "lure_type": "soft",
+   "weight_g": 10,
+   "length_mm": 100,
+   "colour": "Mixed natural",
+   "rig": "Jig head rig"
+  },
+  "sort_order": 201,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-SOFT-WORM-5",
+  "category": "lure",
+  "subcategory": "soft",
+  "name": "Straight worm / stick bait — 5\", 8 g",
+  "specs": {
+   "lure_type": "soft",
+   "weight_g": 8,
+   "length_mm": 127,
+   "colour": "Mixed natural",
+   "rig": "Texas / Carolina rig"
+  },
+  "sort_order": 202,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-SOFT-CRAW-35",
+  "category": "lure",
+  "subcategory": "soft",
+  "name": "Creature / craw — 3.5\", 12 g",
+  "specs": {
+   "lure_type": "soft",
+   "weight_g": 12,
+   "length_mm": 89,
+   "colour": "Dark",
+   "rig": "Texas / Carolina rig"
+  },
+  "sort_order": 203,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-HARD-MINNOW-110",
+  "category": "lure",
+  "subcategory": "hard",
+  "name": "Minnow — 110 mm, 15 g",
+  "specs": {
+   "lure_type": "hard",
+   "weight_g": 15,
+   "length_mm": 110,
+   "colour": "Mixed",
+   "action": "Floating"
+  },
+  "sort_order": 210,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-HARD-CRANK-60",
+  "category": "lure",
+  "subcategory": "hard",
+  "name": "Crankbait — 60 mm, 12 g",
+  "specs": {
+   "lure_type": "hard",
+   "weight_g": 12,
+   "length_mm": 60,
+   "colour": "Mixed",
+   "action": "Diving"
+  },
+  "sort_order": 211,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-HARD-VIB-70",
+  "category": "lure",
+  "subcategory": "hard",
+  "name": "Vibration / lipless — 70 mm, 18 g",
+  "specs": {
+   "lure_type": "hard",
+   "weight_g": 18,
+   "length_mm": 70,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 212,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-HARD-PENCIL-120",
+  "category": "lure",
+  "subcategory": "hard",
+  "name": "Pencil / stickbait — 120 mm, 25 g",
+  "specs": {
+   "lure_type": "hard",
+   "weight_g": 25,
+   "length_mm": 120,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 213,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-HARD-POPPER-90",
+  "category": "lure",
+  "subcategory": "hard",
+  "name": "Popper — 90 mm, 20 g",
+  "specs": {
+   "lure_type": "hard",
+   "weight_g": 20,
+   "length_mm": 90,
+   "colour": "Mixed",
+   "action": "Topwater"
+  },
+  "sort_order": 214,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-METAL-SLOW-100",
+  "category": "lure",
+  "subcategory": "metal",
+  "name": "Slow-pitch metal jig — 100 g",
+  "specs": {
+   "lure_type": "metal",
+   "weight_g": 100,
+   "length_mm": 120,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 220,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-METAL-SLOW-150",
+  "category": "lure",
+  "subcategory": "metal",
+  "name": "Slow-pitch metal jig — 150 g",
+  "specs": {
+   "lure_type": "metal",
+   "weight_g": 150,
+   "length_mm": 140,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 221,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-METAL-SHORE-40",
+  "category": "lure",
+  "subcategory": "metal",
+  "name": "Shore casting metal jig — 40 g",
+  "specs": {
+   "lure_type": "metal",
+   "weight_g": 40,
+   "length_mm": 90,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 222,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-METAL-SHORE-60",
+  "category": "lure",
+  "subcategory": "metal",
+  "name": "Shore casting metal jig — 60 g",
+  "specs": {
+   "lure_type": "metal",
+   "weight_g": 60,
+   "length_mm": 100,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 223,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-SPOON-20",
+  "category": "lure",
+  "subcategory": "spoon",
+  "name": "Casting spoon — 20 g",
+  "specs": {
+   "lure_type": "spoon",
+   "weight_g": 20,
+   "length_mm": 70,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 230,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-SPINNER-15",
+  "category": "lure",
+  "subcategory": "spoon",
+  "name": "Inline spinner — 15 g",
+  "specs": {
+   "lure_type": "spoon",
+   "weight_g": 15,
+   "length_mm": 60,
+   "colour": "Mixed",
+   "action": "Sinking"
+  },
+  "sort_order": 231,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "LURE-GLOW-EGI-30",
+  "category": "lure",
+  "subcategory": "glow",
+  "name": "Glow squid jig (egi) — size 3.0",
+  "specs": {
+   "lure_type": "glow",
+   "weight_g": 18,
+   "length_mm": 90,
+   "colour": "Glow / UV",
+   "action": "Sinking"
+  },
+  "sort_order": 240,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-1000",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 1000",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 1000
+  },
+  "sort_order": 300,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-2000",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 2000",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 2000
+  },
+  "sort_order": 301,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-2500",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 2500",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 2500
+  },
+  "sort_order": 302,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-3000",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 3000",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 3000
+  },
+  "sort_order": 303,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-4000",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 4000",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 4000
+  },
+  "sort_order": 304,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-5000",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 5000",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 5000
+  },
+  "sort_order": 305,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-SPIN-6000",
+  "category": "reel",
+  "subcategory": "spinning",
+  "name": "Spinning reel — size 6000",
+  "specs": {
+   "reel_type": "spinning",
+   "size": 6000
+  },
+  "sort_order": 306,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-BAIT-100",
+  "category": "reel",
+  "subcategory": "baitcasting",
+  "name": "Baitcasting reel — size 100",
+  "specs": {
+   "reel_type": "baitcasting",
+   "size": 100
+  },
+  "sort_order": 310,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-BAIT-200",
+  "category": "reel",
+  "subcategory": "baitcasting",
+  "name": "Baitcasting reel — size 200",
+  "specs": {
+   "reel_type": "baitcasting",
+   "size": 200
+  },
+  "sort_order": 311,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": 500,
+  "moq_custom": 1,
+  "lead_time_oem_days": 45,
+  "lead_time_custom_days": 20,
+  "unit": "pcs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "active",
+  "source": "Component maker catalogue (neutral spec, no maker name published)",
+  "sku": "REEL-CONV-30",
+  "category": "reel",
+  "subcategory": "conventional",
+  "name": "Conventional reel — size 30",
+  "specs": {
+   "reel_type": "conventional",
+   "size": 30
+  },
+  "sort_order": 320,
+  "image": null
+ }
+]

@@ -1,45 +1,123 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""OEM rod configurator page content.
+"""Rod configurator page content — two paths, one catalogue.
 
-Every field below maps to something a Weihai rod line actually needs in order
-to quote: blank layup, guide train, reel seat, handle, cosmetics and packing.
-The buyer picks what they know and skips the rest — a partially filled spec is
-still far more useful than "please send catalogue".
+Two different buyers land on this page:
+
+  * an OEM buyer specifying a production run (300 pcs and up), and
+  * an angler who wants one rod built around their own water, body and taste.
+
+They need different questions, so every field carries a `path`: "oem",
+"custom", or None for both. The switch at the top shows one set and disables
+the other — a disabled field is skipped by FormData, so the hidden half never
+reaches the enquiry.
+
+Every option list is generated from scripts/catalog_data.py wherever a real
+product exists, so the picker, the spec tables and the compatibility engine
+can never drift apart. Change the catalogue, rebuild, and both follow.
 """
 import html
+import os
+import sys
 
-# field = dict(name, label, opts|None, hint=None, full=False, required=False, kind=select|text|email|textarea)
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import catalog_data as cat  # noqa: E402
+
+
+def _num(v):
+    """Leading number of a spec value so 1, 2 and '1.5 (jointed)' can be sorted together."""
+    try:
+        return float(str(v).replace(",", ".").split()[0])
+    except (ValueError, IndexError, AttributeError):
+        return 9999.0
+
+
+def _rod_opts(key, fmt=None, numeric=False, extra=()):
+    """Unique rod values for `key` — catalogue first, then generic extras."""
+    rods = sorted(cat.RODS, key=lambda r: _num(r["specs"].get(key))) if numeric else cat.RODS
+    out = []
+    for p in rods:
+        v = p["specs"].get(key)
+        if v in (None, "", "—"):
+            continue
+        s = fmt(v, p) if fmt else str(v)
+        if s and s not in out:
+            out.append(s)
+    for e in extra:
+        if e not in out:
+            out.append(e)
+    return out
+
+
+def _metres(v, _p):
+    return "%.2f m (%s)" % (v, _p["specs"]["length_ft"])
+
+
+def _sections(v, _p):
+    if isinstance(v, int):
+        return "%d piece" % v if v == 1 else "%d pieces" % v
+    return str(v)
+
+
+# option lists straight out of the catalogue -------------------------------
+LENGTH_OPTS = _rod_opts("length_m", fmt=_metres, numeric=True,
+                        extra=("1.68 m (5'6\")", "1.80 m (5'11\")", "2.10 m (6'11\")",
+                               "2.40 m (7'10\")", "3.30 m (10'10\")", "3.90 m (12'9\")",
+                               "Custom length"))
+POWER_OPTS = _rod_opts("power", extra=("Ultra-Light", "Advise me"))
+ACTION_OPTS = _rod_opts("action", extra=("Slow", "Moderate", "Extra-Fast", "Advise me"))
+LINE_OPTS = _rod_opts("line_rating", extra=("PE 0.6–1.2", "PE 1.5–3.0", "PE 3.0–5.0",
+                                            "4–12 lb", "20–40 lb", "Advise me"))
+CAST_OPTS = _rod_opts("cast_weight_g", extra=("under 5 g", "5–21 g", "10–30 g", "20–50 g",
+                                              "30–80 g", "50–120 g", "100–200 g",
+                                              "over 200 g", "Advise me"))
+REEL_OPTS = _rod_opts("reel_type", extra=("Both in one program", "Advise me"))
+HANDLE_OPTS = _rod_opts("handle", extra=("Portuguese cork", "EVA foam", "Cork + EVA mix",
+                                         "Carbon tube", "Hypersensitive (exposed blank)",
+                                         "Advise me"))
+SECTION_OPTS = _rod_opts("sections", fmt=_sections, numeric=True,
+                         extra=("4 pieces", "5 pieces or more", "Telescopic", "Advise me"))
+
+MODEL_GROUPS = [
+    ("spinning", "Spinning"),
+    ("casting", "Baitcasting"),
+    ("carp", "Carp"),
+    ("boat", "Boat &amp; bottom"),
+    ("jigging", "Slow-pitch jigging"),
+    ("surf", "Rock &amp; surf"),
+]
+
+# field = dict(name, label, opts|None, hint=None, full=False, required=False,
+#              kind=select|text|email|textarea|model|path, path="oem"|"custom"|None)
 GROUPS = [
     {
-        "step": 1,
-        "title": "Blank &amp; Action",
-        "note": "The base of the rod. If you are matching an existing model, pick the closest "
-                "length and power — we will fine-tune the mandrel later.",
+        "step": 0,
+        "title": "Which Kind of Build Is This?",
+        "note": "Both paths build the same rods on the same lines — they differ in how many, "
+                "how they are labelled, and how long they take.",
         "fields": [
+            dict(name="build_path", label="I am ordering as", kind="path", required=True),
+        ],
+    },
+    {
+        "step": 1,
+        "title": "Start From a Model, or Start From Scratch",
+        "note": "Picking an existing model fills in its real measurements — length, power, line "
+                "rating and recommended reel — and everything after that becomes a change you are "
+                "making to a rod that already exists. Leave it blank to specify from nothing.",
+        "fields": [
+            dict(name="base_model", label="Start from an existing model", kind="model",
+                 hint="Optional. Choose a model to prefill, then change anything you like below."),
             dict(name="rod_type", label="Rod type", opts=[
                 "Spinning rod", "Casting / baitcasting rod", "Carp rod", "Surf / rock rod",
                 "Boat &amp; jigging rod", "Telescopic travel rod", "Fly rod", "Ice rod",
                 "Not sure — advise me"]),
-            dict(name="length", label="Length", opts=[
-                "1.68 m (5'6\")", "1.80 m (5'11\")", "1.98 m (6'6\")", "2.10 m (6'11\")",
-                "2.13 m (7'0\")", "2.29 m (7'6\")", "2.40 m (7'10\")", "2.70 m (8'10\")",
-                "3.00 m (9'10\")", "3.30 m (10'10\")", "3.60 m (11'10\")", "3.90 m (12'9\")",
-                "4.20 m (13'9\")", "4.50 m (14'9\")", "Custom length"]),
-            dict(name="sections", label="Sections", opts=[
-                "1 piece", "2 pieces", "3 pieces", "4 pieces", "5 pieces or more",
-                "Telescopic", "Advise me"]),
-            dict(name="power", label="Power", opts=[
-                "Ultra-Light", "Light", "Medium-Light", "Medium", "Medium-Heavy", "Heavy",
-                "Extra-Heavy", "Advise me"]),
-            dict(name="action", label="Action / taper", opts=[
-                "Slow", "Moderate", "Moderate-Fast", "Fast", "Extra-Fast", "Advise me"]),
-            dict(name="lure_weight", label="Lure / cast weight", opts=[
-                "under 5 g", "5–21 g", "10–30 g", "20–50 g", "30–80 g", "50–120 g",
-                "100–200 g", "over 200 g", "Advise me"]),
-            dict(name="line_rating", label="Line rating", opts=[
-                "PE 0.6–1.2", "PE 0.8–2.0", "PE 1.5–3.0", "PE 3.0–5.0",
-                "4–12 lb", "6–14 lb", "10–20 lb", "20–40 lb", "Advise me"]),
+            dict(name="length", label="Length", opts=LENGTH_OPTS),
+            dict(name="sections", label="Sections", opts=SECTION_OPTS),
+            dict(name="power", label="Power", opts=POWER_OPTS),
+            dict(name="action", label="Action / taper", opts=ACTION_OPTS),
+            dict(name="lure_weight", label="Lure / cast weight", opts=CAST_OPTS),
+            dict(name="line_rating", label="Line rating", opts=LINE_OPTS),
         ],
     },
     {
@@ -92,13 +170,14 @@ GROUPS = [
                 hint="Curly tail and paddle tail are soft plastics; metal jigs and spoons are the "
                      "'iron' lures; glow and UV patterns are for night and deep water."),
             dict(name="main_line", label="Main line", opts=[
-                "PE 0.4", "PE 0.6", "PE 0.8", "PE 1.0", "PE 1.2", "PE 1.5", "PE 2.0",
-                "PE 3.0", "PE 4.0", "PE 5.0 or heavier",
-                "Nylon 4–8 lb", "Nylon 10–14 lb", "Nylon 17–25 lb",
-                "Fluorocarbon main line", "Advise me"],
+                    "PE 0.4", "PE 0.6", "PE 0.8", "PE 1.0", "PE 1.2", "PE 1.5", "PE 2.0",
+                    "PE 3.0", "PE 4.0", "PE 5.0 or heavier",
+                    "Nylon 4–8 lb", "Nylon 10–14 lb", "Nylon 17–25 lb",
+                    "Fluorocarbon main line", "Advise me"],
                 hint="Thinner line casts further and spooks fewer fish, but it is weaker and "
                      "abrades fast on rock. Best practice: the thinnest braid your structure and "
-                     "fish size allow, paired with a fluorocarbon leader."),
+                     "fish size allow, paired with a fluorocarbon leader. Everything listed here "
+                     "is in stock as a neutral-specification spool."),
             dict(name="leader", label="Leader / shock leader", opts=[
                 "None", "Fluorocarbon 6 lb", "Fluorocarbon 10 lb", "Fluorocarbon 16 lb",
                 "Fluorocarbon 20 lb", "Fluorocarbon 30 lb", "Fluorocarbon 40 lb",
@@ -117,10 +196,12 @@ GROUPS = [
                 "guide to control line flow, casting rods run a trigger handle with smaller, "
                 "lower-profile guides.",
         "fields": [
-            dict(name="reel_type", label="Reel type", opts=[
-                "Spinning reel", "Baitcasting reel", "Both in one program",
-                "Conventional / overhead", "Advise me"],
-                hint="Drives guide size, spacing and handle shape."),
+            dict(name="reel_type", label="Reel type", opts=REEL_OPTS,
+                 hint="Drives guide size, spacing and handle shape."),
+            dict(name="reel_size", label="Reel size", opts=[
+                "1000", "2000", "2500", "3000", "4000", "5000", "6000",
+                "Baitcaster 100", "Baitcaster 200", "Overhead / conventional", "Advise me"],
+                hint="Sizes in stock. Reel-to-rod mismatches are flagged in the summary panel."),
             dict(name="guide_type", label="Guide type", opts=[
                 "Single-foot guides", "Double-foot guides", "KW anti-tangle",
                 "KT micro guides", "Lowrider (long cast)", "MN style", "Advise me"],
@@ -144,9 +225,7 @@ GROUPS = [
             dict(name="reel_seat", label="Reel seat", opts=[
                 "Fuji VSS", "Fuji ECS", "Fuji ACS", "Fuji TCS", "Fuji SK2",
                 "Aluminium screw seat", "Graphite seat", "Plate / clip seat", "Advise me"]),
-            dict(name="handle_material", label="Handle material", opts=[
-                "Portuguese cork", "EVA foam", "Cork + EVA mix", "Carbon tube",
-                "Hypersensitive (exposed blank)", "Advise me"]),
+            dict(name="handle_material", label="Handle material", opts=HANDLE_OPTS),
             dict(name="handle_style", label="Handle shape", opts=[
                 "Split grip", "Full grip", "Pistol / trigger (casting)",
                 "Straight (spinning)", "Extended fighting butt", "Advise me"]),
@@ -157,6 +236,7 @@ GROUPS = [
     {
         "step": 6,
         "title": "Branding &amp; Packaging",
+        "path": "oem",
         "note": "Your name goes on the rod, the sock and the box. Retail-ready packaging is quoted "
                 "separately from the rod because carton tooling is a one-off cost. Reels, line and "
                 "lures are labelled separately too — see the last question in this group.",
@@ -190,25 +270,60 @@ GROUPS = [
         ],
     },
     {
+        "step": 6,
+        "title": "Finish &amp; Personal Details",
+        "path": "custom",
+        "note": "One rod, built for one angler. There is no stock to pull from and no bulk print "
+                "run to spread tooling across, so a single build costs more per rod than a "
+                "production order — and because it is made to your measurements it cannot be "
+                "resold to anyone else if you change your mind.",
+        "fields": [
+            dict(name="engraving", label="Engraving on the butt cap", kind="text",
+                 placeholder="Up to 24 characters — a name, a date, a boat name",
+                 hint="Laser engraved. Personalised rods cannot be returned or exchanged unless "
+                      "they arrive damaged."),
+            dict(name="thread_colour", label="Guide wrap &amp; trim colour", opts=[
+                "Match the blank (subtle)", "Black", "Deep blue", "Burgundy", "Olive",
+                "Metallic silver", "Metallic gold", "Two-tone — tell us in the notes",
+                "Advise me"]),
+            dict(name="custom_pack", label="How it ships to you", opts=[
+                "Cloth rod sock", "Hard PVC tube", "Sock + hard tube", "No case — rod only",
+                "Advise me"],
+                hint="A hard tube is worth it for anything travelling by air freight."),
+            dict(name="kit_option_custom", label="Do you want it rigged and ready?", opts=[
+                "Rod only", "Rod + reel", "Rod + reel + line spooled",
+                "Rod + reel + line + starter lures", "Advise me"],
+                hint="Components are sourced to your budget and shipped under a neutral or "
+                     "component-maker label — we do not put our own badge on them."),
+            dict(name="ship_to", label="Shipping country", kind="text",
+                 placeholder="e.g. Australia, Germany, Japan",
+                 hint="Freight on a single rod is quoted per destination before we start."),
+        ],
+    },
+    {
         "step": 7,
         "title": "Quantity &amp; Contact",
-        "note": "Two different minimums apply, and it is worth knowing which one you are buying "
-                "before we quote: rod-only programs run from 300 pieces per model, while anything "
-                "that puts a reel, line or lures in the carton starts at 500 — and 1,000 if those "
-                "components also carry your brand. Mixed rod models in one container are always fine.",
+        "note": '<span id="cfg-qty-note">Two different minimums apply, and it is worth knowing which '
+                'one you are buying before we quote: rod-only programs run from 300 pieces per model, '
+                'while anything that puts a reel, line or lures in the carton starts at 500 — and '
+                '1,000 if those components also carry your brand. Mixed rod models in one container '
+                'are always fine.</span>',
         "extra": '<div class="cfg-moq" id="cfg-moq"></div>',
         "fields": [
-            dict(name="quantity", label="Quantity per model", opts=[
+            dict(name="quantity", label="Quantity per model", path="oem", opts=[
                 "300 pcs", "500 pcs", "1,000 pcs", "3,000 pcs", "5,000 pcs or more",
                 "Sample order first", "Not decided yet"]),
+            dict(name="quantity_custom", label="How many rods", path="custom", opts=[
+                "1 rod", "2 rods", "3–5 rods", "More than 5", "Not decided yet"]),
             dict(name="target_market", label="Target market", opts=[
                 "Australia", "United Kingdom", "Europe (EU)", "Japan", "South Korea",
                 "North America", "Other"]),
             dict(name="name", label="Full name *", kind="text", required=True,
                  placeholder="Jane Smith"),
-            dict(name="email", label="Work email *", kind="email", required=True,
+            dict(name="email", label="Email *", kind="email", required=True,
                  placeholder="jane@company.com"),
-            dict(name="company", label="Company / brand", kind="text", placeholder="Company name"),
+            dict(name="company", label="Company / brand", path="oem", kind="text",
+                 placeholder="Company name"),
             dict(name="notes", label="Anything else we should know", kind="textarea", full=True,
                  placeholder="Reference product or link, target retail price, timeline, "
                              "certifications you need (REACH, UKCA), or a spec sheet you want matched."),
@@ -224,7 +339,44 @@ def _attr(s):
     pre-escaped entities such as &amp; (e.g. "Boat &amp; jigging rod"), so a
     full html.escape() would double-escape them.
     """
-    return s.replace('"', "&quot;")
+    return str(s).replace('"', "&quot;")
+
+
+def _model_select(name, label):
+    """Start-from-a-model picker, grouped by rod family, built from the catalogue."""
+    groups = []
+    for sub, title in MODEL_GROUPS:
+        opts = []
+        for p in cat.rods_by_sub(sub):
+            s = p["specs"]
+            desc = "%s · %s · %s" % (s["length_ft"], s["power"], s.get("line_rating", "—"))
+            opts.append('<option value="%s">%s — %s</option>'
+                        % (_attr(p["sku"]), _attr(p["sku"]), _attr(desc)))
+        if opts:
+            groups.append('<optgroup label="%s">%s</optgroup>' % (title, "".join(opts)))
+    ctl = ('<select id="cfg-%s" name="%s"><option value="">— build from scratch —</option>%s'
+           '</select>' % (name, name, "".join(groups)))
+    return ('<div class="form-field"><label for="cfg-%s">%s</label>%s</div>'
+            % (name, label, ctl))
+
+
+def _path_switch(name, label):
+    """Two-card radio: OEM program vs a single custom build."""
+    cards = [
+        ("oem", "OEM / private-label program",
+         "300 pcs and up · your brand on the rod · full spec, packaging and kit options"),
+        ("custom", "One rod, built for me",
+         "A single custom rod, or a handful · your measurements and finish · 1 rod minimum"),
+    ]
+    html_cards = []
+    for val, title, sub in cards:
+        html_cards.append(
+            '<label class="cfg-path" for="cfg-path-%s">'
+            '<input type="radio" id="cfg-path-%s" name="%s" value="%s"%s>'
+            '<span class="cfg-path-t">%s</span><span class="cfg-path-s">%s</span></label>'
+            % (val, val, name, val, " checked" if val == "oem" else "", title, sub))
+    return ('<div class="form-field full"><span class="cfg-path-lab">%s</span>'
+            '<div class="cfg-path-row">%s</div></div>' % (label, "".join(html_cards)))
 
 
 def _field_html(f):
@@ -234,6 +386,8 @@ def _field_html(f):
     hint = ('<p class="form-hint">%s</p>' % f["hint"]) if f.get("hint") else ""
     req = " required" if f.get("required") else ""
     cls = "form-field full" if f.get("full") else "form-field"
+    if f.get("path"):
+        cls += " cfg-only-%s" % f["path"]
     if kind == "select":
         opts = ['<option value="">— select —</option>']
         opts += ['<option value="%s">%s</option>' % (_attr(o), o) for o in f["opts"]]
@@ -241,9 +395,17 @@ def _field_html(f):
     elif kind == "textarea":
         ctl = ('<textarea id="cfg-%s" name="%s" rows="4"%s placeholder="%s"></textarea>'
                % (name, name, req, _attr(f.get("placeholder", ""))))
+    elif kind == "text" or kind == "email":
+        ctl = ('<input id="cfg-%s" name="%s" type="%s"%s placeholder="%s"%s>'
+               % (name, name, kind, req, _attr(f.get("placeholder", "")),
+                  "" if kind == "text" else ' autocomplete="email"'))
+    elif kind == "model":
+        return '<div class="%s">%s%s</div>' % (cls, _model_select(name, label), hint)
+    elif kind == "path":
+        return '<div class="%s">%s</div>' % (cls, _path_switch(name, label))
     else:
-        ctl = ('<input id="cfg-%s" name="%s" type="%s"%s placeholder="%s">'
-               % (name, name, kind, req, _attr(f.get("placeholder", ""))))
+        ctl = ('<input id="cfg-%s" name="%s" type="text"%s placeholder="%s">'
+               % (name, name, req, _attr(f.get("placeholder", ""))))
     return ('<div class="%s"><label for="cfg-%s">%s</label>%s%s</div>'
             % (cls, name, label, ctl, hint))
 
@@ -252,18 +414,27 @@ def render_body(wa_url, form_endpoint):
     groups = []
     for g in GROUPS:
         fields = "".join(_field_html(f) for f in g["fields"])
+        path_attr = ' data-path="%s"' % g["path"] if g.get("path") else ""
         groups.append("""
-      <fieldset class="cfg-group">
+      <fieldset class="cfg-group"%s>
         <h3><span class="cfg-step">%d</span>%s</h3>
         <p class="cfg-note">%s</p>
         <div class="cfg-fields">%s</div>
         %s
-      </fieldset>""" % (g["step"], g["title"], g["note"], fields, g.get("extra", "")))
+      </fieldset>""" % (path_attr, g["step"], g["title"], g["note"], fields, g.get("extra", "")))
+
+    # Rods only: the configurator prefills from rod specs, so shipping the whole
+    # 71-row catalogue into the page would be dead weight.
+    rod_json = html.escape(
+        __import__("json").dumps(cat.RODS, ensure_ascii=False, separators=(",", ":")),
+        quote=False)
 
     return """
+<script type="application/json" id="catalog-data">%(catalog)s</script>
+
 <section class="section" style="padding-top:34px">
   <div class="container">
-    <span class="eyebrow">OEM Configurator</span>
+    <span class="eyebrow">Rod Configurator</span>
     <h1>Build Your Rod — We Quote What You Choose</h1>
     <p class="lead">Pick what matters to you and skip the rest. Every option below is something our
     Weihai lines actually build, so the specification you create here goes straight into a quotation
@@ -282,7 +453,7 @@ def render_body(wa_url, form_endpoint):
       <div class="hp-field" aria-hidden="true">
         <label>Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
       </div>
-      <input type="hidden" name="_subject" id="cfg-subject" value="OEM rod configurator inquiry — entrol-fishing.com">
+      <input type="hidden" name="_subject" id="cfg-subject" value="Rod configurator inquiry — entrol-fishing.com">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
       <input type="hidden" name="spec_summary" id="cfg-summary-input" value="">
@@ -395,13 +566,15 @@ def render_body(wa_url, form_endpoint):
       </div>
     </div>
   </div>
-</section>""" % {"form": form_endpoint, "groups": "".join(groups), "wa": wa_url}
+</section>""" % {"form": form_endpoint, "groups": "".join(groups), "wa": wa_url,
+                 "catalog": rod_json}
 
 
-TITLE = "Build Your Rod | OEM Fishing Rod Configurator | Entrol Fishing"
-DESC = ("Configure a custom fishing rod: carbon grade, guide type, reel seat, handle and packaging. "
-        "Build a fishing rod to your own specification — carbon grade, guide train, reel seat, "
-        "handle, line and lures. Rod MOQ 300 pcs, kits from 500. We flag incompatible choices "
-        "before you order.")
-KEYWORDS = ("custom fishing rod configurator, OEM rod builder, carbon rod specification, "
-            "Fuji guide rod OEM, carp rod specification, build your own fishing rod wholesale")
+TITLE = "Build Your Rod | OEM & Custom Rod Configurator | Entrol Fishing"
+DESC = ("Configure a custom fishing rod — OEM programs from 300 pcs, or a single rod built to "
+        "your own measurements. Start from an existing model or specify carbon grade, guide "
+        "train, reel seat, handle, line and lures. Incompatible choices are flagged before "
+        "you order.")
+KEYWORDS = ("custom fishing rod configurator, OEM rod builder, bespoke fishing rod, carbon rod "
+            "specification, Fuji guide rod OEM, carp rod specification, build your own fishing "
+            "rod wholesale, custom built carp rod")

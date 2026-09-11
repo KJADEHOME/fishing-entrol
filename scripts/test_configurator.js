@@ -32,14 +32,15 @@ function pass(m) { console.log('  ok    ' + m); }
   const form = doc.getElementById('cfg-form');
   if (!form) { fail('cfg-form not found'); return; }
 
+  function fire(el) { el.dispatchEvent(new window.Event('change', { bubbles: true })); }
   function setVals(obj) {
     Object.keys(obj).forEach(k => {
       const s = form.querySelector('select[name="' + k + '"]');
       if (!s) { fail('missing select: ' + k); return; }
       s.value = obj[k];
       if (s.value !== obj[k]) fail('could not set ' + k + ' = ' + obj[k]);
+      fire(s);
     });
-    form.dispatchEvent(new window.Event('change', { bubbles: true }));
   }
   function warnText() {
     const b = doc.getElementById('cfg-warnbox');
@@ -113,8 +114,8 @@ function pass(m) { console.log('  ok    ' + m); }
   console.log('\n== clean combination (must NOT warn) ==');
   form.querySelectorAll('select[name]').forEach(s => { s.value = ''; });
   setVals({
-    rod_type: 'Spinning rod', length: "2.13 m (7'0\")", sections: '2 pieces',
-    power: 'Medium-Light', action: 'Fast', lure_weight: '5–21 g', line_rating: 'PE 0.8–2.0',
+    rod_type: 'Spinning rod', length: "2.19 m (7'2\")", sections: '1 piece',
+    power: 'Medium-Light', action: 'Fast', lure_weight: '5–21 g', line_rating: '6–12 lb',
     reel_type: 'Spinning reel', guide_type: 'Single-foot guides',
     handle_style: 'Split grip', main_line: 'PE 0.8', leader: 'Fluorocarbon 10 lb'
   });
@@ -156,6 +157,81 @@ function pass(m) { console.log('  ok    ' + m); }
       /* all three rows always listed */
     } else fail('MOQ table incomplete for ' + kit);
   });
+
+  console.log('\n== embedded product catalogue ==');
+  const rawCat = doc.getElementById('catalog-data');
+  let CAT = [];
+  try { CAT = JSON.parse((rawCat && rawCat.textContent) || '[]'); } catch (e) { CAT = []; }
+  if (CAT.length >= 20) pass('catalogue embedded in page: ' + CAT.length + ' rods');
+  else fail('catalogue missing or too small: ' + CAT.length);
+  const optCount = form.querySelectorAll('select[name="base_model"] option').length;
+  if (optCount === CAT.length + 1) pass('model picker lists every rod + blank (' + optCount + ')');
+  else fail('model picker has ' + optCount + ' options for ' + CAT.length + ' rods');
+
+  console.log('\n== start from an existing model ==');
+  form.querySelectorAll('select[name]').forEach(s => { s.value = ''; });
+  setVals({ base_model: 'CRS741MF' });
+  const got = {
+    length: form.querySelector('select[name="length"]').value,
+    power: form.querySelector('select[name="power"]').value,
+    action: form.querySelector('select[name="action"]').value,
+    line_rating: form.querySelector('select[name="line_rating"]').value,
+    reel_type: form.querySelector('select[name="reel_type"]').value,
+    handle_material: form.querySelector('select[name="handle_material"]').value
+  };
+  const want = { length: "2.23 m (7'4\")", power: 'Medium', action: 'Fast',
+                 line_rating: '8–17 lb', reel_type: 'Spinning reel', handle_material: 'Cork' };
+  const badFields = Object.keys(want).filter(k => got[k] !== want[k]);
+  if (!badFields.length) pass('CRS741MF prefills length, power, action, line, reel and handle');
+  else fail('prefill mismatch: ' + badFields.map(k => k + '=' + got[k]).join(', '));
+  const info = doc.getElementById('cfg-model-info');
+  if (info && /CRS741MF/.test(info.textContent)) pass('model confirmation line shown');
+  else fail('no confirmation after picking a model');
+
+  console.log('\n== two commercial paths ==');
+  function pathRadio(v) { return form.querySelector('input[name="build_path"][value="' + v + '"]'); }
+  if (!pathRadio('oem') || !pathRadio('custom')) { fail('path radios missing'); }
+  else {
+    const brandFs = Array.from(form.querySelectorAll('fieldset[data-path]'))
+      .find(fs => fs.getAttribute('data-path') === 'oem');
+    const persFs = Array.from(form.querySelectorAll('fieldset[data-path]'))
+      .find(fs => fs.getAttribute('data-path') === 'custom');
+    if (!brandFs || !persFs) fail('path fieldsets missing');
+    else {
+      if (!brandFs.hidden && persFs.hidden) pass('default path is OEM (branding shown, personal hidden)');
+      else fail('default path wrong: branding.hidden=' + brandFs.hidden +
+                ' personal.hidden=' + persFs.hidden);
+
+      pathRadio('custom').checked = true;
+      fire(pathRadio('custom'));
+      if (persFs.hidden === false && brandFs.hidden === true) pass('switching to custom swaps the groups');
+      else fail('path switch did not swap groups');
+
+      const qOem = form.querySelector('select[name="quantity"]');
+      const qCustom = form.querySelector('select[name="quantity_custom"]');
+      if (qOem && qOem.disabled && qCustom && !qCustom.disabled) pass('hidden-path fields are disabled');
+      else fail('disabled state wrong: quantity.disabled=' + (qOem && qOem.disabled) +
+                ' quantity_custom.disabled=' + (qCustom && qCustom.disabled));
+
+      if (/1 rod/.test(moqText()) && /20–25 days/.test(moqText())) {
+        pass('custom path shows single-rod terms, not MOQ tiers');
+      } else fail('custom MOQ panel wrong: ' + moqText().slice(0, 90));
+
+      if (/One custom rod/.test(doc.getElementById('cfg-list').textContent)) {
+        pass('summary labels the path for the sales team');
+      } else fail('summary missing path label');
+
+      setVals({ quantity: '300 pcs' });
+      if (!/One custom rod[\s\S]*300 pcs/.test(doc.getElementById('cfg-list').textContent)) {
+        pass('a disabled OEM field does not leak into the enquiry');
+      } else fail('disabled field leaked into the summary');
+
+      pathRadio('oem').checked = true;
+      fire(pathRadio('oem'));
+      if (/300 pcs \/ model/.test(moqText())) pass('switching back restores the MOQ table');
+      else fail('MOQ table did not come back');
+    }
+  }
 
   console.log('\n== kit_brand field ==');
   const kb = form.querySelector('select[name="kit_brand"]');

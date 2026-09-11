@@ -12,6 +12,9 @@ import json, os, sys
 
 sys.stdout.reconfigure(encoding="utf-8")
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "scripts"))
+
+import catalog_data as cat  # noqa: E402  (product catalogue — single source of truth)
 
 DOMAIN = "https://www.entrol-fishing.com"
 BRAND = "Entrol Fishing"
@@ -73,50 +76,25 @@ def gallery(slug):
 # --------------------------------------------------------------------------
 # spec data — transcribed from factory-published parameter sheets only
 # --------------------------------------------------------------------------
-SPIN_ROWS = [
-    ["CRS721LXF", "2.19 m (7'2\")", "2.19 m", "1", "100 g", "Light / Fast", "1.7 / 11.1 mm", "4–10 lb", "Cork", "—"],
-    ["CRS731MLF", "2.21 m (7'3\")", "2.21 m", "1", "108 g", "Medium-Light / Fast", "1.8 / 11.5 mm", "6–12 lb", "Cork", "—"],
-    ["CRS741MF", "2.23 m (7'4\")", "2.23 m", "1", "105 g", "Medium / Fast", "1.9 / 11.5 mm", "8–17 lb", "Cork", "—"],
-    ["CRS751MHF", "2.26 m (7'5\")", "2.26 m", "1", "131 g", "Medium-Heavy / Fast", "1.8 / 12.0 mm", "10–20 lb", "Cork", "—"],
-    ["CRC721MF (cast)", "2.19 m (7'2\")", "2.19 m", "1", "119 g", "Medium / Fast", "1.7 / 11.6 mm", "8–14 lb", "Cork", "—"],
-    ["CRC741MHF (cast)", "2.23 m (7'4\")", "2.23 m", "1", "126 g", "Medium-Heavy / Fast", "1.8 / 12.0 mm", "8–17 lb", "Cork", "—"],
-    ["CRC761XH (cast)", "2.29 m (7'6\")", "2.29 m", "1", "135 g", "Extra-Heavy / Fast", "2.3 / 12.7 mm", "10–25 lb", "Cork", "—"],
-]
+# Rows come from the product catalogue (scripts/catalog_data.py) so the spec
+# tables, the configurator picker and the compatibility engine can never drift.
+SPIN_ROWS = cat.spec_rows("spinning")
 SPIN_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Action / Power",
              "Tip / Butt Dia.", "Line Rating", "Handle", "Carbon Grade"]
 
-CARP_ROWS = [
-    ["PRC-9300", "2.70 m (9'0\")", "140 cm", "2", "256 g", "3.0 lb test curve", "2.6 / 14.9 mm", "—", "Slim EVA + duplon", "—"],
-    ["PRC-10300", "3.00 m (10'0\")", "156 cm", "2", "315 g", "3.0 lb test curve", "2.7 / 16.0 mm", "—", "Slim EVA + duplon", "—"],
-    ["PRC-12275", "3.60 m (12'0\")", "186 cm", "2", "386 g", "2.75 lb test curve", "2.7 / 16.4 mm", "—", "Slim EVA + duplon", "—"],
-    ["PRC-12300", "3.60 m (12'0\")", "186 cm", "2", "421 g", "3.0 lb test curve", "2.7 / 16.8 mm", "—", "Slim EVA + duplon", "—"],
-]
+CARP_ROWS = cat.spec_rows("carp")
 CARP_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Test Curve",
              "Tip / Butt Dia.", "Line Rating", "Handle", "Carbon Grade"]
 
-BOAT_ROWS = [
-    ["MPB66HC", "1.98 m (6'6\")", "1.98 m", "1", "444 g", "20–50 lb class", "3.0 / 12.0 mm", "20–50 lb", "EVA", "—"],
-    ["MPB66XHC", "1.98 m (6'6\")", "1.98 m", "1", "465 g", "60–100 lb class", "3.3 / 12.7 mm", "60–100 lb", "EVA", "—"],
-    ["MPB66XXHC", "1.98 m (6'6\")", "1.98 m", "1", "508 g", "80–200 lb class", "3.7 / 13.7 mm", "80–200 lb", "EVA", "—"],
-]
+BOAT_ROWS = cat.spec_rows("boat")
 BOAT_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Line Class",
              "Tip / Butt Dia.", "Line Rating", "Handle", "Carbon Grade"]
 
-JIG_ROWS = [
-    ["ASJS581 (spin)", "1.73 m (5'8\")", "127 cm", "1.5 (jointed)", "152 g", "MAX 550 g jig", "2.7 / 12.7 mm", "PE 2.5–4", "EVA", "—"],
-    ["ASJS631 (spin)", "1.91 m (6'3\")", "145 cm", "1.5 (jointed)", "144 g", "MAX 300 g jig", "2.1 / 11.5 mm", "PE 1.5–2.5", "EVA", "—"],
-    ["ASJS631 (spin)", "1.91 m (6'3\")", "145 cm", "1.5 (jointed)", "131 g", "MAX 220 g jig", "1.9 / 11.5 mm", "PE 1.0–2.0", "EVA", "—"],
-    ["ASJC581 (cast)", "1.73 m (5'8\")", "127 cm", "1.5 (jointed)", "160 g", "MAX 550 g jig", "2.7 / 12.5 mm", "PE 2.5–4", "EVA", "—"],
-    ["ASJC631 (cast)", "1.91 m (6'3\")", "145 cm", "1.5 (jointed)", "152 g", "MAX 300 g jig", "2.0 / 11.6 mm", "PE 1.5–2.5", "EVA", "—"],
-    ["ASJC631 (cast)", "1.91 m (6'3\")", "145 cm", "1.5 (jointed)", "138 g", "MAX 120 g jig", "1.8 / 11.0 mm", "PE 0.5–1.5", "EVA", "—"],
-]
+JIG_ROWS = cat.spec_rows("jig")
 JIG_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Jig Rating",
             "Tip / Butt Dia.", "Line Rating", "Handle", "Carbon Grade"]
 
-SURF_ROWS = [
-    ["AGSF4203", "4.20 m (13'9\")", "148 cm", "3 (plug-in)", "578 g", "Fast", "3.17 / 23.4 mm", "120–250 g cast", "Anti-slip EVA", "—"],
-    ["AGSF4503", "4.50 m (14'9\")", "158 cm", "3 (plug-in)", "658 g", "Fast", "3.26 / 24.2 mm", "150–280 g cast", "Anti-slip EVA", "—"],
-]
+SURF_ROWS = cat.spec_rows("surf")
 SURF_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Action",
              "Tip / Butt Dia.", "Cast Weight", "Handle", "Carbon Grade"]
 
