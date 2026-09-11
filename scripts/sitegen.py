@@ -24,6 +24,7 @@ WA = "8615263130999"
 WA_TEXT = "Hi%20Entrol%20Fishing%2C%20I%27d%20like%20a%20quote%20for%20OEM%20fishing%20rods."
 WECHAT = "15263130999"
 GTM_ID = "GTM-T3ZXMRHS"
+GA4_ID = "G-5QK21JJ0G4"
 FORM_ENDPOINT = "#"
 OG_IMAGE = DOMAIN + "/assets/images/spinning-rod-01.webp"
 TODAY = "2026-09-11"
@@ -270,12 +271,15 @@ def head(title, desc, keywords, path, extra_ld=""):
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="product-gallery.css">
+  <!-- Entrol Fishing Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=%(ga4)s"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','%(ga4)s');</script>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','%(gtm)s');</script>
   <!-- End Google Tag Manager -->
   %(ld)s""" % {
         "t": title, "d": desc, "k": keywords, "domain": DOMAIN, "p": path,
-        "og": OG_IMAGE, "brand": BRAND, "gtm": GTM_ID, "ld": extra_ld,
+        "og": OG_IMAGE, "brand": BRAND, "gtm": GTM_ID, "ga4": GA4_ID, "ld": extra_ld,
     }
 
 

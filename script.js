@@ -159,6 +159,8 @@
           status.textContent = 'Thank you — your inquiry has been received. We reply within one business day (GMT+8).';
           status.classList.add('show');
         }
+        track('inquiry_success', { form_path: 'contact', page: location.pathname });
+        if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_path: 'contact' });
         form.reset();
       }).catch(function () {
         if (status) {
@@ -964,6 +966,8 @@
             : 'Specification received — ' + items.length + ' options logged. We reply with pricing, MOQ and sample cost within one business day (GMT+8).';
           st.classList.add('show');
         }
+        track('inquiry_success', { form_path: path, page: location.pathname, options_selected: items.length });
+        if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_path: path });
       }).catch(function () {
         if (st) {
           st.textContent = 'We could not save your inquiry. Please retry, email wangyan@entrol.com, or contact us on WhatsApp.';
