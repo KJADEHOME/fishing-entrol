@@ -393,3 +393,21 @@ table.spec td:first-child { font-weight: 700; color: var(--color-primary-dark); 
   .cfg-fields { grid-template-columns: 1fr; }
   .cfg-why { grid-template-columns: 1fr; }
 }
+
+/* configurator: suggested set-up panel */
+.cfg-combo { margin-top: 18px; padding-top: 16px; border-top: 1px solid #DCE4E8; }
+.cfg-combo h4 { margin: 0 0 6px; font-size: 0.95rem; }
+.cfg-combo .cfg-combo-lead { font-size: 0.78rem; color: var(--color-text-mid, #5A6B74); margin: 0 0 10px; }
+.cfg-combo ul { list-style: none; margin: 0; padding: 0; }
+.cfg-advice { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px;
+  padding: 9px 0; border-bottom: 1px dashed #DCE4E8; font-size: 0.8rem; }
+.cfg-advice:last-child { border-bottom: 0; }
+.cfg-advice .part { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--color-text-mid, #5A6B74); }
+.cfg-advice .val { font-weight: 800; text-align: right; font-size: 0.82rem; }
+.cfg-advice .why { grid-column: 1 / -1; color: var(--color-text-mid, #5A6B74); line-height: 1.45; }
+.cfg-apply { grid-column: 1 / -1; justify-self: start; margin-top: 6px; padding: 4px 14px;
+  font-size: 0.74rem; font-weight: 700; color: var(--color-primary, #0E6E8C);
+  background: #fff; border: 1px solid var(--color-primary, #0E6E8C); border-radius: 20px;
+  cursor: pointer; }
+.cfg-apply:hover { background: var(--color-primary, #0E6E8C); color: #fff; }

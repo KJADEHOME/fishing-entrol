@@ -124,7 +124,11 @@
 
 ## 5. 上线前内容核对
 
-- [ ] **配置器真实提交测试**：在 `configure.html` 填一份完整规格提交，确认 wangyan@entrol.com 收到全部 25 个字段（字段多，需确认 FormSubmit 邮件不截断）
+- [ ] **套装供应能力核实**：配置器 `kit_option` 提供 "rod + reel + line + lures" 套装选项，页面按
+      "audited partner factories" 表述。**上线前必须确认**：(a) 是否真有可供货的轮/线/饵供应商；
+      (b) 整套出货的 HS 编码与目的国关税是否高于单竿（欧盟、澳洲对成品套装税率可能不同）；
+      (c) 若暂时供不了，先在 `scripts/configurator.py` 里把该字段收窄为 Rod only + 组合选项文案调整
+- [ ] **配置器真实提交测试**：在 `configure.html` 填一份完整规格提交，确认 wangyan@entrol.com 收到全部字段（现为 32 个 select，字段多，需确认 FormSubmit 邮件不截断）
 - [ ] **GTM 后台建 `configurator_submit` 转化标签**（dataLayer 已埋，含 `options_selected` 与 `spec_summary`）；建议把「选了 ≥5 项」设为高质量询盘信号
 - [ ] 联系三处一致（浮动按钮 / 页脚 / 表单页）：WhatsApp +8615263130999 / WeChat 15263130999 / sales@entrol-fishing.com
 - [ ] CRONY 阿里对话截图已存进 `docs/authorization/weihai-crony/01-alibaba-reply.png`

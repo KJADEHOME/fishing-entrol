@@ -176,7 +176,156 @@
         subjInput.value = 'OEM configurator — ' + (rodSel && rodSel.value ? rodSel.value : 'rod')
           + (mkt && mkt.value ? ' — ' + mkt.value : '');
       }
+      renderCombo();
       return items;
+    }
+
+    /* ---------- set-up advisor ---------- */
+    var LINE_BY_WEIGHT = [
+      { up: 5, pe: 'PE 0.4', ld: 'Fluorocarbon 6 lb', reel: '1000–2000',
+        why: 'Finesse class — thin braid lets small lures swim naturally and casts further.' },
+      { up: 21, pe: 'PE 0.8', ld: 'Fluorocarbon 10 lb', reel: '2500',
+        why: 'The all-round freshwater and estuary class.' },
+      { up: 30, pe: 'PE 1.2', ld: 'Fluorocarbon 16 lb', reel: '3000',
+        why: 'Enough backbone for snapper, cod and bigger estuary fish.' },
+      { up: 50, pe: 'PE 2.0', ld: 'Fluorocarbon 20 lb', reel: '4000',
+        why: 'Shore jigging and light offshore casting.' },
+      { up: 120, pe: 'PE 3.0', ld: 'Fluorocarbon 30 lb', reel: '5000',
+        why: 'Heavy shore casting and inshore species.' },
+      { up: 99999, pe: 'PE 4.0', ld: 'Fluorocarbon 40 lb', reel: '6000+',
+        why: 'Big metal lures and offshore fish.' }
+    ];
+
+    var TAPER_BY_LURE = [
+      { key: 'curly tail', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'A sensitive tip reads the bite; single-foot guides keep the blank light and responsive.' },
+      { key: 'paddle tail', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'Needs a responsive tip to keep the tail kicking at slow retrieve speeds.' },
+      { key: 'worm', taper: 'Extra-Fast', guide: 'Single-foot guides',
+        why: 'Worms and stick baits are fished on slack line — maximum sensitivity wins.' },
+      { key: 'creature', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'Punching and flipping need tip sensitivity plus a strong butt section.' },
+      { key: 'minnow', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'Twitching a minnow needs a tip that recovers quickly between jerks.' },
+      { key: 'crankbait', taper: 'Moderate', guide: 'Single-foot guides',
+        why: 'A softer parabolic blank keeps treble hooks pinned when a fish lunges.' },
+      { key: 'vibration', taper: 'Moderate-Fast', guide: 'Single-foot guides',
+        why: 'Lipless lures pull hard all day — a slightly softer tip absorbs the vibration.' },
+      { key: 'pencil', taper: 'Moderate-Fast', guide: 'Single-foot guides',
+        why: 'Topwater walking needs a tip soft enough to throw slack line.' },
+      { key: 'popper', taper: 'Moderate-Fast', guide: 'Single-foot guides',
+        why: 'Soft tip to work the pop, strong butt to drive the hooks home.' },
+      { key: 'slow pitch', taper: 'Moderate', guide: 'Double-foot guides',
+        why: 'Slow-pitch jigging loads the whole blank — a parabolic taper does the work.' },
+      { key: 'shore jig', taper: 'Fast', guide: 'Double-foot guides',
+        why: 'Long casts with heavy metal need a fast, powerful blank and rigid guides.' },
+      { key: 'spoon', taper: 'Moderate', guide: 'Single-foot guides',
+        why: 'Spoons and spinners are constant-retrieve lures — a through-action blank is kinder.' },
+      { key: 'glow', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'Night fishing with glow lures: sensitivity matters more than distance.' },
+      { key: 'jig head', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'Bottom contact is the bite — you need to feel gravel from sand.' },
+      { key: 'texas', taper: 'Fast', guide: 'Single-foot guides',
+        why: 'Weedless rigs need a strong butt to drive the hook through cover.' },
+      { key: 'cut bait', taper: 'Moderate', guide: 'Double-foot guides',
+        why: 'Bait fishing needs a forgiving tip so fish are not spooked off the hook.' },
+      { key: 'boilie', taper: 'Moderate', guide: 'Double-foot guides',
+        why: 'Carp rods are progressive: soft tip for casting, deep power for playing.' },
+      { key: 'fly', taper: 'Moderate', guide: 'Single-foot guides',
+        why: 'Fly blanks load on the cast — the taper carries the line.' }
+    ];
+
+    var SPECIES_ALERT = {
+      'Pike': 'Pike and zander cut braid instantly — specify a wire or tooth-proof leader.',
+      'Kingfish': 'Kingfish and tuna run hard with sharp gill plates — go one leader class heavier than the rod suggests.',
+      'Carp': 'Carp fight deep and steadily; most European buyers prefer a nylon main line because its stretch protects the blank.',
+      'Catfish': 'Catfish need strength over finesse — do not go below PE 3.0 with a 40 lb leader.',
+      'Squid': 'Egi rods are short, ultra-sensitive and very soft-tipped — a standard fast taper feels dead.',
+      'Cod': 'Cod and ling live on rough ground — abrasion resistance beats thin diameter.',
+      'Snapper': 'Snapper head straight for structure the moment they are hooked — the leader takes the abuse, not the braid.'
+    };
+
+    function pick(selName, wanted) {
+      var sel = cfgForm.querySelector('select[name="' + selName + '"]');
+      if (!sel || !wanted) return null;
+      var opts = Array.prototype.slice.call(sel.options), i;
+      for (i = 0; i < opts.length; i++) if (opts[i].value === wanted) return { sel: sel, value: wanted };
+      for (i = 0; i < opts.length; i++) if (opts[i].value.indexOf(wanted) === 0) return { sel: sel, value: opts[i].value };
+      return null;
+    }
+
+    function val(name) {
+      var s = cfgForm.querySelector('select[name="' + name + '"]');
+      return s && s.value ? s.value : '';
+    }
+
+    function renderCombo() {
+      var box = document.getElementById('cfg-combo-list');
+      var lead = document.getElementById('cfg-combo-lead');
+      if (!box) return;
+      var lure = val('lure_type'), sp = val('target_species'), lw = val('lure_weight');
+      var rows = [], i;
+
+      if (lw) {
+        var w = Math.max.apply(null, (lw.match(/\d+/g) || ['0']).map(Number));
+        var rule = LINE_BY_WEIGHT[LINE_BY_WEIGHT.length - 1];
+        for (i = 0; i < LINE_BY_WEIGHT.length; i++) if (w <= LINE_BY_WEIGHT[i].up) { rule = LINE_BY_WEIGHT[i]; break; }
+        rows.push({ part: 'Main line', value: rule.pe, why: rule.why, apply: pick('main_line', rule.pe) });
+        rows.push({ part: 'Leader', value: rule.ld,
+          why: 'Braid alone will not survive rock or teeth — the leader does that job.',
+          apply: pick('leader', rule.ld) });
+        rows.push({ part: 'Reel size', value: rule.reel,
+          why: 'Balances the rod and holds enough line for the cast weights you chose.', apply: null });
+      }
+
+      if (lure) {
+        var low = lure.toLowerCase(), t = null;
+        for (i = 0; i < TAPER_BY_LURE.length; i++) if (low.indexOf(TAPER_BY_LURE[i].key) !== -1) { t = TAPER_BY_LURE[i]; break; }
+        if (t) {
+          rows.push({ part: 'Taper', value: t.taper, why: t.why, apply: pick('action', t.taper) });
+          rows.push({ part: 'Guides', value: t.guide,
+            why: t.guide.indexOf('Double') === 0
+              ? 'Double-foot guides are stiffer and handle heavy loads and big fish.'
+              : 'Single-foot guides keep the tip light and sensitive.',
+            apply: pick('guide_type', t.guide) });
+        }
+      }
+
+      if (sp) {
+        for (var key in SPECIES_ALERT) {
+          if (sp.indexOf(key) !== -1) {
+            rows.push({ part: 'Watch out', value: key, why: SPECIES_ALERT[key], apply: null });
+            break;
+          }
+        }
+      }
+
+      if (!val('kit_option') && (lure || sp)) {
+        rows.push({ part: 'Worth adding', value: 'Rod + starter lure set',
+          why: 'Ships the rod with lures matched to your target species — one carton, one purchase order.',
+          apply: pick('kit_option', 'Rod + starter lure set') });
+      }
+
+      if (lead) {
+        lead.textContent = rows.length
+          ? 'Based on what you have chosen so far — tap Apply to accept any suggestion:'
+          : 'Pick a target species or lure type and we will suggest the matching taper, line and reel size here.';
+      }
+
+      box.innerHTML = rows.map(function (r, idx) {
+        return '<li class="cfg-advice"><span class="part">' + esc(r.part) + '</span>'
+          + '<span class="val">' + esc(r.value) + '</span>'
+          + '<span class="why">' + esc(r.why) + '</span>'
+          + (r.apply ? '<button type="button" class="cfg-apply" data-i="' + idx + '">Apply</button>' : '')
+          + '</li>';
+      }).join('');
+
+      box.querySelectorAll('.cfg-apply').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var r = rows[parseInt(btn.getAttribute('data-i'), 10)];
+          if (r && r.apply) { r.apply.sel.value = r.apply.value; renderSummary(); }
+        });
+      });
     }
 
     cfgForm.addEventListener('change', renderSummary);

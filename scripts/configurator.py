@@ -67,6 +67,51 @@ GROUPS = [
     },
     {
         "step": 3,
+        "title": "Target Fish, Bait &amp; Line",
+        "note": "Lure type and line decide the taper more than anything else: soft plastics and "
+                "jig heads need a sensitive tip and no stretch, crankbaits need a softer blank that "
+                "gives, and metal lures need a fast backbone to drive the hook home.",
+        "fields": [
+            dict(name="target_species", label="Target species", opts=[
+                "Bass", "Trout / perch", "Bream / flathead", "Snapper / grouper",
+                "Kingfish / tuna", "Mackerel / bonito", "Carp", "Catfish", "Cod / ling",
+                "Squid (egi)", "Pike / zander", "Mixed / general", "Advise me"]),
+            dict(name="fishing_method", label="Fishing method", opts=[
+                "Shore casting", "Boat / offshore", "Kayak", "Rock &amp; surf",
+                "Estuary / river", "Lake / reservoir", "Ice fishing", "Advise me"]),
+            dict(name="lure_type", label="Lure / bait type", opts=[
+                "Soft plastic — curly tail grub", "Soft plastic — paddle tail shad",
+                "Soft plastic — worm / stick bait", "Soft plastic — creature / craw",
+                "Hard lure — minnow", "Hard lure — crankbait",
+                "Hard lure — vibration / lipless", "Hard lure — pencil / stickbait",
+                "Hard lure — popper (topwater)", "Metal jig (slow pitch)",
+                "Metal jig (shore jig / casting)", "Spoon / spinner",
+                "Glow or UV lure (night fishing)", "Jig head rig",
+                "Texas / Carolina rig", "Live or cut bait",
+                "Boilie / pellet (carp)", "Fly", "Mixed range", "Advise me"],
+                hint="Curly tail and paddle tail are soft plastics; metal jigs and spoons are the "
+                     "'iron' lures; glow and UV patterns are for night and deep water."),
+            dict(name="main_line", label="Main line", opts=[
+                "PE 0.4", "PE 0.6", "PE 0.8", "PE 1.0", "PE 1.2", "PE 1.5", "PE 2.0",
+                "PE 3.0", "PE 4.0", "PE 5.0 or heavier",
+                "Nylon 4–8 lb", "Nylon 10–14 lb", "Nylon 17–25 lb",
+                "Fluorocarbon main line", "Advise me"],
+                hint="Thinner line casts further and spooks fewer fish, but it is weaker and "
+                     "abrades fast on rock. Best practice: the thinnest braid your structure and "
+                     "fish size allow, paired with a fluorocarbon leader."),
+            dict(name="leader", label="Leader / shock leader", opts=[
+                "None", "Fluorocarbon 6 lb", "Fluorocarbon 10 lb", "Fluorocarbon 16 lb",
+                "Fluorocarbon 20 lb", "Fluorocarbon 30 lb", "Fluorocarbon 40 lb",
+                "Nylon shock leader", "Wire / tooth-proof leader", "Advise me"],
+                hint="Braid has almost no abrasion resistance — a fluorocarbon leader is what "
+                     "actually survives contact with rock, teeth and structure."),
+            dict(name="lure_colour", label="Lure colour preference", opts=[
+                "Natural / clear", "Glow in the dark", "UV reactive", "Chartreuse / high-vis",
+                "Dark silhouette", "Mixed selection", "Advise me"]),
+        ],
+    },
+    {
+        "step": 4,
         "title": "Guide Train",
         "note": "The reel type decides the whole guide layout: spinning rods need a large first "
                 "guide to control line flow, casting rods run a trigger handle with smaller, "
@@ -91,7 +136,7 @@ GROUPS = [
         ],
     },
     {
-        "step": 4,
+        "step": 5,
         "title": "Reel Seat &amp; Handle",
         "note": "This is where a rod is recognised as yours. Seat model, grip material and grip "
                 "shape are all tooled to your drawing.",
@@ -110,7 +155,7 @@ GROUPS = [
         ],
     },
     {
-        "step": 5,
+        "step": 6,
         "title": "Branding &amp; Packaging",
         "note": "Your name goes on the rod, the sock and the box. Retail-ready packaging is quoted "
                 "separately from the rod because carton tooling is a one-off cost.",
@@ -123,10 +168,16 @@ GROUPS = [
                 "Bulk / no retail pack", "Custom retail packaging", "Advise me"]),
             dict(name="hook_keeper", label="Hook keeper", opts=[
                 "Yes", "No", "Advise me"]),
+            dict(name="kit_option", label="Supply as", opts=[
+                "Rod only", "Rod + reel combo", "Rod + reel + line spooled",
+                "Rod + starter lure set", "Full retail kit (rod, reel, line, lures, packaging)",
+                "Advise me"],
+                hint="Reels, line and lures come from audited partner factories and ship in the "
+                     "same carton as the rod — one purchase order instead of four."),
         ],
     },
     {
-        "step": 6,
+        "step": 7,
         "title": "Quantity &amp; Contact",
         "note": "MOQ is 300 pieces per model. Mixed models in one container are welcome, and "
                 "first programs often start with one model before expanding.",
@@ -218,8 +269,41 @@ def render_body(wa_url, form_endpoint):
       <h3>Your Specification</h3>
       <p class="cfg-count" id="cfg-count">0 options selected</p>
       <ul class="cfg-list" id="cfg-list"></ul>
+
+      <div class="cfg-combo" id="cfg-combo">
+        <h4>Suggested set-up</h4>
+        <p class="cfg-combo-lead" id="cfg-combo-lead">Pick a target species or lure type and we
+        will suggest the matching taper, line and reel size here.</p>
+        <ul id="cfg-combo-list"></ul>
+      </div>
+
       <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">Or chat on WhatsApp</a>
     </aside>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">Matched Kits</span>
+      <h2>Take the Whole Set — Rod, Reel, Line and Lures in One Carton</h2>
+      <p class="lead">Most importers buy the rod from one factory, the reel from a second and the
+      terminal tackle from a third, then pay three times to consolidate. We can ship the complete
+      set, matched to the specification above and packed together under your brand.</p>
+    </div>
+    <div class="cfg-why" style="margin-top:30px">
+      <div class="card"><h4>Rod + reel combo</h4><p>A size-matched reel mounted on the rod you
+      specified, balanced and spooled. One carton, one barcode, retail-ready.</p></div>
+      <div class="card"><h4>Starter lure set</h4><p>Five to ten lures chosen for the species and
+      method you selected — soft plastics, metal jigs or hard lures, bagged and header-carded.</p></div>
+      <div class="card"><h4>Line &amp; leader pack</h4><p>Braid and fluorocarbon leader at the rating
+      we recommend above, spooled on the reel or boxed as its own retail SKU.</p></div>
+      <div class="card"><h4>Private-label accessories</h4><p>Hooks, jig heads, swivels and tools from
+      audited partner factories, packed under your brand alongside the rod.</p></div>
+    </div>
+    <div class="center" style="margin-top:28px">
+      <a class="btn btn-primary" href="contact.html">Ask About a Complete Kit</a>
+    </div>
   </div>
 </section>
 
