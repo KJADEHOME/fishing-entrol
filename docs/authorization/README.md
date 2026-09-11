@@ -56,24 +56,99 @@ docs/authorization/
 
 见 `authorization-letter-EN.md`，直接填入公司名发送即可。
 
+### 2.3 阿里国际站站内信版（CRONY 已走这条 ✅）
+
+**现状：已在阿里国际站联系过 CRONY，对方回复"用图片做跨境贸易允许，会给图包"。**
+这条渠道比从官网抓图正当得多 —— 阿里平台上供应商上传产品图的目的本就是供分销推广，且对方**主动提供图包**意味着知情同意。
+
+但要做三件事，缺一件就还是空口无凭：
+
+#### ① 立刻截图存档（今天就能做）
+
+把阿里站内信/旺旺里**对方说"可以给图包 / 可以用"的那条对话**完整截图，存到
+`docs/authorization/weihai-crony/01-alibaba-reply.png`。
+
+截图必须包含：对方店铺名/账号 + 你的提问原文 + 对方的肯定答复 + 时间。**光有图包没有这段对话，等于没授权。**
+
+#### ② 回一条确认，把四个问题钉死（复制即发，英文）
+
+> Thanks for the images — that's great help.
+>
+> Just to confirm the scope so we use them correctly:
+>
+> 1. We may use the image pack on **our own export website** (entrol-fishing.com), not only on Alibaba/Amazon listings?
+> 2. We may also use them in **overseas promotion** — outbound emails, LinkedIn/Facebook, and Google Ads?
+> 3. The license is **non-exclusive** — you're free to work with other partners, we just need to know we're not restricted.
+> 4. Any requirement to **credit your brand** on the images, or any restriction on which markets we promote in?
+>
+> A simple "yes to all" reply is enough for our records. Thanks again.
+
+#### ③ 拿到图包后替换现有 31 张官网抓取图
+
+图包通常是高清原图、带正式型号名，比我们从官网抓的更干净、质量也更好。**替换后把来源标注从"官网抓取"改成"阿里图包（对方提供）"** —— 这一步会让整个授权链条变得无懈可击。
+
+替换方法（脚本已就绪，改映射表重跑即可）：
+
+```bash
+# 1. 图包解压放进 _raw/crony_pack/
+# 2. 改 scripts/build_product_images.py 顶部的映射表，指向新文件
+# 3. 重跑
+python scripts/build_product_images.py
+python scripts/sitegen.py
+python scripts/smoke_test.py
+```
+
 ---
 
 ## 三、三家工厂的授权优先级与关注点
 
-| 工厂 | 图片占用 | 授权难度 | 要特别说清的 |
-|---|---|---|---|
-| **Weihai CRONY** | **31/33 张（绝对主力）** | 中 | 他们自己也做出口，要说清"我们是推广合作，不是另起炉灶竞争"；最好谈成"指定海外销售代表" |
-| 威海民盛 | 2 张（About 页） | 低 | 只要两张图，很好谈 |
-| 威海润鼎 | 0 张图，只用**文字资质**（4 项专利号、高新技术企业） | 低 | 专利号是公开的，但"用我们厂名义背书"这句必须落到文字 |
+| 工厂 | 图片占用 | 授权难度 | 渠道 | 要特别说清的 |
+|---|---|---|---|---|
+| **Weihai CRONY** | **31/33 张（绝对主力）** | ~~中~~ → **低** | **阿里国际站 ✅ 已同意给图包** | 见下方"风险重估" |
+| 威海民盛 | 2 张（About 页） | 低 | 微信 | 只要两张图，很好谈 |
+| 威海润鼎 | 0 张图，只用**文字资质**（4 项专利号、高新技术企业） | 低 | 微信 | 专利号是公开的，但"用我们厂名义背书"这句必须落到文字 |
 
-### ⚠️ CRONY 这一家的真实风险
+### CRONY 风险重估（2026-09-11 更新：对方已同意给图包）
 
-31 张产品图全部来自 CRONY 官网，而 CRONY 自己出口 40+ 国家 —— **我们做的是同一件事**。
+| 风险 | 之前（官网抓取） | 现在（阿里授权 + 图包） |
+|---|---|---|
+| **侵权/被追责** | 中高 —— 抓取行为本身不干净 | ✅ **基本清零** —— 平台内知情同意 + 主动提供 |
+| **撤回断供** | 高 —— 对方可能视我们为竞争者 | 🟡 **降低但保留** —— 给图包说明定位为分销合作，撤回动机小，但确认书里的 30 天撤回条款仍在 |
+| **重复内容 SEO** | 中 | ⚠️ **反而升高** —— 见下 |
+| **客户被架空** | 中 | 🟡 保留 —— 见下 |
 
-两条路，选一条：
+#### ⚠️ 现在最大的风险已经换了一个：撞图
 
-- **A. 谈成合作**：向 CRONY 要授权时，定位成"我负责海外获客，单子下给你做"，让他们理解成**多一个销售渠道**而不是**多一个竞争对手**。谈成后网站 About 页可以直接写 `overseas sales office`，可信度最高。
-- **B. 逐步替换**：授权先拿到（避免当下侵权），同时**核心 SKU 自拍替换** —— 从润鼎/民盛拿样品自己拍，成本几百块，版权 100% 干净，长期最稳。建议 B 做后手，别把命脉放在一家自有出口业务的工厂手上。
+图包是**非独家的**。CRONY 大概率把同一套图发给了多个分销商。结果就是：
+
+- Google 图片搜索里，同款竿的照片一抓一大把，我们的页面**没有辨识度**
+- 客户搜到十家长得一样的站，**只会比价**，最后直接找工厂 → 我们被架空（这正是"客户资产被架空"风险的经典触发路径）
+
+**对策（成本很低，效果很大）**：拿到图包后，**每个类目页自拍 2–3 张**，专挑图包里没有的角度：
+
+| 自拍什么 | 为什么有效 |
+|---|---|
+| 每页**首屏头图**（1 张） | 决定第一印象和 Google 图片点击率，替换掉就不再是"千篇一律" |
+| **手持比例参照图**（1 张） | 图包几乎不会有，最能建立"这是真实库存"的信任 |
+| **细节特写**（1 张，导环缠绕 / 轮座 / 碳布纹路） | 采购最想看的恰恰是这些，图包通常是整支摆拍 |
+
+4 个类目页 × 3 张 = **12 张自拍**，一次拍摄就能把差异化拉起来，成本几百块。
+剩下的用图包填充，**图包负责"量"，自拍负责"辨识度"**。
+
+#### ⚠️ 表述边界：别把"分销"说成"销售办公室"
+
+对方给图包让我们卖货，法律上我们是**分销商**，不是"工厂的海外销售办公室"。
+在拿到对方明确认可之前，**About 页不要写 `overseas sales office of CRONY`** —— 这个表述暗示排他关系，对方未必认。
+
+安全表述：`authorized distributor` / `we work directly with CRONY's production line`。
+想要更强的表述，就在那条阿里确认消息里追加一句：
+
+> By the way — how would you prefer we describe our relationship on the site? "Authorized distributor" or something stronger? We want to word it accurately.
+
+对方回什么，我们就写什么。**这句话的回复截图，比任何确认书都值钱。**
+
+> 📦 **拿到图包之后怎么防撞图、要不要向工厂要"未上架原图"、图片差异化怎么做** ——
+> 见 `image-pack-strategy.md`（含拿图时要问的 4 个问题 + 替换图包的重跑命令）。
 
 ---
 
