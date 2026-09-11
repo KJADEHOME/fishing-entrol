@@ -77,7 +77,7 @@ docs/authorization/
 > Just to confirm the scope so we use them correctly:
 >
 > 1. We may use the image pack on **our own export website** (entrol-fishing.com), not only on Alibaba/Amazon listings?
-> 2. We may also use them in **overseas promotion** — outbound emails, LinkedIn/Facebook, and Google Ads?
+> 2. We may **remove your brand logos from the images** and present the products under our own brand, Entrol — confirm this is acceptable?
 > 3. The license is **non-exclusive** — you're free to work with other partners, we just need to know we're not restricted.
 > 4. Any requirement to **credit your brand** on the images, or any restriction on which markets we promote in?
 >

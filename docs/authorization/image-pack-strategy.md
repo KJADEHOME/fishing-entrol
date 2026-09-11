@@ -14,7 +14,7 @@
 
 > 图包收到了，谢谢！确认几个用法，免得以后用错：
 > 1. 图包除了平台店铺，**可以用在我们的独立站和海外推广**（开发信、LinkedIn、Google Ads）吗？
-> 2. 图上的 logo / 水印，我们是**保留你们的，还是可以换成我们自己的品牌**？
+> 2. We will **remove your brand logos from the images** and present the products under our own brand, **Entrol** — the rods themselves stay exactly as your lines produce them. Please confirm this is acceptable?
 > 3. 有没有**不在图包范围内、不能外发**的图（比如车间全景、客户合影）？
 > 4. 可否额外发一批**没上传过官网/阿里的原图**？我们优先用这批，避免和别的分销商撞图。
 

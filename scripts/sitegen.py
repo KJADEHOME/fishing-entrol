@@ -769,76 +769,77 @@ def build_products():
 
 
 def build_about():
-    title = "About Us | Weihai Fishing Rod Factory Partners | Entrol Fishing"
-    desc = ("Entrol Fishing is the overseas sales office of carbon rod factories in Weihai, China — "
-            "patented blank technology, ISO-certified lines and 20+ years of OEM export experience.")
-    kw = ("Weihai fishing rod factory, about Entrol Fishing, carbon rod factory China, fishing rod "
-          "OEM partner, fishing tackle manufacturer Weihai")
+    title = "About Entrol Fishing | Carbon Rod OEM Program Management from Weihai"
+    desc = ("Entrol Fishing manages carbon fishing rod OEM/ODM programs from Weihai, China — "
+            "audited partner production lines, milestone QC reports, one contact from spec to shipment.")
+    kw = ("Weihai fishing rod factory, Entrol Fishing, carbon rod OEM China, fishing rod program "
+          "management, fishing tackle supply Weihai")
     crumbs = [("index.html", "Home"), ("about.html", "About Us")]
     body = """
 <section class="section" style="padding-top:34px">
   <div class="container grid grid-2">
     <div>
       <span class="eyebrow">Who We Are</span>
-      <h1>The Export Office for Weihai's Rod Factories</h1>
-      <p class="lead">%(brand)s is the overseas sales office of a group of fishing rod factories in
-      Weihai, Shandong Province — the Chinese city that manufactures close to sixty percent of the
-      world's fishing rods. The factories run production, quality and capacity. We run everything
-      that happens between the factory gate and your warehouse: quotations, specifications,
-      sampling, QC reports, documents and communication in your working hours.</p>
-      <p class="lead">This is a factory-authorized sales office model — not a trading company
-      guessing at factory reality. Categories produced directly by our partner lines are presented
-      as factory programs; anything sourced from audited partner facilities outside the group is
-      labeled as such. No blurred lines.</p>
+      <h1>Your Rod Program, Managed from Weihai</h1>
+      <p class="lead">%(brand)s is a brand and export-management office based in Weihai, Shandong
+      Province — the Chinese city that manufactures close to sixty percent of the world's fishing
+      rods. Production is executed by audited partner lines; we run everything that happens between
+      the factory gate and your warehouse: quotations, specifications, sampling, QC reports,
+      documents and communication in your working hours.</p>
+      <p class="lead">We are deliberately brand-first, not factory-locked. For every category we
+      keep qualified alternatives and match your program to the line whose strengths fit it — and
+      if a better option emerges, your program moves without you rewriting a single document. One
+      brand, one contract, one standard of QC, whichever line builds the rods.</p>
     </div>
     <div class="card" style="padding:0;overflow:hidden">
-      <img src="assets/images/about-factory-01.webp" alt="Rod manufacturing line in Weihai, Shandong, China — OEM carbon rod manufacturer" loading="lazy" decoding="async">
-      <div style="padding:18px 22px"><p class="form-hint">Blank rolling and assembly at a Weihai partner line.</p></div>
+      <img src="assets/images/about-factory-01.webp" alt="Rod manufacturing facility in Weihai, Shandong, China — OEM carbon rod manufacturer" loading="lazy" decoding="async">
+      <div style="padding:18px 22px"><p class="form-hint">A partner production line in Weihai, Shandong.</p></div>
     </div>
   </div>
 </section>
 
 <section class="section section-alt">
   <div class="container">
-    <span class="eyebrow">The Factory Cluster</span>
+    <span class="eyebrow">The Supply Base</span>
     <h2>Who Actually Builds Your Rods</h2>
-    <p class="lead">Weihai's rod industry is a cluster of specialized factories. Our office works
-    with the lines whose strengths match your program — and we tell you exactly who builds what.</p>
+    <p class="lead">Weihai's rod industry is a cluster of specialized factories, and no single line
+    is best at everything. We qualify multiple production lines per category and place each program
+    where it genuinely fits best.</p>
     <div class="grid grid-3" style="margin-top:32px">
       <div class="card">
-        <h3>R&amp;D-Led Carbon Blank Factory</h3>
-        <p>A Weihai rod manufacturer recognized as a National High-Tech Enterprise (2023) and
-        Science &amp; Technology SME (2025), holding four published rod patents — including a
-        drainage anti-sand butt system (CN220529038U), a telescopic handle length adjustment
-        (CN218977762U), a threaded butt-cap design (CN218789949B) and an angle-adjustable rod
-        holder mount (CN104969994B). Holds import &amp; export rights.</p>
+        <h3>Carbon Blank Engineering</h3>
+        <p>Partner lines working with 24T–40T carbon prepreg, with published utility-model patents
+        on blank structures, butt systems and handle mechanisms. High-tech enterprise recognition
+        and in-house R&amp;D teams on the lines we use for custom programs.</p>
       </div>
       <div class="card">
-        <h3>High-Volume OEM Rod Factory</h3>
-        <p>A Weihai sports-tackle manufacturer where roughly 90%% of output is OEM production —
-        around 200,000 rods per year across lure, iso-fishing, Taiwan-style and slow-pitch
-        categories, with a documented portfolio of 24 patents and a ten-thousand-grade dust-controlled
-        workshop. Full customization of action, cosmetics and packaging.</p>
+        <h3>OEM Volume Capacity</h3>
+        <p>Dedicated OEM lines producing on the order of hundreds of thousands of rods per year,
+        with dust-controlled workshops and full customization of action, cosmetics and packaging —
+        the backbone for repeating container programs.</p>
       </div>
       <div class="card">
-        <h3>Export-Line Specialist</h3>
-        <p>A Weihai rod factory established in 2009, ISO 9001 certified and an EFTTA member,
-        exporting to 40+ countries. Its English-language product engineering — parameter sheets,
-        guide trains, test-curve documentation — is the reference standard our quotations are
-        built on.</p>
+        <h3>Export Compliance</h3>
+        <p>Lines holding ISO 9001-certified processes and export rights, accustomed to FOB Qingdao
+        documentation, third-party inspection and market-specific compliance conversations
+        (REACH for the EU, UKCA review for the UK).</p>
       </div>
     </div>
     <div class="grid grid-2" style="margin-top:28px">
-      <div class="card" style="padding:0;overflow:hidden">
-        <img src="assets/images/about-factory-02.webp" alt="Automated rod rolling workshop in Weihai, Shandong — OEM carbon rod manufacturer" loading="lazy" decoding="async">
-        <div style="padding:18px 22px"><p class="form-hint">Automated blank-rolling workshop, Weihai.</p></div>
+      <div class="card">
+        <h3>How We Qualify a Production Line</h3>
+        <ul class="feature-list">
+          <li>On-site audit: workshop, capacity, QC stations, dust control</li>
+          <li>Sample teardown and field testing before any program is placed</li>
+          <li>Compliance document review for the destination market</li>
+          <li>Requalification every season — underperforming lines are rotated out</li>
+        </ul>
       </div>
       <div>
         <h3>Why Buyers Choose This Model</h3>
         <ul class="feature-list">
           <li>One contract, one contact — but factory-direct pricing, not trader margin</li>
-          <li>Factory credentials you can verify: patents, certifications, customs ratings</li>
-          <li>Category matched to the line that is genuinely best at it</li>
+          <li>Category matched to the line that is genuinely best at it — today, not on paper</li>
           <li>QC photo reports at rolling, assembly and packing milestones</li>
           <li>Consolidated shipments across categories from one industrial base</li>
         </ul>
@@ -889,13 +890,13 @@ FAQS = [
      "cosmetics and packaging to match, and confirm the spec in writing before sampling."),
     ("Do you provide private-label branding?",
      "Yes. Logo placement, custom paint, wraps, rod socks, tubes and retail-ready boxes are all "
-     "produced in-house by our partner lines. Artwork requirements are provided with the quotation."),
+     "produced by our partner lines. Artwork requirements are provided with the quotation."),
     ("What are the shipping terms and freight times?",
      "We quote FOB Qingdao as standard; CIF and EXW available. Sea freight from Weihai/Qingdao to "
      "Australian ports runs 15–20 days, and to northern Europe roughly 30–35 days. Fishing tackle "
      "enters Australia duty-free under the China–Australia FTA."),
     ("Which certifications and compliance documents can you support?",
-     "Our partner factories hold ISO 9001 certification and national high-tech enterprise status, "
+     "Our audited partner lines hold ISO 9001 certification and national high-tech enterprise status, "
      "and published rod patents. For EU-bound programs we discuss REACH-aware material and coating "
      "choices before contract; UKCA documentation can be reviewed for UK orders. Request the "
      "specific document set you need with your quotation."),
