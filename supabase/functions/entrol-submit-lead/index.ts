@@ -1,12 +1,12 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { assessLeadAbuse } from "./anti-spam.mjs";
 
-type BusinessUnit = "pet_products" | "socks" | "kjadehome";
+type BusinessUnit = "pet_products" | "socks" | "kjadehome" | "fishing";
 
 type SiteConfig = {
   businessUnit: BusinessUnit;
-  sourceSite: "www.entrol.com" | "entrol.com" | "socks.entrol.com" | "www.kjadehome.com" | "kjadehome.com";
-  notificationLabel: "Entrol Pet Lead" | "Entrol Socks Lead" | "KJadeHome Lead";
+  sourceSite: "www.entrol.com" | "entrol.com" | "socks.entrol.com" | "www.kjadehome.com" | "kjadehome.com" | "fishing.entrol.com";
+  notificationLabel: "Entrol Pet Lead" | "Entrol Socks Lead" | "KJadeHome Lead" | "Entrol Fishing Lead";
   notificationIntro: string;
   notificationToEnv: "ENTROL_NOTIFICATION_TO" | "ENTROL_SOCKS_NOTIFICATION_TO";
   notificationFromEnv: "ENTROL_NOTIFICATION_FROM" | "ENTROL_SOCKS_NOTIFICATION_FROM";
@@ -42,6 +42,26 @@ const SITE_BY_ORIGIN: Readonly<Record<string, SiteConfig>> = Object.freeze({
     notificationToEnv: "ENTROL_SOCKS_NOTIFICATION_TO",
     notificationFromEnv: "ENTROL_SOCKS_NOTIFICATION_FROM",
     customerReplyFromEnv: "ENTROL_SOCKS_CUSTOMER_REPLY_FROM",
+  },
+  "https://fishing.entrol.com": {
+    businessUnit: "fishing",
+    sourceSite: "fishing.entrol.com",
+    notificationLabel: "Entrol Fishing Lead",
+    notificationIntro: "A new Entrol fishing-tackle website lead was stored successfully.",
+    notificationToEnv: "ENTROL_NOTIFICATION_TO",
+    notificationFromEnv: "ENTROL_NOTIFICATION_FROM",
+    customerReplyFromEnv: "ENTROL_CUSTOMER_REPLY_FROM",
+  },
+  // Temporary while GitHub Pages provisions the custom-domain certificate.
+  // Remove this origin after HTTP redirects permanently to HTTPS.
+  "http://fishing.entrol.com": {
+    businessUnit: "fishing",
+    sourceSite: "fishing.entrol.com",
+    notificationLabel: "Entrol Fishing Lead",
+    notificationIntro: "A new Entrol fishing-tackle website lead was stored successfully.",
+    notificationToEnv: "ENTROL_NOTIFICATION_TO",
+    notificationFromEnv: "ENTROL_NOTIFICATION_FROM",
+    customerReplyFromEnv: "ENTROL_CUSTOMER_REPLY_FROM",
   },
   "https://www.kjadehome.com": {
     businessUnit: "kjadehome",
@@ -452,9 +472,54 @@ function kjadehomeCustomerReplyContent(row: ReplyLead) {
   return { subject, text, html };
 }
 
+function fishingCustomerReplyContent(row: ReplyLead) {
+  const greetingName = row.name || row.company;
+  const greeting = greetingName ? `Hello ${greetingName},` : "Hello,";
+  const requestSummary = row.product_interest
+    ? `We have recorded your interest in: ${row.product_interest}.`
+    : "We have recorded your fishing-tackle request.";
+  const subject = "We received your Entrol Fishing inquiry";
+  const siteUrl = "https://fishing.entrol.com/";
+  const contactUrl = "https://fishing.entrol.com/contact.html";
+  const text = [
+    greeting,
+    "",
+    "Thank you for contacting Entrol Fishing. Your inquiry has been stored successfully, and our team will review it within one business day.",
+    requestSummary,
+    "",
+    "Please reply with any missing target market, estimated quantity, target price, branding, packaging or delivery requirements. We will confirm feasibility, MOQ, sample cost, production lead time and shipping terms in a written quotation.",
+    "",
+    "No specification, price, MOQ, production date or freight cost is confirmed until our team issues a written quotation.",
+    "",
+    `Website: ${siteUrl}`,
+    `Contact page: ${contactUrl}`,
+    "Email: wangyan@entrol.com",
+    "WhatsApp: +86 152 6313 0999",
+    "",
+    "Best regards,",
+    "wangyan",
+    "Entrol Fishing",
+    "Weihai Yuanchuang Import & Export Co., Ltd.",
+  ].join("\n");
+  const html = `<!doctype html>
+<html lang="en"><body style="margin:0;background:#f4f7f9;font-family:Arial,sans-serif;color:#1f2d38">
+<div style="max-width:640px;margin:0 auto;padding:28px 18px"><div style="background:#ffffff;border:1px solid #dde6ec;border-radius:14px;padding:30px">
+<p style="margin:0 0 18px;font-size:16px">${escapeHtml(greeting)}</p>
+<h1 style="margin:0 0 16px;color:#17324d;font-size:24px">Thank you for contacting Entrol Fishing</h1>
+<p style="margin:0 0 14px;line-height:1.65">Your inquiry has been stored successfully. Our team will review it within one business day.</p>
+<p style="margin:0 0 20px;line-height:1.65">${escapeHtml(requestSummary)}</p>
+<p style="margin:0 0 14px;line-height:1.65">Please reply with any missing target market, estimated quantity, target price, branding, packaging or delivery requirements. We will confirm feasibility, MOQ, sample cost, production lead time and shipping terms in a written quotation.</p>
+<p style="margin:18px 0;padding:12px 14px;border-left:4px solid #d69b2d;background:#fff8e8;line-height:1.55"><strong>Quotation notice:</strong> No specification, price, MOQ, production date or freight cost is confirmed until our team issues a written quotation.</p>
+<p style="margin:20px 0 0;line-height:1.65"><a href="${siteUrl}">Entrol Fishing website</a><br>Email: <a href="mailto:wangyan@entrol.com">wangyan@entrol.com</a><br>WhatsApp: <a href="https://wa.me/8615263130999">+86 152 6313 0999</a><br><a href="${contactUrl}">Contact Entrol Fishing</a></p>
+<p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>wangyan</strong><br>Entrol Fishing<br>Weihai Yuanchuang Import &amp; Export Co., Ltd.</p>
+</div></div></body></html>`;
+  return { subject, text, html };
+}
+
 function customerReplyContent(site: SiteConfig, row: ReplyLead) {
   if (site.businessUnit === "socks") return socksCustomerReplyContent(row);
   if (site.businessUnit === "kjadehome") return kjadehomeCustomerReplyContent(row);
+  if (site.businessUnit === "fishing") return fishingCustomerReplyContent(row);
   return petCustomerReplyContent(row);
 }
 
@@ -498,7 +563,7 @@ Deno.serve(async (req: Request) => {
   const safePayload = Object.fromEntries(
     Object.entries(payload)
       .filter(([key, value]) => !key.startsWith("_") && key !== "website" && typeof value === "string")
-      .slice(0, 50)
+      .slice(0, 100)
       .map(([key, value]) => [key.slice(0, 100), clean(value, 5000)]),
   );
   const submissionType = clean(payload.submission_type, 20) === "catalog" || clean(payload.catalog_request, 10) ? "catalog" : "inquiry";
@@ -607,6 +672,11 @@ Deno.serve(async (req: Request) => {
     if (quarantineStatusError) console.error("quarantine_status_update_failed", quarantineStatusError.code, quarantineStatusError.message);
   } else if (resendApiKey) {
     const subjectName = row.company || row.name || row.email || row.contact || "New lead";
+    const fishingConfiguration = site.businessUnit === "fishing"
+      ? Object.entries(safePayload)
+        .filter(([key]) => !["request_id", "submission_type", "name", "email", "company", "contact", "phone", "whatsapp", "message", "source_page", "landing_page", "referrer", "utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].includes(key))
+        .map(([key, value]) => `${key}: ${value}`)
+      : [];
     const notificationText = [
       site.notificationIntro,
       "",
@@ -632,6 +702,7 @@ Deno.serve(async (req: Request) => {
       `Catalog touch: ${row.catalog_touch_placement || "-"} | ${row.catalog_touch_page || "-"}`,
       `Catalog touched at: ${row.catalog_touched_at || "-"}`,
       `Inquiry trigger: ${row.inquiry_trigger || "-"}`,
+      ...(fishingConfiguration.length ? ["", "Fishing configuration:", ...fishingConfiguration] : []),
     ].join("\n");
 
     try {

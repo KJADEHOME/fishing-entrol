@@ -24,7 +24,7 @@ WA = "8615263130999"
 WA_TEXT = "Hi%20Entrol%20Fishing%2C%20I%27d%20like%20a%20quote%20for%20OEM%20fishing%20rods."
 WECHAT = "15263130999"
 GTM_ID = "GTM-T3ZXMRHS"
-FORM_ENDPOINT = "https://formsubmit.co/wangyan@entrol.com"
+FORM_ENDPOINT = "#"
 OG_IMAGE = DOMAIN + "/assets/images/spinning-rod-01.webp"
 TODAY = "2026-09-11"
 

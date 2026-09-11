@@ -8,6 +8,51 @@
 (function () {
   'use strict';
 
+  // Same durable first-party inquiry pipeline used by Entrol Pet and Entrol Socks.
+  // A success message is shown only when Supabase confirms that the lead was stored.
+  var ENTROL_LEAD_API_URL = 'https://jipgzavuxvnaisgxcvts.supabase.co/functions/v1/entrol-submit-lead';
+
+  function requestId() {
+    if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      return (c === 'x' ? r : (r & 3 | 8)).toString(16);
+    });
+  }
+
+  function leadPayload(formData, overrides) {
+    var payload = {};
+    formData.forEach(function (value, key) {
+      if (typeof value === 'string' && key.charAt(0) !== '_' && value.trim() !== '') payload[key] = value;
+    });
+    payload.request_id = requestId();
+    payload.submission_type = 'inquiry';
+    payload.source_page = window.location.href;
+    payload.landing_page = sessionStorage.getItem('entrol_fishing_landing_page') || window.location.href;
+    payload.referrer = document.referrer || 'direct';
+    var params = new URLSearchParams(window.location.search);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (name) {
+      payload[name] = params.get(name) || sessionStorage.getItem('entrol_fishing_' + name) || '';
+    });
+    Object.keys(overrides || {}).forEach(function (key) {
+      if (overrides[key] !== undefined && overrides[key] !== null && String(overrides[key]).trim() !== '') payload[key] = overrides[key];
+    });
+    return payload;
+  }
+
+  function submitLead(payload) {
+    return fetch(ENTROL_LEAD_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Request-Id': payload.request_id },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (result) {
+        if (!res.ok || !result.ok || !result.lead_id) throw new Error(result.error || 'submission_failed');
+        return result;
+      });
+    });
+  }
+
   /* ---------- mobile nav ---------- */
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.querySelector('.main-nav');
@@ -99,27 +144,31 @@
         return;
       }
 
-      // FormSubmit AJAX mode keeps the visitor on-page and shows a status line
+      // Durable first-party capture: database storage must succeed before success is shown.
       e.preventDefault();
       var status = document.querySelector('.form-status');
-      // drop empty fields so the emailed enquiry stays readable
-      var payload = {};
-      fd.forEach(function (v, k) { if (String(v).trim() !== '') payload[k] = v; });
-      fetch(form.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(function (res) {
-        if (!res.ok) throw new Error('inquiry endpoint returned ' + res.status);
+      var button = form.querySelector('button[type="submit"]');
+      var originalText = button ? button.textContent : '';
+      if (button) { button.disabled = true; button.textContent = 'Sending...'; }
+      var payload = leadPayload(fd, {
+        product_interest: fd.get('rod_category') || '',
+        target_market: fd.get('target_market') || ''
+      });
+      submitLead(payload).then(function () {
         if (status) {
           status.textContent = 'Thank you — your inquiry has been received. We reply within one business day (GMT+8).';
           status.classList.add('show');
         }
         form.reset();
       }).catch(function () {
-        // fall back to normal POST if fetch fails
-        form.removeEventListener('submit', arguments.callee);
-        form.submit();
+        if (status) {
+          status.textContent = 'We could not save your inquiry. Please retry, email wangyan@entrol.com, or contact us on WhatsApp.';
+          status.style.background = '#FDECEA';
+          status.style.color = '#B03A2E';
+          status.classList.add('show');
+        }
+      }).then(function () {
+        if (button) { button.disabled = false; button.textContent = originalText; }
       });
     });
   }
@@ -896,22 +945,34 @@
       }
 
       e.preventDefault();
-      var payload = {};
-      fd.forEach(function (v, k) { if (String(v).trim() !== '') payload[k] = v; });
-      fetch(cfgForm.action, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(function (res) {
-        if (!res.ok) throw new Error('inquiry endpoint returned ' + res.status);
+      var button = cfgForm.querySelector('button[type="submit"]');
+      var originalText = button ? button.textContent : '';
+      if (button) { button.disabled = true; button.textContent = 'Sending...'; }
+      var path = currentPath();
+      var specSummary = String(fd.get('spec_summary') || '');
+      var notes = String(fd.get('notes') || '');
+      var payload = leadPayload(fd, {
+        product_interest: fd.get('base_model') || fd.get('rod_type') || (path === 'custom' ? 'One custom rod' : 'OEM fishing rod program'),
+        quantity: path === 'custom' ? fd.get('quantity_custom') : fd.get('quantity'),
+        target_market: fd.get('target_market') || fd.get('ship_to') || '',
+        message: [notes, specSummary].filter(Boolean).join('\n\n')
+      });
+      submitLead(payload).then(function () {
         if (st) {
-          st.textContent = currentPath() === 'custom'
+          st.textContent = path === 'custom'
             ? 'Build request received — ' + items.length + ' options logged. We reply with a build sheet, a price and a freight quote within one business day (GMT+8).'
             : 'Specification received — ' + items.length + ' options logged. We reply with pricing, MOQ and sample cost within one business day (GMT+8).';
           st.classList.add('show');
         }
       }).catch(function () {
-        cfgForm.submit();
+        if (st) {
+          st.textContent = 'We could not save your inquiry. Please retry, email wangyan@entrol.com, or contact us on WhatsApp.';
+          st.style.background = '#FDECEA';
+          st.style.color = '#B03A2E';
+          st.classList.add('show');
+        }
+      }).then(function () {
+        if (button) { button.disabled = false; button.textContent = originalText; }
       });
     });
   }
