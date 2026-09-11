@@ -158,7 +158,8 @@ GROUPS = [
         "step": 6,
         "title": "Branding &amp; Packaging",
         "note": "Your name goes on the rod, the sock and the box. Retail-ready packaging is quoted "
-                "separately from the rod because carton tooling is a one-off cost.",
+                "separately from the rod because carton tooling is a one-off cost. Reels, line and "
+                "lures are labelled separately too — see the last question in this group.",
         "fields": [
             dict(name="logo_method", label="Logo method", opts=[
                 "Silk-screen print", "Laser engraving", "Hydro-dip transfer",
@@ -172,15 +173,30 @@ GROUPS = [
                 "Rod only", "Rod + reel combo", "Rod + reel + line spooled",
                 "Rod + starter lure set", "Full retail kit (rod, reel, line, lures, packaging)",
                 "Advise me"],
-                hint="Reels, line and lures come from audited partner factories and ship in the "
-                     "same carton as the rod — one purchase order instead of four."),
+                hint="Kits ship in one carton on one purchase order. Note the MOQ rises when reels, "
+                     "line or lures are included — see the minimum-order table before you choose."),
+            dict(name="kit_brand", label="Brand on the reel / line / lures", opts=[
+                "Our brand on everything (1,000 pcs min)",
+                "Component maker's own brand",
+                "Unbranded / neutral bulk pack",
+                "Recommend a house brand that fits my price point",
+                "Not ordering a kit — rod only",
+                "Advise me"],
+                hint="The rod always carries your brand. Reels, line and lures are bought in from "
+                     "component makers — we do not manufacture them and we do not put our own name "
+                     "on them. They can be printed with your brand from 1,000 pcs, or shipped under "
+                     "the maker's own brand, an unbranded neutral pack, or a house brand we propose "
+                     "to your target price."),
         ],
     },
     {
         "step": 7,
         "title": "Quantity &amp; Contact",
-        "note": "MOQ is 300 pieces per model. Mixed models in one container are welcome, and "
-                "first programs often start with one model before expanding.",
+        "note": "Two different minimums apply, and it is worth knowing which one you are buying "
+                "before we quote: rod-only programs run from 300 pieces per model, while anything "
+                "that puts a reel, line or lures in the carton starts at 500 — and 1,000 if those "
+                "components also carry your brand. Mixed rod models in one container are always fine.",
+        "extra": '<div class="cfg-moq" id="cfg-moq"></div>',
         "fields": [
             dict(name="quantity", label="Quantity per model", opts=[
                 "300 pcs", "500 pcs", "1,000 pcs", "3,000 pcs", "5,000 pcs or more",
@@ -201,6 +217,16 @@ GROUPS = [
 ]
 
 
+def _attr(s):
+    """Escape for use inside a double-quoted HTML attribute.
+
+    Only the quote character is touched: option text deliberately carries
+    pre-escaped entities such as &amp; (e.g. "Boat &amp; jigging rod"), so a
+    full html.escape() would double-escape them.
+    """
+    return s.replace('"', "&quot;")
+
+
 def _field_html(f):
     name = f["name"]
     label = f["label"]
@@ -210,14 +236,14 @@ def _field_html(f):
     cls = "form-field full" if f.get("full") else "form-field"
     if kind == "select":
         opts = ['<option value="">— select —</option>']
-        opts += ['<option value="%s">%s</option>' % (o, o) for o in f["opts"]]
+        opts += ['<option value="%s">%s</option>' % (_attr(o), o) for o in f["opts"]]
         ctl = '<select id="cfg-%s" name="%s"%s>%s</select>' % (name, name, req, "".join(opts))
     elif kind == "textarea":
         ctl = ('<textarea id="cfg-%s" name="%s" rows="4"%s placeholder="%s"></textarea>'
-               % (name, name, req, f.get("placeholder", "")))
+               % (name, name, req, _attr(f.get("placeholder", ""))))
     else:
         ctl = ('<input id="cfg-%s" name="%s" type="%s"%s placeholder="%s">'
-               % (name, name, kind, req, f.get("placeholder", "")))
+               % (name, name, kind, req, _attr(f.get("placeholder", ""))))
     return ('<div class="%s"><label for="cfg-%s">%s</label>%s%s</div>'
             % (cls, name, label, ctl, hint))
 
@@ -231,7 +257,8 @@ def render_body(wa_url, form_endpoint):
         <h3><span class="cfg-step">%d</span>%s</h3>
         <p class="cfg-note">%s</p>
         <div class="cfg-fields">%s</div>
-      </fieldset>""" % (g["step"], g["title"], g["note"], fields))
+        %s
+      </fieldset>""" % (g["step"], g["title"], g["note"], fields, g.get("extra", "")))
 
     return """
 <section class="section" style="padding-top:34px">
@@ -240,8 +267,12 @@ def render_body(wa_url, form_endpoint):
     <h1>Build Your Rod — We Quote What You Choose</h1>
     <p class="lead">Pick what matters to you and skip the rest. Every option below is something our
     Weihai lines actually build, so the specification you create here goes straight into a quotation
-    — no generic catalogue, no waiting for someone to guess your market. You will get pricing,
-    MOQ, sample cost and a freight estimate within one business day.</p>
+    — no generic catalogue, no waiting for someone to guess your market. You will get pricing, MOQ,
+    sample cost and a freight estimate within one business day.</p>
+    <p><strong>If two of your choices will not work together, the site tells you here and now.</strong>
+    A spinning blank with a baitcasting reel, a 2-metre rod asked to throw 100 g, PE 0.6 behind a
+    heavy shore jig — each of those is a rod that breaks, casts badly or injures someone, and each
+    one is caught before it reaches a production order. Watch the summary panel as you go.</p>
   </div>
 </section>
 
@@ -266,6 +297,7 @@ def render_body(wa_url, form_endpoint):
     </form>
 
     <aside class="cfg-summary" aria-live="polite">
+      <div class="cfg-warnbox" id="cfg-warnbox"></div>
       <h3>Your Specification</h3>
       <p class="cfg-count" id="cfg-count">0 options selected</p>
       <ul class="cfg-list" id="cfg-list"></ul>
@@ -286,21 +318,52 @@ def render_body(wa_url, form_endpoint):
   <div class="container">
     <div class="center">
       <span class="eyebrow">Matched Kits</span>
-      <h2>Take the Whole Set — Rod, Reel, Line and Lures in One Carton</h2>
+      <h2>One Carton, One Order — and Honest Labels</h2>
       <p class="lead">Most importers buy the rod from one factory, the reel from a second and the
-      terminal tackle from a third, then pay three times to consolidate. We can ship the complete
-      set, matched to the specification above and packed together under your brand.</p>
+      terminal tackle from a third, then pay three times to consolidate. We can assemble the whole
+      set to the specification above and ship it together. One thing we will not do is put our own
+      badge on someone else's reel: <strong>the rod is ours to build, the components are sourced to
+      your brief</strong>, and how they are labelled is your call.</p>
     </div>
     <div class="cfg-why" style="margin-top:30px">
-      <div class="card"><h4>Rod + reel combo</h4><p>A size-matched reel mounted on the rod you
-      specified, balanced and spooled. One carton, one barcode, retail-ready.</p></div>
-      <div class="card"><h4>Starter lure set</h4><p>Five to ten lures chosen for the species and
-      method you selected — soft plastics, metal jigs or hard lures, bagged and header-carded.</p></div>
-      <div class="card"><h4>Line &amp; leader pack</h4><p>Braid and fluorocarbon leader at the rating
-      we recommend above, spooled on the reel or boxed as its own retail SKU.</p></div>
-      <div class="card"><h4>Private-label accessories</h4><p>Hooks, jig heads, swivels and tools from
-      audited partner factories, packed under your brand alongside the rod.</p></div>
+      <div class="card"><h4>Rod (built by us)</h4><p>Your blank, guides, seat, handle, cosmetics and
+      packaging. Always carries your brand — 300 pcs per model, any spec you configure above.</p></div>
+      <div class="card"><h4>Reel (sourced to your brief)</h4><p>Tell us the size, gear ratio, drag
+      and price point and we come back with two or three options from component makers — your brand
+      from 1,000 pcs, or theirs below that.</p></div>
+      <div class="card"><h4>Line &amp; leader pack</h4><p>Braid and fluorocarbon at the rating we
+      recommend above, spooled on the reel or boxed as its own retail SKU. Branded spools from
+      1,000 pcs; unbranded bulk below that.</p></div>
+      <div class="card"><h4>Lures &amp; terminal tackle</h4><p>Soft plastics, metal jigs or hard
+      lures chosen for your species and method, bagged and header-carded. Mixed selections are
+      normal — a starter set usually runs five to ten pieces.</p></div>
     </div>
+
+    <div class="card" style="margin-top:30px">
+      <h3 style="margin-top:0">How the minimum order splits</h3>
+      <p>A rod program and a kit program are not the same purchase, and quoting them as if they were
+      is how container deals fall apart at the last minute. Each part carries its own minimum because
+      each part is made by someone else.</p>
+      <table class="spec-table">
+        <thead><tr><th>What you order</th><th>Minimum</th><th>What it covers</th></tr></thead>
+        <tbody>
+          <tr><td>Rod only — your spec, your brand</td><td><strong>300 pcs / model</strong></td>
+              <td>Blank, guide train, reel seat, handle, cosmetics and packaging, all to your
+              specification. Mixed models in one container are welcome.</td></tr>
+          <tr><td>Rod + reel, + line or + lure set</td><td><strong>500 pcs</strong></td>
+              <td>The rod plus matched components in one carton. Below 500 the component makers will
+              not open a production slot for a custom specification.</td></tr>
+          <tr><td>Full kit, or components printed with your brand</td>
+              <td><strong>1,000 pcs</strong></td>
+              <td>Your logo on the reel body, line spool or lure cards means their own tooling and
+              print run — that is where the 1,000 starts.</td></tr>
+        </tbody>
+      </table>
+      <p class="form-hint" style="margin-top:12px">We quote each part on its own line so you can see
+      exactly what the reel costs versus the rod — and drop a component if it does not work for your
+      market. Nothing is bundled into a single number you cannot check.</p>
+    </div>
+
     <div class="center" style="margin-top:28px">
       <a class="btn btn-primary" href="contact.html">Ask About a Complete Kit</a>
     </div>
@@ -337,6 +400,8 @@ def render_body(wa_url, form_endpoint):
 
 TITLE = "Build Your Rod | OEM Fishing Rod Configurator | Entrol Fishing"
 DESC = ("Configure a custom fishing rod: carbon grade, guide type, reel seat, handle and packaging. "
-        "Get an OEM quotation from Weihai, China within one business day. MOQ 300 pcs/model.")
+        "Build a fishing rod to your own specification — carbon grade, guide train, reel seat, "
+        "handle, line and lures. Rod MOQ 300 pcs, kits from 500. We flag incompatible choices "
+        "before you order.")
 KEYWORDS = ("custom fishing rod configurator, OEM rod builder, carbon rod specification, "
             "Fuji guide rod OEM, carp rod specification, build your own fishing rod wholesale")

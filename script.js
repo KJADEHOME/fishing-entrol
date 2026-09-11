@@ -176,7 +176,9 @@
         subjInput.value = 'OEM configurator — ' + (rodSel && rodSel.value ? rodSel.value : 'rod')
           + (mkt && mkt.value ? ' — ' + mkt.value : '');
       }
+      renderWarnings();
       renderCombo();
+      renderMoq();
       return items;
     }
 
@@ -326,6 +328,223 @@
           if (r && r.apply) { r.apply.sel.value = r.apply.value; renderSummary(); }
         });
       });
+    }
+
+    /* ---------- compatibility warnings ---------- */
+    var POWER_IX = { 'Ultra-Light': 1, 'Light': 2, 'Medium-Light': 3, 'Medium': 4,
+                     'Medium-Heavy': 5, 'Heavy': 6, 'Extra-Heavy': 7 };
+
+    function allNum(s) { return (String(s).match(/[\d.]+/g) || []).map(Number); }
+    function maxNum(s) { var a = allNum(s); return a.length ? Math.max.apply(null, a) : 0; }
+    function firstNum(s) { var a = allNum(s); return a.length ? a[0] : 0; }
+
+    function renderWarnings() {
+      var box = document.getElementById('cfg-warnbox');
+      if (!box) return;
+
+      var rod = val('rod_type'), len = val('length'), pw = val('power'), lw = val('lure_weight');
+      var line = val('main_line'), ld = val('leader'), reel = val('reel_type');
+      var guide = val('guide_type'), handle = val('handle_style'), sec = val('sections');
+      var sp = val('target_species'), hook = val('hook_keeper');
+
+      var lenM = firstNum(len);
+      var wMax = maxNum(lw);
+      var pe = /PE/i.test(line) ? firstNum(line) : 0;
+      var nylonLb = /nylon/i.test(line) ? maxNum(line) : 0;
+      var pIx = POWER_IX[pw] || 0;
+      var w = [];
+      var picks = 0;
+
+      cfgForm.querySelectorAll('select[name]').forEach(function (s) { if (s.value) picks++; });
+
+      function add(level, title, body, fixSel, fixVal) {
+        w.push({ level: level, title: title, body: body,
+                 fix: (fixSel && fixVal) ? pick(fixSel, fixVal) : null });
+      }
+
+      /* --- reel vs rod --- */
+      if (/Spinning/.test(rod) && /Baitcasting/.test(reel)) {
+        add('risk', 'A spinning blank will not run a baitcasting reel',
+          'Spinning rods use large, high-standing guides so line can peel off a fixed spool in coils. ' +
+          'A baitcaster feeds line in a straight, fast stream through guides that are too small and sit ' +
+          'too low — expect wind knots, casts that die halfway, and the rod loading in the wrong place.',
+          'reel_type', 'Spinning reel');
+      }
+      if (/Casting/.test(rod) && /Spinning/.test(reel)) {
+        add('risk', 'A casting blank will not run a spinning reel',
+          'Casting rods are built with small, low-profile guides because the line leaves a revolving ' +
+          'spool under control. Fit a spinning reel and the coils slap against every ring — line ' +
+          'twists, distance collapses and the tip rings wear grooves.',
+          'reel_type', 'Baitcasting reel');
+      }
+      if (/Carp/.test(rod) && /Baitcasting|Conventional/.test(reel)) {
+        add('caution', 'Carp rods are built around big-spool spinning reels',
+          'European carp anglers use baitrunner-style spinning reels with a free-spool clutch; the butt ' +
+          'ring and guide spacing are set for that. A baitcaster leaves no room for the clutch and the ' +
+          'rod will not be accepted in that market.',
+          'reel_type', 'Spinning reel');
+      }
+      if (/Surf/.test(rod) && /Baitcasting/.test(reel)) {
+        add('caution', 'Surf rods are spinning-reel rods in practice',
+          'Long surf blanks need a large stripper guide to gather line coming off a fixed spool at speed. ' +
+          'A baitcaster cannot deliver that and will backlash into the wind.',
+          'reel_type', 'Spinning reel');
+      }
+
+      /* --- reel vs handle --- */
+      if (/Pistol/.test(handle) && /Spinning/.test(reel)) {
+        add('caution', 'Trigger grip with a spinning reel fights your hand',
+          'The trigger exists so your finger has something to brace against while palming a baitcaster. ' +
+          'With a spinning reel it digs into the palm on long retrieves — buyers notice it immediately.',
+          'handle_style', 'Split grip');
+      }
+      if (/Straight/.test(handle) && /Baitcasting/.test(reel)) {
+        add('caution', 'A straight spinning grip gives a baitcaster no control',
+          'Without a trigger you cannot palm the reel, so you cannot thumb the spool on the cast. ' +
+          'Backlash on every cast is the result.',
+          'handle_style', 'Pistol / trigger (casting)');
+      }
+
+      /* --- length vs cast weight --- */
+      if (lenM && lenM <= 2.10 && wMax >= 50) {
+        add('risk', 'This blank is too short to cast ' + lw,
+          'Under about 2.1 m there is not enough lever length to load ' + lw + ' safely. The rod ' +
+          'overloads the tip section and breaks — and it breaks on the forward cast, not on a fish.',
+          'lure_weight', '20–50 g');
+      }
+      if (lenM && lenM >= 3.30 && wMax && wMax <= 5) {
+        add('caution', 'A rod this long will not load a ' + lw + ' lure',
+          'Below roughly 5 g the blank never bends far enough to store energy. The lure travels a few ' +
+          'metres and all that extra length kills any feel of the bite.',
+          'lure_weight', '10–30 g');
+      }
+      if (lenM && lenM >= 3.90 && /1 piece/.test(sec)) {
+        add('risk', 'A one-piece rod this long cannot be shipped economically',
+          'At ' + lenM + ' m the parcel is over every courier length limit and will not fit a standard ' +
+          'export carton — air freight refuses it and sea freight needs an oversized crate. Split it into ' +
+          'sections or the freight number will be the biggest surprise in the quote.',
+          'sections', '3 pieces');
+      }
+
+      /* --- line vs cast weight --- */
+      if (wMax >= 50 && ((pe && pe <= 1.0) || (nylonLb && nylonLb <= 14))) {
+        add('risk', 'Line far too light for a ' + lw + ' cast',
+          'On the cast the lure accelerates hard and the shock load lands on a few centimetres of line ' +
+          'at the tip. At this rating it parts and throws ' + Math.round(wMax / 28.35) + ' oz of metal ' +
+          'back past the angler — this is the classic crack-off, and it is how people get hurt.',
+          'main_line', wMax >= 100 ? 'PE 3.0' : 'PE 2.0');
+      }
+      if (wMax && wMax <= 5 && (pe >= 3 || nylonLb >= 17)) {
+        add('caution', 'Line too heavy to cast a ' + lw + ' lure',
+          'Thick line has too much drag and memory for a light lure — casts collapse short, and the wind ' +
+          'bowls the line into a belly you cannot feel a bite through.',
+          'main_line', 'PE 0.6');
+      }
+      if (pe && wMax >= 30 && /^None$/.test(ld)) {
+        add('caution', 'Braid with no leader will not survive contact',
+          'Braid has almost no abrasion resistance. One touch of rock, shell or a toothy fish and the ' +
+          'whole rig is gone. Heavy casting needs a shock leader as well.',
+          'leader', wMax >= 100 ? 'Fluorocarbon 40 lb' : 'Fluorocarbon 30 lb');
+      }
+
+      /* --- power vs cast weight --- */
+      if (wMax >= 50 && pIx && pIx <= 3) {
+        add('risk', 'Power is too light for the cast weight',
+          'A ' + pw + ' blank is rated for small lures. Casting ' + lw + ' overloads it — the rod snaps ' +
+          'on the cast, not on the fish, and that reads as a quality defect to your customer.',
+          'power', 'Heavy');
+      }
+      if (wMax && wMax <= 5 && pIx >= 6) {
+        add('caution', 'Power is too heavy for the cast weight',
+          'A ' + pw + ' blank will not bend under a ' + lw + ' lure, so it stores no energy. The cast dies ' +
+          'and the tip is too stiff to register a bite at all.',
+          'power', 'Light');
+      }
+
+      /* --- guides vs line/reel --- */
+      if (/KT micro/.test(guide) && wMax >= 50) {
+        add('caution', 'Micro guides will not pass a heavy leader knot',
+          'KT rings are built for thin braid and finesse work. A 30–40 lb shock-leader knot hangs up in ' +
+          'the ring on the cast — and on a heavy cast that is precisely when a crack-off happens.',
+          'guide_type', 'Double-foot guides');
+      }
+      if (/Single-foot/.test(guide) && /Surf|Boat/.test(rod) && wMax >= 50) {
+        add('caution', 'Single-foot guides are under-built for this load',
+          'Heavy surf and boat work puts a bending load on every guide foot. Double-foot guides spread it; ' +
+          'single-foot ones eventually crack at the wrap.',
+          'guide_type', 'Double-foot guides');
+      }
+      if (/Lowrider/.test(guide) && /Baitcasting/.test(reel)) {
+        add('caution', 'Lowrider trains are a spinning-reel design',
+          'The Lowrider concept controls the coils coming off a fixed spool. On a baitcaster it adds ' +
+          'friction and noise without any benefit.',
+          'guide_type', 'KT micro guides');
+      }
+
+      /* --- species vs terminal tackle --- */
+      if (/Pike/.test(sp) && !/Wire|tooth-proof/.test(ld)) {
+        add('risk', 'Pike will cut straight through that leader',
+          'Pike and zander teeth part fluorocarbon on the strike. Without a wire or tooth-proof leader ' +
+          'your customer loses every fish — and blames the rod, not the leader.',
+          'leader', 'Wire / tooth-proof leader');
+      }
+      if (/Kingfish/.test(sp) && pe && pe < 2) {
+        add('caution', 'Kingfish will find the weak point in a light line',
+          'Kingfish and tuna run hard with sharp gill plates. Step the main line and leader up one class ' +
+          'over what the cast weight alone suggests.',
+          'main_line', 'PE 3.0');
+      }
+
+      if (!w.length) {
+        box.innerHTML = picks >= 4
+          ? '<div class="cfg-warn-none">No conflicts in what you have picked so far — this combination can be built as specified.</div>'
+          : '';
+        return;
+      }
+
+      box.innerHTML = w.map(function (r, i) {
+        return '<div class="cfg-warn ' + r.level + '">'
+          + '<span class="w-title">' + (r.level === 'risk' ? 'Will not work — ' : 'Worth reconsidering — ')
+          + esc(r.title) + '</span>'
+          + '<span class="w-body">' + esc(r.body) + '</span>'
+          + (r.fix ? '<button type="button" class="w-fix" data-w="' + i + '">Change to: ' + esc(r.fix.value) + '</button>' : '')
+          + '</div>';
+      }).join('');
+
+      box.querySelectorAll('.w-fix').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var r = w[parseInt(btn.getAttribute('data-w'), 10)];
+          if (r && r.fix) { r.fix.sel.value = r.fix.value; renderSummary(); }
+        });
+      });
+    }
+
+    /* ---------- MOQ notice (rod vs kit vs branded kit) ---------- */
+    function renderMoq() {
+      var el = document.getElementById('cfg-moq');
+      if (!el) return;
+      var kit = val('kit_option'), kb = val('kit_brand');
+      var isKit = kit && !/Rod only/.test(kit);
+      var isFull = /Full retail kit/.test(kit);
+      var ownBrand = /Our brand on everything/.test(kb);
+      var rows = [
+        ['Rod only — your spec, your brand, our line', '300 pcs / model', !isKit],
+        ['Rod + reel, + line or + lure set', '500 pcs', isKit && !isFull],
+        ['Full kit, or components also printed with your brand', '1,000 pcs', isFull || ownBrand]
+      ];
+      var html = '<strong>Minimum order depends on what goes in the carton</strong>'
+        + '<table class="inline">'
+        + rows.map(function (r) {
+            return '<tr><td' + (r[2] ? ' style="font-weight:800"' : '') + '>' + esc(r[0])
+              + (r[2] ? ' &larr; your selection' : '') + '</td><td>' + esc(r[1]) + '</td></tr>';
+          }).join('')
+        + '</table>'
+        + '<p style="margin:8px 0 0">Why they differ: the rod is built on our own line, so 300 pieces '
+        + 'covers one mandrel set-up and one print run. Reels, line and lures come from separate '
+        + 'component makers — each has its own minimum, and 500 is where they will open a slot. '
+        + 'Putting your brand on those components means their own tooling and print run, which starts '
+        + 'at 1,000. We quote each part separately so you can see exactly where the money goes.</p>';
+      el.innerHTML = html;
     }
 
     cfgForm.addEventListener('change', renderSummary);

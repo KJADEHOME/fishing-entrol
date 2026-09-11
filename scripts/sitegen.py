@@ -120,8 +120,9 @@ SURF_ROWS = [
 SURF_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Action",
              "Tip / Butt Dia.", "Cast Weight", "Handle", "Carbon Grade"]
 
-MOQ_NOTE = ("MOQ 300 pcs per model · Sample lead time 15–20 days · Production lead time 35–45 days "
-            "after sample approval. Custom length, action, components and branding available on request.")
+MOQ_NOTE = ("MOQ 300 pcs per model (500 for kits) · Sample lead time 15–20 days · Production "
+            "lead time 35–45 days after sample approval. Custom length, action, components and "
+            "branding available on request.")
 
 
 def spec_table(cols, rows, caption):
@@ -916,8 +917,20 @@ def build_about():
 
 FAQS = [
     ("What is your MOQ for OEM fishing rods?",
-     "MOQ is 300 pieces per model. Mixed-model containers are welcome for first orders, and "
-     "charter or fleet programs can be quoted at different volumes."),
+     "For rods, 300 pieces per model. Mixed-model containers are welcome for first orders, and "
+     "charter or fleet programs can be quoted at different volumes. The minimum rises when you ask "
+     "us to put other components in the carton: a rod plus reel, line or a lure set starts at 500 "
+     "pieces, and a full retail kit — or reels, spools and lure cards printed with your own brand "
+     "— starts at 1,000. Each part carries its own minimum because each part is made by a "
+     "different supplier, and we quote them on separate lines so you can see exactly what you are "
+     "paying for."),
+    ("Can you supply a matched kit — rod, reel, line and lures in one carton?",
+     "Yes, and we assemble it to the specification you build in the configurator. Be clear about "
+     "one thing though: the rod is built on our own production lines and always carries your brand, "
+     "while the reel, line and lures are sourced from component makers to your brief. We do not "
+     "manufacture those and we will not put our own badge on them. You choose how they are "
+     "labelled: your brand from 1,000 pieces, the component maker's own brand, an unbranded neutral "
+     "pack, or a house brand we propose to your target price point."),
     ("How long does a sample take?",
      "Pre-production samples take 15–20 days from specification confirmation, depending on blank "
      "tooling and component availability. Bulk production takes 35–45 days after sample approval."),
