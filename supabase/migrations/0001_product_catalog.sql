@@ -1,4 +1,4 @@
--- Product catalogue for entrol-fishing.com
+-- Product catalogue for fishing.entrol.com
 --
 -- Single source of truth for every SKU the configurator, the category pages
 -- and the compatibility engine are allowed to quote. Two commercial paths

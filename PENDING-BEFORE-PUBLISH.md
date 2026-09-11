@@ -1,4 +1,4 @@
-# PENDING-BEFORE-PUBLISH — entrol-fishing.com
+# PENDING-BEFORE-PUBLISH — fishing.entrol.com
 
 > 本站当前为**本地原型**（D://codex//fishing-growth-os//source//）。
 > **硬约束：未完成本清单前，禁止 push 到 GitHub、禁止部署到任何线上环境。**
@@ -108,11 +108,11 @@
 | about-factory-02.webp | Weihai Minsheng Sporting Goods (news/article photo) | https://www.minshengfishing.cn/article.html | 口头✅ 书面❌ |
 
 
-## 3. 域名与邮箱（未完成）
+## 3. 域名与联系方式
 
 - [ ] **确定签约主体**（渔具出口接单用哪个公司签）—— 授权确认书里的"被授权方"一栏卡在这，见 `docs/authorization/README.md` §4
-- [ ] 注册 `entrol-fishing.com`（站点内 canonical/OG/sitemap 均已按此域名生成）
-- [ ] 配置企业域名邮箱 `sales@entrol-fishing.com`（腾讯企业邮，参照 entrol.com 的 MX 配置）
+- [x] 发布域名确定为 `fishing.entrol.com`，沿用 `socks.entrol.com` 的 GitHub Pages + CNAME 方式
+- [x] 对外邮箱继续沿用 `wangyan@entrol.com`；暂不启用 `sales@entrol-fishing.com`
 - [ ] 表单收件箱确认：当前表单直投 `wangyan@entrol.com`（FormSubmit，已验证可用）
 
 ## 4. 统计与索引（上线后 48 小时内完成）
@@ -135,7 +135,7 @@
 - [ ] **配置器真实提交测试**：在 `oem-builder.html` 与 `custom-rod.html` 各填一份完整规格提交，确认 wangyan@entrol.com 收到全部字段（OEM 页含 model_count/target_price 等生产批量字段、custom 页含 kit_lines 配件明细，字段多，需确认 FormSubmit 邮件不截断）
 - [ ] **GTM 后台建 `configurator_submit` 转化标签**（dataLayer 已埋，含 `options_selected` 与 `spec_summary`）；建议把「选了 ≥5 项」设为高质量询盘信号
 - [ ] **兼容性预警规则复查**：13 条规则（轮型×竿型、竿长×饵重、线号×饵重、硬度×饵重、导环×前导、鱼种×前导等）为行业常识推断，**请让懂行的工厂技术或老客户过一遍**，特别是 PE 号数对应的安全抛投上限
-- [ ] 联系三处一致（浮动按钮 / 页脚 / 表单页）：WhatsApp +8615263130999 / WeChat 15263130999 / sales@entrol-fishing.com
+- [x] 联系三处一致（浮动按钮 / 页脚 / 表单页）：WhatsApp +8615263130999 / WeChat 15263130999 / wangyan@entrol.com
 - [ ] CRONY 阿里对话截图已存进 `docs/authorization/weihai-crony/01-alibaba-reply.png`
 - [ ] 图包已替换现有 31 张，并跑通 `build_product_images.py` → `sitegen.py` → `smoke_test.py`
 - [ ] 4 个类目页各补 2–3 张自拍（头图 / 手持比例 / 细节特写），防撞图

@@ -1,4 +1,4 @@
-# 工厂授权留档规范 — entrol-fishing.com
+# 工厂授权留档规范 — fishing.entrol.com
 
 > 状态：三家工厂（润鼎 / 民盛 / CRONY）**已口头同意**授权使用图片与资料。
 > 本目录的任务是把它变成**可举证的书面记录**。口头说一声在纠纷中无证据力。
@@ -25,7 +25,7 @@ docs/authorization/
 |---|---|
 | 看得到对方头像与昵称/备注名 | 证明是谁说的 |
 | 看得到完整对话上下文 | 上面必须有你发的**具体请求**（哪张图、用在哪个网站） |
-| 看得到对方明确答复 | "同意""可以""你用吧" —— 只回"嗯""好的"不够明确，最好追一句"那我们把这些图用在 entrol-fishing.com 上没问题吧？" |
+| 看得到对方明确答复 | "同意""可以""你用吧" —— 只回"嗯""好的"不够明确，最好追一句"那我们把这些图用在 fishing.entrol.com 上没问题吧？" |
 | 看得到时间 | 微信自带时间戳即可 |
 | 原图保存，不要压缩糊掉 | 存 PNG，别用微信转发的缩略图 |
 
@@ -37,7 +37,7 @@ docs/authorization/
 
 ### 2.1 微信版（润鼎 / 民盛，中文）
 
-> X 总，跟您同步个事。我们准备做一个英文的渔具外贸站 entrol-fishing.com，专门接澳洲和欧洲的询盘，接到单子下给咱们厂做。
+> X 总，跟您同步个事。我们准备做一个英文的渔具外贸站 fishing.entrol.com，专门接澳洲和欧洲的询盘，接到单子下给咱们厂做。
 >
 > 想用一下咱们厂这几样东西：
 > 1. 产品图（[具体说明：官网上 XX 系列的几张]）
@@ -50,7 +50,7 @@ docs/authorization/
 
 **对方回复后，追一句**（这一步很关键，把模糊的"同意"钉死）：
 
-> 好的，那我确认一下：上面说的产品图、参数表和工厂资质，我们用在 entrol-fishing.com 和海外推广上，您这边同意，对吧？
+> 好的，那我确认一下：上面说的产品图、参数表和工厂资质，我们用在 fishing.entrol.com 和海外推广上，您这边同意，对吧？
 
 ### 2.2 邮件版（CRONY，英文）
 
@@ -76,7 +76,7 @@ docs/authorization/
 >
 > Just to confirm the scope so we use them correctly:
 >
-> 1. We may use the image pack on **our own export website** (entrol-fishing.com), not only on Alibaba/Amazon listings?
+> 1. We may use the image pack on **our own export website** (fishing.entrol.com), not only on Alibaba/Amazon listings?
 > 2. We may **remove your brand logos from the images** and present the products under our own brand, Entrol — confirm this is acceptable?
 > 3. The license is **non-exclusive** — you're free to work with other partners, we just need to know we're not restricted.
 > 4. Any requirement to **credit your brand** on the images, or any restriction on which markets we promote in?

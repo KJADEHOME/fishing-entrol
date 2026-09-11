@@ -2065,5 +2065,207 @@
   },
   "sort_order": 320,
   "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-JIG-1-0-7G",
+  "category": "accessory",
+  "subcategory": "jig-head",
+  "name": "Jig head — 1/0 hook, 7 g",
+  "specs": {
+   "hook_size": "1/0",
+   "weight_g": 7,
+   "finish": "Black nickel",
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 400,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-JIG-2-0-14G",
+  "category": "accessory",
+  "subcategory": "jig-head",
+  "name": "Jig head — 2/0 hook, 14 g",
+  "specs": {
+   "hook_size": "2/0",
+   "weight_g": 14,
+   "finish": "Black nickel",
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 401,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-EWG-2-0",
+  "category": "accessory",
+  "subcategory": "worm-hook",
+  "name": "EWG worm hook — size 2/0",
+  "specs": {
+   "hook_size": "2/0",
+   "barb": "Barbed",
+   "finish": "Black nickel",
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 410,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-EWG-3-0",
+  "category": "accessory",
+  "subcategory": "worm-hook",
+  "name": "EWG worm hook — size 3/0",
+  "specs": {
+   "hook_size": "3/0",
+   "barb": "Barbed",
+   "finish": "Black nickel",
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 411,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-ASSIST-2-0",
+  "category": "accessory",
+  "subcategory": "assist-hook",
+  "name": "Jigging assist hook — size 2/0",
+  "specs": {
+   "hook_size": "2/0",
+   "rig": "Single assist",
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 420,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-SWIVEL-30LB",
+  "category": "accessory",
+  "subcategory": "swivel",
+  "name": "Rolling swivel — 30 lb",
+  "specs": {
+   "strength_lb": 30,
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 430,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-SNAP-30LB",
+  "category": "accessory",
+  "subcategory": "snap",
+  "name": "Lure snap — 30 lb",
+  "specs": {
+   "strength_lb": 30,
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 431,
+  "image": null
+ },
+ {
+  "brand_mode": "neutral",
+  "moq_oem": null,
+  "moq_custom": null,
+  "lead_time_oem_days": null,
+  "lead_time_custom_days": null,
+  "unit": "packs",
+  "paths": [
+   "oem",
+   "custom"
+  ],
+  "status": "draft",
+  "source": "Internal reference specification",
+  "sku": "TERM-SINKER-MIX-5-20G",
+  "category": "accessory",
+  "subcategory": "sinker",
+  "name": "Sinker assortment — 5–20 g",
+  "specs": {
+   "weight_g": "5–20",
+   "pack": "Mixed reference pack",
+   "verification": "supplier confirmation required"
+  },
+  "sort_order": 440,
+  "image": null
  }
 ]

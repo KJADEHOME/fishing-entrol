@@ -102,6 +102,29 @@ GROUPS = [
     },
     {
         "step": 1,
+        "title": "Start With the Commercial Brief",
+        "path": "oem",
+        "note": "You do not need to know every component yet. Tell us what you are launching and "
+                "the price position you need; we use that brief to narrow the build before the "
+                "technical review.",
+        "fields": [
+            dict(name="launch_goal", label="What are you trying to launch?", opts=[
+                "A new private-label rod", "Improve a reference product",
+                "A complete retail fishing kit", "Match a target retail price",
+                "Extend an existing product range", "Not sure — advise me"]),
+            dict(name="program_tier", label="Preferred product position", opts=[
+                "Value — durable and price-led", "Balanced — performance and cost",
+                "Performance — lighter and component-led", "Show me all three options"]),
+            dict(name="buyer_type", label="Your business", opts=[
+                "Fishing brand", "Importer / distributor", "Independent tackle store",
+                "Online seller", "Wholesaler", "Other"]),
+            dict(name="sales_channel", label="Where will it be sold?", opts=[
+                "Independent tackle stores", "Online marketplace", "Own ecommerce site",
+                "Distributor network", "Mixed channels", "Not decided yet"]),
+        ],
+    },
+    {
+        "step": 2,
         "title": "Start From a Model, or Start From Scratch",
         "note": "Picking an existing model fills in its real measurements — length, power, line "
                 "rating and recommended reel — and everything after that becomes a change you are "
@@ -122,7 +145,7 @@ GROUPS = [
         ],
     },
     {
-        "step": 2,
+        "step": 3,
         "title": "Carbon &amp; Blank Construction",
         "note": "T-value is the tensile modulus of the carbon cloth in tons. Higher T is lighter "
                 "and more sensitive, but more brittle and more expensive — most volume programs "
@@ -575,6 +598,7 @@ def render_body(wa_url, form_endpoint, path=None):
     """
     fixed = path in ("oem", "custom")
     groups = []
+    display_step = 0
     for g in GROUPS:
         if fixed and g.get("step") == 0:
             continue
@@ -585,6 +609,7 @@ def render_body(wa_url, form_endpoint, path=None):
             fl = [f for f in fl if not f.get("path") or f["path"] == path]
         if not fl:
             continue
+        display_step += 1
         fields = "".join(_field_html(f) for f in fl)
         groups.append("""
       <fieldset class="cfg-group">
@@ -592,7 +617,7 @@ def render_body(wa_url, form_endpoint, path=None):
         <p class="cfg-note">%s</p>
         <div class="cfg-fields">%s</div>
         %s
-      </fieldset>""" % (g["step"], g["title"], g["note"], fields, g.get("extra", "")))
+      </fieldset>""" % (display_step, g["title"], g["note"], fields, g.get("extra", "")))
 
     # The page needs rods (for the "start from a model" prefill) and the line,
     # lure and reel rows (for the accessory picker), so ship a slimmed full
@@ -624,9 +649,11 @@ def render_body(wa_url, form_endpoint, path=None):
       <div class="hp-field" aria-hidden="true">
         <label>Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
       </div>
-      <input type="hidden" name="_subject" id="cfg-subject" value="Rod configurator inquiry — entrol-fishing.com">
+      <input type="hidden" name="_subject" id="cfg-subject" value="Rod configurator inquiry — fishing.entrol.com">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="inquiry_id" id="cfg-inquiry-id" value="">
+      <input type="hidden" name="page_path" id="cfg-page-path" value="">
       <input type="hidden" name="spec_summary" id="cfg-summary-input" value="">
       %(groups)s
       <div class="cfg-group">
@@ -641,6 +668,7 @@ def render_body(wa_url, form_endpoint, path=None):
     <aside class="cfg-summary" aria-live="polite">
       <div class="cfg-warnbox" id="cfg-warnbox"></div>
       <h3>Your Specification</h3>
+      <p class="cfg-ref" id="cfg-ref"></p>
       <p class="cfg-count" id="cfg-count">0 options selected</p>
       <ul class="cfg-list" id="cfg-list"></ul>
 

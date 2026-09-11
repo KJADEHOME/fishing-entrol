@@ -91,7 +91,7 @@
         e.preventDefault();
         var st = document.querySelector('.form-status');
         if (st) {
-          st.textContent = 'Your submission could not be processed. Please reach us directly at sales@entrol-fishing.com or WhatsApp +86 152 6313 0999.';
+          st.textContent = 'Your submission could not be processed. Please reach us directly at wangyan@entrol.com or WhatsApp +86 152 6313 0999.';
           st.style.background = '#FDECEA';
           st.style.color = '#B03A2E';
           st.classList.add('show');
@@ -110,6 +110,7 @@
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
       }).then(function (res) {
+        if (!res.ok) throw new Error('inquiry endpoint returned ' + res.status);
         if (status) {
           status.textContent = 'Thank you — your inquiry has been received. We reply within one business day (GMT+8).';
           status.classList.add('show');
@@ -253,7 +254,9 @@
     var KIT_CATS = [
       { c: 'reel', label: 'Reels', unit: 'sets', add: 'Add another reel' },
       { c: 'line', label: 'Line', unit: 'spools', add: 'Add another spool' },
-      { c: 'lure', label: 'Lures', unit: 'packs', add: 'Add another lure' }
+      { c: 'lure', label: 'Lures', unit: 'packs', add: 'Add another lure' },
+      { c: 'accessory', label: 'Hooks & terminal tackle', unit: 'packs',
+        add: 'Add another hook or terminal item' }
     ];
 
     function kitOptions(cat) {
@@ -405,6 +408,22 @@
     var countEl = document.getElementById('cfg-count');
     var sumInput = document.getElementById('cfg-summary-input');
     var subjInput = document.getElementById('cfg-subject');
+    var inquiryInput = document.getElementById('cfg-inquiry-id');
+    var pagePathInput = document.getElementById('cfg-page-path');
+    var refEl = document.getElementById('cfg-ref');
+
+    function makeInquiryId() {
+      var d = new Date();
+      var y = String(d.getFullYear()).slice(-2);
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      var rnd = Math.floor(Math.random() * 100000).toString().padStart(5, '0');
+      return 'EF-' + y + m + day + '-' + rnd;
+    }
+
+    if (inquiryInput && !inquiryInput.value) inquiryInput.value = makeInquiryId();
+    if (pagePathInput) pagePathInput.value = location.pathname || '';
+    if (refEl && inquiryInput) refEl.textContent = 'Draft reference ' + inquiryInput.value;
 
     function esc(s) {
       return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -444,10 +463,11 @@
         }).join('');
       }
       var text = items.map(function (p) { return p[0] + ': ' + p[1]; }).join(' | ');
-      if (sumInput) sumInput.value = text;
+      if (sumInput) sumInput.value = (inquiryInput ? 'Inquiry: ' + inquiryInput.value + ' | ' : '') + text;
       if (subjInput) {
         var mkt = cfgForm.querySelector('select[name="target_market"]');
-        subjInput.value = (isCustom ? 'Custom rod build' : 'OEM configurator') + ' — '
+        subjInput.value = (inquiryInput ? inquiryInput.value + ' — ' : '')
+          + (isCustom ? 'Custom rod build' : 'OEM configurator') + ' — '
           + (rodSel && rodSel.value ? rodSel.value : 'rod')
           + (mkt && mkt.value ? ' — ' + mkt.value : '');
       }
@@ -867,7 +887,7 @@
       if (score >= 4) {
         e.preventDefault();
         if (st) {
-          st.textContent = 'Your submission could not be processed. Please reach us directly at sales@entrol-fishing.com or WhatsApp +86 152 6313 0999.';
+          st.textContent = 'Your submission could not be processed. Please reach us directly at wangyan@entrol.com or WhatsApp +86 152 6313 0999.';
           st.style.background = '#FDECEA';
           st.style.color = '#B03A2E';
           st.classList.add('show');
@@ -883,6 +903,7 @@
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(payload)
       }).then(function (res) {
+        if (!res.ok) throw new Error('inquiry endpoint returned ' + res.status);
         if (st) {
           st.textContent = currentPath() === 'custom'
             ? 'Build request received — ' + items.length + ' options logged. We reply with a build sheet, a price and a freight quote within one business day (GMT+8).'

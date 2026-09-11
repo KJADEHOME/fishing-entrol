@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Static site generator for Entrol Fishing (entrol-fishing.com).
+"""Static site generator for Entrol Fishing (fishing.entrol.com).
 
 Idempotent: re-running rebuilds every page from the content definitions below.
 All copy is ORIGINAL — never copied from other sites in the network (anti
@@ -16,10 +16,10 @@ sys.path.insert(0, os.path.join(ROOT, "scripts"))
 
 import catalog_data as cat  # noqa: E402  (product catalogue — single source of truth)
 
-DOMAIN = "https://www.entrol-fishing.com"
+DOMAIN = "https://fishing.entrol.com"
 BRAND = "Entrol Fishing"
 LEGAL = "Entrol Fishing — Weihai sourcing office"
-EMAIL = "sales@entrol-fishing.com"
+EMAIL = "wangyan@entrol.com"
 WA = "8615263130999"
 WA_TEXT = "Hi%20Entrol%20Fishing%2C%20I%27d%20like%20a%20quote%20for%20OEM%20fishing%20rods."
 WECHAT = "15263130999"
@@ -427,18 +427,60 @@ def build_index():
   <div class="container">
     <span class="eyebrow">Weihai &middot; Shandong &middot; China</span>
     <h1>Carbon Fiber Fishing Rods, Built to Your Specification</h1>
-    <p class="lead">You decide the rod: carbon grade, guide train, reel seat, handle shape,
-    cosmetics and packaging. We build it in Weihai — the city that produces the majority of the
-    world's fishing rods — from 300 pieces per model, under your own brand.</p>
+    <p class="lead">Tell us the market, target retail price and quantity. We turn that brief into
+    a buildable rod or complete retail kit, coordinate the supplying lines in Weihai, and quote it
+    under your own brand.</p>
     <div class="btn-row">
       <a class="btn btn-accent" href="oem-builder.html">Build Your Rod &rarr;</a>
       <a class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.7)" href="products.html">Browse Rod Categories</a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><strong>MOQ 300</strong><span>pieces per model</span></div>
-      <div class="hero-stat"><strong>15–20 days</strong><span>sample lead time</span></div>
-      <div class="hero-stat"><strong>15–20 days</strong><span>sea freight to Australia</span></div>
-      <div class="hero-stat"><strong>&lt;24 h</strong><span>inquiry response (GMT+8)</span></div>
+      <div class="hero-stat"><strong>OEM first</strong><span>private-label programs</span></div>
+      <div class="hero-stat"><strong>3 positions</strong><span>value · balanced · performance</span></div>
+      <div class="hero-stat"><strong>One brief</strong><span>rod, components and packaging</span></div>
+      <div class="hero-stat"><strong>One reference</strong><span>for quote, sample and reorder</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">Choose Your Starting Point</span>
+      <h2>Start With the Business Decision — Not a Wall of Components</h2>
+      <p class="lead">You can begin with a target price, an existing product, a new private-label
+      idea or a complete retail kit. Technical choices come after the commercial brief.</p>
+    </div>
+    <div class="path-row">
+      <a class="path-card" href="oem-builder.html">
+        <span class="path-eyebrow">Primary · B2B</span><h3>Build an OEM Product Program</h3>
+        <p>For brands, importers, distributors, tackle stores and online sellers.</p>
+        <ul class="path-meta"><li>Start from a target retail price</li><li>Modify a proven base model</li>
+        <li>Quote a rod or a complete retail kit</li></ul><strong>Open OEM Builder →</strong>
+      </a>
+      <a class="path-card" href="custom-rod.html">
+        <span class="path-eyebrow">Secondary · Angler</span><h3>Configure One Professional Set-up</h3>
+        <p>For an angler who wants a rod, reel, line, lures and terminal tackle matched together.</p>
+        <ul class="path-meta"><li>Build around species and fishing method</li><li>Add each component by quantity</li>
+        <li>Receive one combined quotation</li></ul><strong>Build My Set-up →</strong>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="center"><span class="eyebrow">Three Product Positions</span>
+      <h2>Give Buyers a Useful Starting Point</h2>
+      <p class="lead">These are design directions, not fixed prices. The final specification is
+      checked against the target market, order quantity and supplier availability.</p></div>
+    <div class="grid grid-3" style="margin-top:34px">
+      <div class="card"><h3>Value</h3><p>Durability and sell-through first. Spend where the angler
+      feels it; keep decoration and component cost controlled.</p><a class="card-link" href="oem-builder.html">Brief a value program →</a></div>
+      <div class="card"><h3>Balanced</h3><p>The default for an independent brand: reliable blank,
+      credible components, practical packaging and room for retail margin.</p><a class="card-link" href="oem-builder.html">Brief a balanced program →</a></div>
+      <div class="card"><h3>Performance</h3><p>Lower weight, upgraded component train and finish,
+      developed around a buyer who can explain the difference.</p><a class="card-link" href="oem-builder.html">Brief a performance program →</a></div>
     </div>
   </div>
 </section>
@@ -485,14 +527,14 @@ def build_index():
     <div>
       <span class="eyebrow">Why Source From Weihai</span>
       <h2>The World's Rod Factory Is a City, Not a Company</h2>
-      <p class="lead">Nearly six in ten fishing rods sold worldwide are made in Weihai, Shandong.
-      Working with %(brand)s puts you inside that cluster — blank rolling, component supply,
-      painting and assembly within a single industrial base.</p>
+      <p class="lead">Weihai brings blank rolling, component supply, painting and assembly into
+      one established fishing-tackle cluster. Working with %(brand)s gives you one project contact
+      across those specialist supplying lines.</p>
       <ul class="feature-list">
-        <li>High-tonnage carbon blanks (24T and above) with documented material sourcing</li>
+        <li>Carbon and composite options confirmed against the selected supplying line</li>
         <li>Full OEM/ODM: length, action, guides, reel seats, grip, cosmetics, packaging</li>
-        <li>Zero tariff on fishing tackle into Australia under the China–Australia FTA</li>
-        <li>15–20 day sea freight to Australian ports, smaller time-zone gap than Europe</li>
+        <li>Product-specific tariff and origin documentation reviewed before shipment</li>
+        <li>Freight route and lead time quoted against the destination and sailing</li>
         <li>One contact in your time zone for quotes, samples, QC and shipment documents</li>
       </ul>
     </div>
@@ -875,8 +917,8 @@ COMP_COLS = ["SKU", "Description", "Specification"]
 
 def build_products():
     title = "Rod Models & Components | OEM Spec Library | Entrol Fishing"
-    desc = ("Every rod model and component we supply: 22 carbon rod specifications, braid, leader, "
-            "lures and reels. Start an OEM program from an existing model.")
+    desc = ("Rod and component reference library: 22 carbon rod specifications, braid, leader, "
+            "lures, reels and terminal tackle. Start an OEM brief from an existing model.")
     assert len(title) <= 65 and len(desc) <= 160
     kw = ("fishing rod model list, OEM fishing rod specifications, carbon rod models, fishing rod "
           "components wholesale, braid and leader OEM, fishing reel sourcing")
@@ -939,16 +981,20 @@ def build_products():
             ("Reels", comp_rows(cat.REELS),
              "Reel sizes we can source alongside a rod program. Gear ratio, drag and weight are "
              "specified per brief — tell us the target and we come back with options."),
+            ("Hooks &amp; terminal tackle", comp_rows(cat.TERMINAL),
+             "Reference combinations for a complete set-up. Availability, pack quantity and OEM "
+             "minimum are confirmed with the selected supplying line before quotation."),
         ]))
 
     body = """
 <section class="section" style="padding-top:34px">
   <div class="container">
     <span class="eyebrow">Product Library</span>
-    <h1>Every Model We Build, With Its Real Numbers</h1>
-    <p class="lead">%(nrods)d rod models are tooled on our Weihai lines right now, alongside the
-    line, lure and reel ranges we source to go with them. These are production specifications, not
-    a wish list — pick one and the OEM builder opens with its measurements already filled in.</p>
+    <h1>Start From a Verified Rod Specification</h1>
+    <p class="lead">%(nrods)d rod specifications give you a practical starting point, alongside
+    line, lure, reel and terminal-tackle references for a complete set. Pick one and the OEM
+    builder opens with its measurements already filled in; supplier availability is confirmed
+    before quotation.</p>
     <div class="grid grid-2" style="margin-top:38px">%(items)s</div>
   </div>
 </section>
@@ -1494,7 +1540,7 @@ def build_contact():
         <div class="hp-field" aria-hidden="true">
           <label>Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
         </div>
-        <input type="hidden" name="_subject" value="New fishing rod OEM inquiry — entrol-fishing.com">
+        <input type="hidden" name="_subject" value="New fishing rod OEM inquiry — fishing.entrol.com">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <div class="form-grid">

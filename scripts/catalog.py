@@ -83,6 +83,7 @@ def catalog_json():
 def validate():
     seen = set()
     problems = []
+    allowed_categories = {"rod", "line", "lure", "reel", "accessory"}
     for p in data.PRODUCTS:
         if p["sku"] in seen:
             problems.append("duplicate sku: %s" % p["sku"])
@@ -90,6 +91,12 @@ def validate():
         for key in ("sku", "category", "subcategory", "name", "specs"):
             if not p.get(key):
                 problems.append("%s missing %s" % (p.get("sku"), key))
+        if p.get("category") not in allowed_categories:
+            problems.append("%s invalid category: %s" % (p.get("sku"), p.get("category")))
+        if (p.get("status") == "active"
+                and p.get("specs", {}).get("verification") == "supplier confirmation required"):
+            problems.append("%s cannot be active while supplier confirmation is required"
+                            % p.get("sku"))
         if p["category"] == "rod":
             for key in ("length_m", "power", "action", "reel_type"):
                 if key not in p["specs"]:

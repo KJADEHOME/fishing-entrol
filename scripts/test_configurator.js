@@ -67,6 +67,17 @@ async function testPage(file, mode) {
   if (formPath === mode) pass('form carries data-path="' + mode + '" (no switch needed)');
   else fail('wrong data-path: ' + formPath + ' expected ' + mode);
 
+  const inquiryId = (doc.getElementById('cfg-inquiry-id') || {}).value || '';
+  if (/^EF-\d{6}-\d{5}$/.test(inquiryId)) pass('draft inquiry reference generated');
+  else fail('missing or malformed inquiry reference: ' + inquiryId);
+
+  if (mode === 'oem') {
+    const commercial = ['launch_goal', 'program_tier', 'buyer_type', 'sales_channel'];
+    const missing = commercial.filter(n => !form.querySelector('select[name="' + n + '"]'));
+    if (!missing.length) pass('commercial brief comes before technical specification');
+    else fail('commercial brief fields missing: ' + missing.join(', '));
+  }
+
   // ---- compatibility warnings ----
   const CASES = [
     ['spinning blank + baitcasting reel',
@@ -267,8 +278,13 @@ async function testPage(file, mode) {
     if (!kitIn) { fail('kit_lines hidden input missing'); }
     else {
       const rows0 = doc.querySelectorAll('#kit-lines .kit-row');
-      if (rows0.length === 3) pass('one empty row each for reel, line and lure');
-      else fail('expected 3 default rows, got ' + rows0.length);
+      if (rows0.length === 4) pass('one empty row each for reel, line, lure and terminal tackle');
+      else fail('expected 4 default rows, got ' + rows0.length);
+
+      const terminal0 = row('accessory', 0);
+      if (terminal0 && terminal0.querySelectorAll('.kit-sku option').length > 1) {
+        pass('hooks and terminal tackle are available to the personal set-up');
+      } else fail('terminal tackle picker has no catalogue options');
 
       if (kitBox && kitBox.hidden) pass('in-the-box panel stays hidden while nothing is picked');
       else fail('panel shown with an empty list');

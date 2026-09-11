@@ -246,6 +246,20 @@ def reel(sub, size, sort, **extra):
                 "%s reel — size %d" % (sub.capitalize(), size), sort, **s)
 
 
+def terminal(sub, slug, name, sort, **specs):
+    """Neutral terminal-tackle reference.
+
+    These rows make a complete personal set specifiable. They are reference
+    combinations until a supplying line confirms stock, packing and MOQ.
+    """
+    specs.setdefault("verification", "supplier confirmation required")
+    item = comp("accessory", sub, "TERM-%s" % slug, name, sort, **specs)
+    item.update(status="draft", moq_oem=None, moq_custom=None,
+                lead_time_oem_days=None, lead_time_custom_days=None,
+                unit="packs", source="Internal reference specification")
+    return item
+
+
 LINES = (
     # 8-strand: smoother, quieter through the guides, the default for jigging
     [braid(p, 8, m, "Dark green", 100 + i)
@@ -316,7 +330,27 @@ REELS = [
     reel("conventional", 30, 320),
 ]
 
-PRODUCTS = sorted(RODS + LINES + LURES + REELS, key=lambda p: (p["sort_order"], p["sku"]))
+TERMINAL = [
+    terminal("jig-head", "JIG-1-0-7G", "Jig head — 1/0 hook, 7 g", 400,
+             hook_size="1/0", weight_g=7, finish="Black nickel"),
+    terminal("jig-head", "JIG-2-0-14G", "Jig head — 2/0 hook, 14 g", 401,
+             hook_size="2/0", weight_g=14, finish="Black nickel"),
+    terminal("worm-hook", "EWG-2-0", "EWG worm hook — size 2/0", 410,
+             hook_size="2/0", barb="Barbed", finish="Black nickel"),
+    terminal("worm-hook", "EWG-3-0", "EWG worm hook — size 3/0", 411,
+             hook_size="3/0", barb="Barbed", finish="Black nickel"),
+    terminal("assist-hook", "ASSIST-2-0", "Jigging assist hook — size 2/0", 420,
+             hook_size="2/0", rig="Single assist"),
+    terminal("swivel", "SWIVEL-30LB", "Rolling swivel — 30 lb", 430,
+             strength_lb=30),
+    terminal("snap", "SNAP-30LB", "Lure snap — 30 lb", 431,
+             strength_lb=30),
+    terminal("sinker", "SINKER-MIX-5-20G", "Sinker assortment — 5–20 g", 440,
+             weight_g="5–20", pack="Mixed reference pack"),
+]
+
+PRODUCTS = sorted(RODS + LINES + LURES + REELS + TERMINAL,
+                  key=lambda p: (p["sort_order"], p["sku"]))
 
 
 # --------------------------------------------------------------------------
@@ -407,5 +441,6 @@ def as_json():
 
 
 if __name__ == "__main__":
-    print("products: %d (rods %d, line %d, lure %d, reel %d)"
-          % (len(PRODUCTS), len(RODS), len(LINES), len(LURES), len(REELS)))
+    print("products: %d (rods %d, line %d, lure %d, reel %d, terminal %d)"
+          % (len(PRODUCTS), len(RODS), len(LINES), len(LURES), len(REELS),
+             len(TERMINAL)))

@@ -377,6 +377,8 @@ table.spec td:first-child { font-weight: 700; color: var(--color-primary-dark); 
 .cfg-summary .cfg-list .k { color: var(--color-text-mid, #5A6B74); }
 .cfg-summary .cfg-list .v { font-weight: 700; text-align: right; }
 .cfg-summary .cfg-count { font-size: 0.8rem; color: var(--color-text-mid, #5A6B74); margin-bottom: 10px; }
+.cfg-summary .cfg-ref { font-size: 0.76rem; font-weight: 700; color: var(--color-primary, #0E6E8C);
+  margin: -3px 0 8px; letter-spacing: .03em; }
 .cfg-summary .btn { width: 100%; margin-top: 6px; }
 
 .cfg-why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }

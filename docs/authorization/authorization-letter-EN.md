@@ -15,7 +15,7 @@ Contact: `[      ]`
 **Licensee (Party B):** `[Entity TBD, e.g. Weihai Yuanling Import & Export Co., Ltd.]`
 Unified Social Credit Code: `[      ]`
 Address: `[      ]`
-Contact: Wang Yan — +86 152 6313 0999 — sales@entrol-fishing.com
+Contact: Wang Yan — +86 152 6313 0999 — wangyan@entrol.com
 
 Whereas Party B provides **overseas market development and order-placement services** for Party A, Party A agrees to grant Party B the right to use certain images and materials on the terms below.
 
@@ -28,7 +28,7 @@ Whereas Party B provides **overseas market development and order-placement servi
 
 ### 2. Scope of License
 
-1. **Channels:** the English-language export website `entrol-fishing.com` operated by Party B, overseas B2B marketplace storefronts, outbound sales emails, overseas social media (LinkedIn / Facebook / Instagram), and trade-show or offline promotional materials.
+1. **Channels:** the English-language export website `fishing.entrol.com` operated by Party B, overseas B2B marketplace storefronts, outbound sales emails, overseas social media (LinkedIn / Facebook / Instagram), and trade-show or offline promotional materials.
 2. **Territory:** outside mainland China.
 3. **Nature:** non-exclusive; not sublicensable to third parties, except to designers, web developers and advertising providers engaged by Party B for the promotional purpose.
 4. **Prohibited uses:** no mainland-China retail platforms; no promotion of products manufactured by any factory other than Party A; no material alteration of the Licensed Materials that would misrepresent product specifications.
@@ -82,6 +82,6 @@ CRONY exports to 40+ countries itself, so a bare "can I use your photos on my si
 >
 > For your range specifically, we'd like to feature the Cross / Progress / Measplus / AGSF series with real photos and the spec tables from your product pages, so buyers can enquire on actual models. Every enquiry for your products goes straight to you — we're an extra sales channel, not another supplier.
 >
-> Could you confirm we may use those product photos and spec data on entrol-fishing.com and in overseas promotion? A one-line "agreed" reply is enough for now; we can send a short confirmation letter for your records.
+> Could you confirm we may use those product photos and spec data on fishing.entrol.com and in overseas promotion? A one-line "agreed" reply is enough for now; we can send a short confirmation letter for your records.
 
 **If they hesitate**, the fallback is to photograph samples ourselves — see `README.md` §3, option B.

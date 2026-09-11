@@ -91,7 +91,7 @@ try:
     for p in ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
               "rock-surf-rods.html", "products.html", "oem-builder.html", "custom-rod.html",
               "capabilities.html", "process.html", "about.html", "faq.html", "contact.html"]:
-        check("[sitemap]", any(l.endswith("/" + p) or (p == "index.html" and l.rstrip("/").endswith("entrol-fishing.com") or l.rstrip("/").endswith("/")) for l in locs), p)
+        check("[sitemap]", any(l.endswith("/" + p) or (p == "index.html" and l.rstrip("/").endswith("fishing.entrol.com") or l.rstrip("/").endswith("/")) for l in locs), p)
 except Exception as e:
     fail += 1
     problems.append("[sitemap] parse error: %s" % e)
