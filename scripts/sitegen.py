@@ -30,6 +30,7 @@ MANIFEST = json.load(open(os.path.join(ROOT, "scripts", "product_images_manifest
 NAV = [
     ("index.html", "Home"),
     ("products.html", "Products"),
+    ("configure.html", "Build Your Rod"),
     ("about.html", "About"),
     ("faq.html", "FAQ"),
     ("contact.html", "Contact"),
@@ -40,6 +41,13 @@ PRODUCT_NAV = [
     ("saltwater-rods.html", "Saltwater & Boat Rods"),
     ("rock-surf-rods.html", "Rock & Surf Rods"),
 ]
+# category slug -> configurator preset key (read by script.js from ?rod=)
+CFG_KEY = {
+    "spinning-rod": "spinning",
+    "carp-rod": "carp",
+    "saltwater-rod": "boat",
+    "rock-surf-rod": "surf",
+}
 
 LOGO_SVG = """<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#0E6E8C"/><path d="M6 22c6-1 9-4 11-8 1.4-2.8 2.4-5.4 4.6-7.2.5-.4 1.2.2.9.8-1 2-1.4 4-1.2 6.2l3.4 1.5c.6.3.5 1.1-.1 1.3l-3.6 1c-1.3 3.4-4.3 6.9-9 7.6-2.3.4-4.6.2-6-.2-.6-.2-.6-1 0-1z" fill="#fff"/><circle cx="21.5" cy="9.5" r="1.4" fill="#0E6E8C"/></svg>"""
 
@@ -343,11 +351,11 @@ def build_index():
   <div class="container">
     <span class="eyebrow">Weihai &middot; Shandong &middot; China</span>
     <h1>Carbon Fiber Fishing Rods, Built to Your Specification</h1>
-    <p class="lead">%(brand)s is the overseas sales office of rod manufacturing partners in Weihai —
-    the city that produces the majority of the world's fishing rods. Spinning, carp, saltwater and
-    surf rods engineered for your market, from 300 pieces per model.</p>
+    <p class="lead">You decide the rod: carbon grade, guide train, reel seat, handle shape,
+    cosmetics and packaging. We build it in Weihai — the city that produces the majority of the
+    world's fishing rods — from 300 pieces per model, under your own brand.</p>
     <div class="btn-row">
-      <a class="btn btn-accent" href="contact.html">Request a Quote</a>
+      <a class="btn btn-accent" href="configure.html">Build Your Rod &rarr;</a>
       <a class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.7)" href="products.html">Browse Rod Categories</a>
     </div>
     <div class="hero-stats">
@@ -439,11 +447,38 @@ def build_index():
   </div>
 </section>
 
+<section class="section">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">OEM Configurator</span>
+      <h2>Build the Rod You Sell — Component by Component</h2>
+      <p class="lead">Nothing here is fixed. Pick the components your market actually asks for and
+      we quote the rod that comes out the other end.</p>
+    </div>
+    <div class="cfg-why" style="margin-top:32px">
+      <div class="card"><h4>Carbon grade</h4><p>24T to 46T cloth, mixed layups or glass composite —
+      you set the balance of weight, sensitivity and cost that your price point needs.</p></div>
+      <div class="card"><h4>Guide train</h4><p>Single-foot, double-foot, KW anti-tangle or micro
+      guides, in Alconite, SiC or Torzite, on stainless or titanium frames.</p></div>
+      <div class="card"><h4>Reel seat &amp; handle</h4><p>Fuji VSS, ECS, ACS or TCS; split or full
+      grip; cork, EVA or carbon; trigger or straight — matched to spinning or baitcasting reels.</p></div>
+      <div class="card"><h4>Your brand, your pack</h4><p>Silk-screen, laser or hydro-dip logo, plus
+      rod bag, tube or printed retail box. You sell it under your name.</p></div>
+    </div>
+    <div class="center" style="margin-top:30px">
+      <a class="btn btn-accent" href="configure.html">Open the Configurator &rarr;</a>
+      <p class="form-hint" style="margin-top:12px">About two minutes. Skip anything you are unsure
+      about — we will advise on the rest.</p>
+    </div>
+  </div>
+</section>
+
 <section class="section section-alt">
   <div class="container">
     <div class="cta-band">
-      <h2>Send Us Your Rod Spec</h2>
-      <p>Get a quotation with MOQ, sample cost and freight estimate within one business day.</p>
+      <h2>Rather Just Talk to Someone?</h2>
+      <p>Send a photo or a link to a rod you like and we will reverse-engineer the specification, or
+      simply tell us your market and target price. Quotation within one business day.</p>
       <div class="btn-row">
         <a class="btn btn-accent" href="contact.html">Request a Quote</a>
         <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp Us Now</a>
@@ -520,16 +555,18 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
 <section class="section">
   <div class="container">
     <div class="cta-band">
-      <h2>Ready to Start Your Rod Program?</h2>
-      <p>%(moq)s</p>
+      <h2>Configure Your %(h1short)s Specification</h2>
+      <p>%(moq)s Choose carbon grade, guide train, reel seat, handle and packaging in the
+      configurator — you will have a quotable specification in about two minutes.</p>
       <div class="btn-row">
-        <a class="btn btn-accent" href="contact.html">Request a Quote</a>
+        <a class="btn btn-accent" href="configure.html?rod=%(cfgkey)s">Open the Rod Configurator</a>
         <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp Us</a>
       </div>
     </div>
   </div>
 </section>""" % {
-        "breadcrumb": "", "h1": h1, "intro": intro_html, "wa": wa_link(),
+        "breadcrumb": "", "h1": h1, "h1short": h1.split(" — ")[0], "intro": intro_html,
+        "wa": wa_link(), "cfgkey": CFG_KEY.get(slug, "spinning"),
         "gallery": gallery(slug), "table": spec_table(cols, rows, table_note),
         "custom": custom_html, "moq": MOQ_NOTE,
     }
@@ -780,16 +817,16 @@ def build_about():
   <div class="container grid grid-2">
     <div>
       <span class="eyebrow">Who We Are</span>
-      <h1>Your Rod Program, Managed from Weihai</h1>
-      <p class="lead">%(brand)s is a brand and export-management office based in Weihai, Shandong
+      <h1>OEM &amp; ODM Rod Programs, Managed from Weihai</h1>
+      <p class="lead">%(brand)s is an OEM and export-management office based in Weihai, Shandong
       Province — the Chinese city that manufactures close to sixty percent of the world's fishing
-      rods. Production is executed by audited partner lines; we run everything that happens between
-      the factory gate and your warehouse: quotations, specifications, sampling, QC reports,
-      documents and communication in your working hours.</p>
-      <p class="lead">We are deliberately brand-first, not factory-locked. For every category we
-      keep qualified alternatives and match your program to the line whose strengths fit it — and
-      if a better option emerges, your program moves without you rewriting a single document. One
-      brand, one contract, one standard of QC, whichever line builds the rods.</p>
+      rods. You specify the rod; we get it built, inspected and shipped. Production runs on audited
+      partner lines while we handle quotations, specifications, sampling, QC reports, documents and
+      communication in your working hours.</p>
+      <p class="lead">Almost everything we build leaves under the buyer's own brand — your logo,
+      your colours, your packaging — because for an importer the brand on the rod is the asset, not
+      ours. We are not locked to one factory either: for every category we keep qualified
+      alternatives and place your program on the line whose strengths genuinely fit it.</p>
     </div>
     <div class="card" style="padding:0;overflow:hidden">
       <img src="assets/images/about-factory-01.webp" alt="Rod manufacturing facility in Weihai, Shandong, China — OEM carbon rod manufacturer" loading="lazy" decoding="async">
@@ -952,6 +989,14 @@ def build_faq():
          [ORG_LD, webpage_ld(title, desc, "faq.html"), breadcrumb_ld(crumbs), faq_ld])
 
 
+def build_configurator():
+    import configurator as C
+    crumbs = [("index.html", "Home"), ("configure.html", "Build Your Rod")]
+    body = C.render_body(wa_link(), FORM_ENDPOINT)
+    page("configure.html", C.TITLE, C.DESC, C.KEYWORDS, body,
+         [ORG_LD, webpage_ld(C.TITLE, C.DESC, "configure.html"), breadcrumb_ld(crumbs)])
+
+
 def build_contact():
     title = "Request a Quote | Fishing Rod OEM Inquiry | Entrol Fishing"
     desc = ("Request a fishing rod OEM quotation from Weihai, China. MOQ 300 pcs/model, samples in "
@@ -1060,14 +1105,16 @@ def build_assets():
     print("wrote assets/logo.svg")
 
     sitemap_urls = ["", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
-                    "rock-surf-rods.html", "products.html", "about.html", "faq.html", "contact.html"]
+                    "rock-surf-rods.html", "products.html", "configure.html", "about.html",
+                    "faq.html", "contact.html"]
     urls = "".join("""
   <url>
     <loc>%s/%s</loc>
     <lastmod>%s</lastmod>
     <changefreq>monthly</changefreq>
     <priority>%s</priority>
-  </url>""" % (DOMAIN, u, TODAY, "1.0" if u in ("", "spinning-rods.html", "carp-rods.html") else "0.8")
+  </url>""" % (DOMAIN, u, TODAY,
+               "1.0" if u in ("", "configure.html", "spinning-rods.html", "carp-rods.html") else "0.8")
         for u in sitemap_urls)
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s\n</urlset>\n' % urls
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
@@ -1092,6 +1139,7 @@ if __name__ == "__main__":
     build_saltwater()
     build_rocksurf()
     build_products()
+    build_configurator()
     build_about()
     build_faq()
     build_contact()

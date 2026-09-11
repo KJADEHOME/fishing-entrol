@@ -124,6 +124,8 @@
 
 ## 5. 上线前内容核对
 
+- [ ] **配置器真实提交测试**：在 `configure.html` 填一份完整规格提交，确认 wangyan@entrol.com 收到全部 25 个字段（字段多，需确认 FormSubmit 邮件不截断）
+- [ ] **GTM 后台建 `configurator_submit` 转化标签**（dataLayer 已埋，含 `options_selected` 与 `spec_summary`）；建议把「选了 ≥5 项」设为高质量询盘信号
 - [ ] 联系三处一致（浮动按钮 / 页脚 / 表单页）：WhatsApp +8615263130999 / WeChat 15263130999 / sales@entrol-fishing.com
 - [ ] CRONY 阿里对话截图已存进 `docs/authorization/weihai-crony/01-alibaba-reply.png`
 - [ ] 图包已替换现有 31 张，并跑通 `build_product_images.py` → `sitegen.py` → `smoke_test.py`

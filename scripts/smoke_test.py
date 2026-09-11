@@ -18,6 +18,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PORT = 8907
 
 PAGES = ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
+         "configure.html",
          "rock-surf-rods.html", "products.html", "about.html", "faq.html", "contact.html",
          "styles.css", "script.js", "product-gallery.css", "product-gallery.js",
          "robots.txt", "assets/logo.svg"]
@@ -85,7 +86,8 @@ try:
     tree = ET.fromstring(sm)
     ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
     locs = [e.text for e in tree.findall(".//s:url/s:loc", ns)]
-    check("[sitemap]", len(locs) == 9, "lists %d urls" % len(locs))
+    HTML_PAGES = [x for x in PAGES if x.endswith(".html")]
+    check("[sitemap]", len(locs) == len(HTML_PAGES), "lists %d urls (expected %d)" % (len(locs), len(HTML_PAGES)))
     for p in ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
               "rock-surf-rods.html", "products.html", "about.html", "faq.html", "contact.html"]:
         check("[sitemap]", any(l.endswith("/" + p) or (p == "index.html" and l.rstrip("/").endswith("entrol-fishing.com") or l.rstrip("/").endswith("/")) for l in locs), p)
@@ -122,6 +124,7 @@ for p in [x for x in PAGES if x.endswith(".html")]:
     _, html = get(p)
     t = html.decode("utf-8", "replace")
     for href in set(re.findall(r'href="([^"#][^"]*)"', t)):
+        href = href.split("?")[0]  # ignore query strings (?rod=carp)
         if href.startswith(("http", "mailto:", "tel:")):
             continue
         local = os.path.normpath(os.path.join(ROOT, href))

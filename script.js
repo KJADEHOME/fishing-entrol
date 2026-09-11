@@ -102,10 +102,13 @@
       // FormSubmit AJAX mode keeps the visitor on-page and shows a status line
       e.preventDefault();
       var status = document.querySelector('.form-status');
+      // drop empty fields so the emailed enquiry stays readable
+      var payload = {};
+      fd.forEach(function (v, k) { if (String(v).trim() !== '') payload[k] = v; });
       fetch(form.action, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.fromEntries(fd))
+        body: JSON.stringify(payload)
       }).then(function (res) {
         if (status) {
           status.textContent = 'Thank you — your inquiry has been received. We reply within one business day (GMT+8).';
@@ -116,6 +119,114 @@
         // fall back to normal POST if fetch fails
         form.removeEventListener('submit', arguments.callee);
         form.submit();
+      });
+    });
+  }
+
+  /* ---------- OEM rod configurator ---------- */
+  var cfgForm = document.getElementById('cfg-form');
+  if (cfgForm) {
+    var ROD_PRESET = {
+      spinning: 'Spinning rod',
+      casting: 'Casting / baitcasting rod',
+      carp: 'Carp rod',
+      boat: 'Boat & jigging rod',
+      surf: 'Surf / rock rod'
+    };
+
+    // preselect rod type when arriving from a category page (?rod=carp)
+    var preset = /[?&]rod=([a-z]+)/.exec(location.search);
+    var rodSel = cfgForm.querySelector('select[name="rod_type"]');
+    if (preset && ROD_PRESET[preset[1]] && rodSel) rodSel.value = ROD_PRESET[preset[1]];
+
+    var listEl = document.getElementById('cfg-list');
+    var countEl = document.getElementById('cfg-count');
+    var sumInput = document.getElementById('cfg-summary-input');
+    var subjInput = document.getElementById('cfg-subject');
+
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function cfgItems() {
+      var out = [];
+      cfgForm.querySelectorAll('select[name]').forEach(function (s) {
+        if (!s.value) return;
+        var lab = cfgForm.querySelector('label[for="' + s.id + '"]');
+        var k = lab ? lab.textContent.replace(/\s*\*$/, '').trim() : s.name;
+        out.push([k, s.value]);
+      });
+      return out;
+    }
+
+    function renderSummary() {
+      var items = cfgItems();
+      if (countEl) {
+        countEl.textContent = items.length + ' option' + (items.length === 1 ? '' : 's') + ' selected';
+      }
+      if (listEl) {
+        listEl.innerHTML = items.map(function (p) {
+          return '<li><span class="k">' + esc(p[0]) + '</span><span class="v">' + esc(p[1]) + '</span></li>';
+        }).join('');
+      }
+      var text = items.map(function (p) { return p[0] + ': ' + p[1]; }).join(' | ');
+      if (sumInput) sumInput.value = text;
+      if (subjInput) {
+        var mkt = cfgForm.querySelector('select[name="target_market"]');
+        subjInput.value = 'OEM configurator — ' + (rodSel && rodSel.value ? rodSel.value : 'rod')
+          + (mkt && mkt.value ? ' — ' + mkt.value : '');
+      }
+      return items;
+    }
+
+    cfgForm.addEventListener('change', renderSummary);
+    renderSummary();
+
+    cfgForm.addEventListener('submit', function (e) {
+      risks = [];
+      var fd = new FormData(cfgForm);
+      var email = (fd.get('email') || '').trim().toLowerCase();
+      var name = (fd.get('name') || '').trim();
+
+      if (fd.get('_honey')) { e.preventDefault(); return; }
+      var domain = email.split('@')[1] || '';
+      if (DISPOSABLE.indexOf(domain) !== -1) flag(3, 'disposable email domain');
+      if (isCompactGibberish(name)) flag(2, 'name is compact gibberish');
+
+      var items = renderSummary();
+      var score = risks.reduce(function (s, r) { return s + r.pts; }, 0);
+      track('configurator_submit', {
+        options_selected: items.length,
+        spec_summary: items.map(function (p) { return p[0] + ': ' + p[1]; }).join(' | '),
+        risk_score: score
+      });
+
+      var st = cfgForm.querySelector('.form-status');
+      if (score >= 4) {
+        e.preventDefault();
+        if (st) {
+          st.textContent = 'Your submission could not be processed. Please reach us directly at sales@entrol-fishing.com or WhatsApp +86 152 6313 0999.';
+          st.style.background = '#FDECEA';
+          st.style.color = '#B03A2E';
+          st.classList.add('show');
+        }
+        return;
+      }
+
+      e.preventDefault();
+      var payload = {};
+      fd.forEach(function (v, k) { if (String(v).trim() !== '') payload[k] = v; });
+      fetch(cfgForm.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (res) {
+        if (st) {
+          st.textContent = 'Specification received — ' + items.length + ' options logged. We reply with pricing, MOQ and sample cost within one business day (GMT+8).';
+          st.classList.add('show');
+        }
+      }).catch(function () {
+        cfgForm.submit();
       });
     });
   }

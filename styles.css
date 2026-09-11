@@ -351,3 +351,45 @@ table.spec td:first-child { font-weight: 700; color: var(--color-primary-dark); 
   .footer-grid { grid-template-columns: 1fr; padding: 40px 0 30px; }
   .footer-bottom { flex-direction: column; }
 }
+
+/* ============ OEM Rod Configurator ============ */
+.cfg-layout { display: grid; grid-template-columns: minmax(0,1fr) 320px; gap: 34px; align-items: start; }
+.cfg-form { display: flex; flex-direction: column; gap: 26px; }
+.cfg-group { border: 1px solid var(--color-border, #E2E8EC); border-radius: 12px; padding: 22px 24px 24px; background: #fff; }
+.cfg-group > h3 { margin: 0 0 4px; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
+.cfg-group > h3 .cfg-step { display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%; background: var(--color-accent, #E8A33D);
+  color: #3A2506; font-size: 0.8rem; font-weight: 800; flex: 0 0 auto; }
+.cfg-group > .cfg-note { margin: 0 0 16px; font-size: 0.88rem; color: var(--color-text-mid, #5A6B74); }
+.cfg-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cfg-fields .form-field.full { grid-column: 1 / -1; }
+.cfg-fields label { font-size: 0.82rem; }
+.cfg-fields select, .cfg-fields input, .cfg-fields textarea { font-size: 0.92rem; }
+.cfg-fields .form-hint { font-size: 0.76rem; margin-top: 2px; }
+
+.cfg-summary { position: sticky; top: 100px; border: 1px solid var(--color-border, #E2E8EC);
+  border-radius: 12px; padding: 20px 22px; background: #F7FAFB; }
+.cfg-summary h3 { margin: 0 0 10px; font-size: 1rem; }
+.cfg-summary .cfg-list { list-style: none; margin: 0 0 14px; padding: 0; font-size: 0.85rem; }
+.cfg-summary .cfg-list li { display: flex; justify-content: space-between; gap: 12px;
+  padding: 6px 0; border-bottom: 1px dashed #DCE4E8; }
+.cfg-summary .cfg-list li:last-child { border-bottom: 0; }
+.cfg-summary .cfg-list .k { color: var(--color-text-mid, #5A6B74); }
+.cfg-summary .cfg-list .v { font-weight: 700; text-align: right; }
+.cfg-summary .cfg-count { font-size: 0.8rem; color: var(--color-text-mid, #5A6B74); margin-bottom: 10px; }
+.cfg-summary .btn { width: 100%; margin-top: 6px; }
+
+.cfg-why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.cfg-why .card { padding: 20px 22px; }
+.cfg-why .card h4 { margin: 0 0 6px; font-size: 0.98rem; }
+.cfg-why .card p { font-size: 0.88rem; }
+
+@media (max-width: 980px) {
+  .cfg-layout { grid-template-columns: 1fr; }
+  .cfg-summary { position: static; }
+  .cfg-why { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .cfg-fields { grid-template-columns: 1fr; }
+  .cfg-why { grid-template-columns: 1fr; }
+}
