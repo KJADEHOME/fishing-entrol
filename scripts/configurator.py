@@ -616,7 +616,7 @@ def render_body(wa_url, form_endpoint, path=None):
         <h3><span class="cfg-step">%d</span>%s</h3>
         <p class="cfg-note">%s</p>
         <div class="cfg-fields">%s</div>
-        %s
+%s
       </fieldset>""" % (display_step, g["title"], g["note"], fields, g.get("extra", "")))
 
     # The page needs rods (for the "start from a model" prefill) and the line,
