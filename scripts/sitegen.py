@@ -30,19 +30,45 @@ TODAY = "2026-09-11"
 
 MANIFEST = json.load(open(os.path.join(ROOT, "scripts", "product_images_manifest.json"), encoding="utf-8"))
 
-NAV = [
-    ("index.html", "Home"),
-    ("products.html", "Products"),
-    ("configure.html", "Build Your Rod"),
-    ("about.html", "About"),
-    ("faq.html", "FAQ"),
-    ("contact.html", "Contact"),
-]
 PRODUCT_NAV = [
     ("spinning-rods.html", "Spinning & Casting Rods"),
     ("carp-rods.html", "Carp Rods"),
     ("saltwater-rods.html", "Saltwater & Boat Rods"),
     ("rock-surf-rods.html", "Rock & Surf Rods"),
+]
+CAPABILITY_NAV = [
+    ("capabilities.html", "Manufacturing Capability"),
+    ("process.html", "How We Work — Quote to Shipment"),
+]
+COMPANY_NAV = [
+    ("about.html", "About Us"),
+    ("faq.html", "FAQ"),
+    ("contact.html", "Contact"),
+]
+# (file, label, submenu) — submenu files also mark the parent as active
+NAV = [
+    ("index.html", "Home", []),
+    ("products.html", "Products", PRODUCT_NAV),
+    ("capabilities.html", "Capabilities", CAPABILITY_NAV),
+    ("oem-builder.html", "OEM Builder", []),
+    ("custom-rod.html", "Custom Rod", []),
+    ("about.html", "About", COMPANY_NAV),
+]
+# Every URL the site publishes — sitemap and internal-link checks come from here.
+ALL_PAGES = [
+    ("", "1.0"),
+    ("spinning-rods.html", "0.9"),
+    ("carp-rods.html", "0.9"),
+    ("saltwater-rods.html", "0.9"),
+    ("rock-surf-rods.html", "0.9"),
+    ("products.html", "0.9"),
+    ("capabilities.html", "0.8"),
+    ("process.html", "0.8"),
+    ("oem-builder.html", "1.0"),
+    ("custom-rod.html", "0.9"),
+    ("about.html", "0.7"),
+    ("faq.html", "0.7"),
+    ("contact.html", "0.8"),
 ]
 # category slug -> configurator preset key (read by script.js from ?rod=)
 CFG_KEY = {
@@ -110,6 +136,68 @@ def spec_table(cols, rows, caption):
             '<tbody>%s</tbody></table></div><p class="table-note">%s</p>' % (th, trs, caption))
 
 
+CARD_KINDS = {
+    "spinning-rod": ("spinning",),
+    "carp-rod": ("carp",),
+    "saltwater-rod": ("boat", "jig"),
+    "rock-surf-rod": ("surf",),
+}
+
+
+def rod_cards(kinds):
+    """Model cards for a category page, generated from the product catalogue.
+
+    Each card is an anchor target (#<sku>) and links into the OEM builder with
+    the model preselected, so a buyer can start from a real rod instead of
+    filling 30 abstract fields from scratch.
+    """
+    if isinstance(kinds, str):
+        kinds = (kinds,)
+    cards = []
+    for kind in kinds:
+        k = cat.PAGE_KINDS[kind]
+        for sub in k["subs"]:
+            for p in sorted(cat.rods_by_sub(sub), key=lambda r: r["specs"]["length_m"]):
+                s = p["specs"]
+                if sub == "casting":
+                    mark = " (cast)"
+                elif sub == "jigging":
+                    mark = " (spin)" if "Spinning" in s.get("reel_type", "") else " (cast)"
+                else:
+                    mark = ""
+                rows = [("Length", "%.2f m (%s)" % (s["length_m"], s["length_ft"]))]
+                if kind == "carp":
+                    rows.append(("Test curve", s["power"]))
+                else:
+                    rows.append(("Power / action", "%s / %s" % (s.get("power", "—"),
+                                                                s.get("action", "—"))))
+                rows.append(("Line rating", s.get("line_rating", "—")))
+                if s.get("cast_weight_g"):
+                    rows.append(("Cast weight", "%s g" % s["cast_weight_g"]))
+                rows += [("Rod weight", "%d g" % s["weight_g"]),
+                         ("Sections", s["sections"]),
+                         ("Handle", s.get("handle", "—")),
+                         ("Reel type", s.get("reel_type", "—"))]
+                dl = "".join("<div class=\"rod-spec\"><span>%s</span><strong>%s</strong></div>"
+                             % (lab, val) for lab, val in rows)
+                cards.append("""
+      <article class="card rod-card" id="%(sku)s">
+        <img src="%(img)s" alt="%(alt)s" loading="lazy" decoding="async">
+        <div class="rod-body">
+          <h3>%(model)s%(mark)s</h3>
+          <p class="rod-name">%(name)s</p>
+          <div class="rod-specs">%(specs)s</div>
+          <div class="rod-actions">
+            <a class="card-link" href="oem-builder.html?model=%(sku)s">Start an OEM program from this rod &rarr;</a>
+            <a class="card-link" href="custom-rod.html?model=%(sku)s">Or build one for yourself</a>
+          </div>
+        </div>
+      </article>""" % {"sku": p["sku"], "img": p["image"], "model": p["model"], "mark": mark,
+                       "name": p["name"], "specs": dl,
+                       "alt": p["model"] + " carbon fishing rod — OEM specification"})
+    return ('<div class="grid grid-3 rod-grid">%s</div>' % "".join(cards))
+
+
 def jsonld(blocks):
     out = []
     for b in blocks:
@@ -123,8 +211,8 @@ ORG_LD = {
     "name": BRAND,
     "url": DOMAIN + "/",
     "logo": DOMAIN + "/assets/logo.svg",
-    "description": "Overseas sales office for carbon fiber fishing rod factories in Weihai, Shandong, China. "
-                   "OEM/ODM spinning, carp, saltwater and surf rods with low MOQs and full customization.",
+    "description": "OEM and export-management office for carbon fishing rod programs in Weihai, Shandong, China. "
+                   "We plan, sample, quality-control and ship spinning, carp, saltwater and surf rods under your brand.",
     "email": EMAIL,
     "telephone": "+8615263130999",
     "address": {
@@ -199,37 +287,46 @@ def nav_html(active):
     def link(f, label):
         cls = ' class="active"' if f == active else ""
         return '<a href="%s"%s>%s</a>' % (f, cls, label)
-    prod_dd = (
-        '<li class="nav-dropdown">%s<ul>%s</ul></li>'
-        % (link("products.html", "Products"),
-           "".join("<li>%s</li>" % link(f, l) for f, l in PRODUCT_NAV)))
-    items = []
-    for f, l in NAV:
-        if f == "products.html":
-            items.append(prod_dd)
-        else:
-            items.append("<li>%s</li>" % link(f, l))
-    return "".join(items)
+
+    def dropdown(f, label, sub):
+        here = f == active or any(sf == active for sf, _ in sub)
+        cls = ' class="active"' if here else ""
+        items = "".join("<li>%s</li>" % link(sf, sl) for sf, sl in sub)
+        return ('<li class="nav-dropdown"><a href="%s"%s>%s</a><ul>%s</ul></li>'
+                % (f, cls, label, items))
+
+    out = []
+    for f, label, sub in NAV:
+        out.append(dropdown(f, label, sub) if sub else "<li>%s</li>" % link(f, label))
+    return "".join(out)
 
 
 def footer_html():
     prod = "".join('<li><a href="%s">%s</a></li>' % (f, l) for f, l in PRODUCT_NAV)
-    comp = "".join('<li><a href="%s">%s</a></li>' % (f, l) for f, l in NAV if f != "products.html")
+    prog = "".join('<li><a href="%s">%s</a></li>' % (f, l) for f, l in [
+        ("oem-builder.html", "OEM Rod Program"),
+        ("custom-rod.html", "One Custom Rod"),
+        ("capabilities.html", "Manufacturing Capability"),
+        ("process.html", "How We Work"),
+        ("about.html", "About Us"),
+        ("faq.html", "FAQ"),
+    ])
     return """
 <div class="container">
   <div class="footer-grid">
     <div class="footer-brand">
       <h4>%(brand)s</h4>
-      <p>Overseas sales office for carbon fiber fishing rod factories in Weihai, Shandong —
-         China's fishing tackle manufacturing capital. OEM and ODM programs for importers,
-         brands and tackle retailers in Australia, Europe, Japan and Korea.</p>
+      <p>An OEM and export-management office for carbon fishing rod programs in Weihai, Shandong —
+         China's fishing tackle manufacturing capital. We plan, sample, quality-control and ship
+         rods under your brand for importers, brands and tackle retailers in Australia, Europe,
+         Japan and Korea.</p>
     </div>
     <div>
       <h4>Rod Categories</h4>
       <ul>%(prod)s</ul>
     </div>
     <div>
-      <h4>Company</h4>
+      <h4>Programs &amp; Company</h4>
       <ul>%(comp)s</ul>
     </div>
     <div>
@@ -246,7 +343,7 @@ def footer_html():
     <span>&copy; 2026 %(brand)s. All rights reserved.</span>
     <span>Carbon fishing rod OEM / ODM · Weihai, Shandong, China</span>
   </div>
-</div>""" % {"brand": BRAND, "prod": prod, "comp": comp, "email": EMAIL,
+</div>""" % {"brand": BRAND, "prod": prod, "comp": prog, "email": EMAIL,
              "wa": wa_link(), "wechat": WECHAT}
 
 
@@ -334,7 +431,7 @@ def build_index():
     cosmetics and packaging. We build it in Weihai — the city that produces the majority of the
     world's fishing rods — from 300 pieces per model, under your own brand.</p>
     <div class="btn-row">
-      <a class="btn btn-accent" href="configure.html">Build Your Rod &rarr;</a>
+      <a class="btn btn-accent" href="oem-builder.html">Build Your Rod &rarr;</a>
       <a class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.7)" href="products.html">Browse Rod Categories</a>
     </div>
     <div class="hero-stats">
@@ -445,7 +542,7 @@ def build_index():
       rod bag, tube or printed retail box. You sell it under your name.</p></div>
     </div>
     <div class="center" style="margin-top:30px">
-      <a class="btn btn-accent" href="configure.html">Open the Configurator &rarr;</a>
+      <a class="btn btn-accent" href="oem-builder.html">Open the Configurator &rarr;</a>
       <p class="form-hint" style="margin-top:12px">About two minutes. Skip anything you are unsure
       about — we will advise on the rest.</p>
     </div>
@@ -519,6 +616,16 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
 </section>
 <section class="section">
   <div class="container">
+    <span class="eyebrow">Models</span>
+    <h2>Every Model in This Category</h2>
+    <p class="lead">These are the rods currently tooled on our Weihai lines. Pick one and the
+    builder opens with its real measurements already filled in — length, power, line rating, reel
+    type and handle — and you change only what you want to change.</p>
+    %(cards)s
+  </div>
+</section>
+<section class="section section-alt">
+  <div class="container">
     <span class="eyebrow">Specifications</span>
     <h2>Reference Specification Table</h2>
     <p class="lead">Real production data from current Weihai tooling. Any model can be customized —
@@ -526,7 +633,7 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
     %(table)s
   </div>
 </section>
-<section class="section section-alt">
+<section class="section">
   <div class="container grid grid-2">
     %(custom)s
   </div>
@@ -538,7 +645,7 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
       <p>%(moq)s Choose carbon grade, guide train, reel seat, handle and packaging in the
       configurator — you will have a quotable specification in about two minutes.</p>
       <div class="btn-row">
-        <a class="btn btn-accent" href="configure.html?rod=%(cfgkey)s">Open the Rod Configurator</a>
+        <a class="btn btn-accent" href="oem-builder.html?rod=%(cfgkey)s">Open the OEM Rod Builder</a>
         <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp Us</a>
       </div>
     </div>
@@ -547,6 +654,7 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
         "breadcrumb": "", "h1": h1, "h1short": h1.split(" — ")[0], "intro": intro_html,
         "wa": wa_link(), "cfgkey": CFG_KEY.get(slug, "spinning"),
         "gallery": gallery(slug), "table": spec_table(cols, rows, table_note),
+        "cards": rod_cards(CARD_KINDS.get(slug, ("spinning",))),
         "custom": custom_html, "moq": MOQ_NOTE,
     }
     page(fname, title, desc, kw, body, [ORG_LD, webpage_ld(title, desc, fname), crumb_ld, product_ld])
@@ -724,12 +832,54 @@ def build_rocksurf():
              desc, kw, intro, SURF_COLS, SURF_ROWS, MOQ_NOTE, custom, None)
 
 
+LIB_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Power / Rating",
+            "Tip / Butt Dia.", "Line Rating", "Handle", "Reel Type"]
+
+
+def library_rows(kind):
+    """Spec rows for the full-model library — same data as the category pages,
+    plus the reel type so the table stands on its own."""
+    k = cat.PAGE_KINDS[kind]
+    out = []
+    for sub in k["subs"]:
+        for p in sorted(cat.rods_by_sub(sub), key=lambda r: r["specs"]["length_m"]):
+            s = p["specs"]
+            if sub == "casting":
+                mark = " (cast)"
+            elif sub == "jigging":
+                mark = " (spin)" if "Spinning" in s.get("reel_type", "") else " (cast)"
+            else:
+                mark = ""
+            out.append([p["model"] + mark,
+                        "%.2f m (%s)" % (s["length_m"], s["length_ft"]),
+                        cat._closed(p), s["sections"], "%d g" % s["weight_g"],
+                        k["c6"](s), cat._dia(p), k["c8"](s),
+                        s.get("handle", "—"), s.get("reel_type", "—")])
+    return out
+
+
+def comp_rows(items):
+    out = []
+    for p in items:
+        bits = []
+        for key, val in p["specs"].items():
+            if val in (None, "", "—"):
+                continue
+            bits.append("%s %s" % (str(key).replace("_", " ").title(), val))
+        out.append([p["sku"], p["name"], ", ".join(bits)])
+    return out
+
+
+COMP_COLS = ["SKU", "Description", "Specification"]
+
+
 def build_products():
-    title = "Fishing Rod Product Range | OEM Carbon Rods | Entrol Fishing"
-    desc = ("All carbon fishing rod categories from Entrol Fishing: spinning & casting, carp, "
-            "saltwater & boat, rock & surf. OEM/ODM from Weihai, China. MOQ 300 pcs/model.")
-    kw = ("fishing rod product range, OEM fishing rods China, carbon rod categories, wholesale fishing "
-          "rods, Weihai rod supplier")
+    title = "Rod Models & Components | OEM Spec Library | Entrol Fishing"
+    desc = ("Every rod model and component we supply: 22 carbon rod specifications, braid, leader, "
+            "lures and reels. Start an OEM program from an existing model.")
+    assert len(title) <= 65 and len(desc) <= 160
+    kw = ("fishing rod model list, OEM fishing rod specifications, carbon rod models, fishing rod "
+          "components wholesale, braid and leader OEM, fishing reel sourcing")
     items = "".join("""
       <div class="card cat-card">
         <img src="%(img)s" alt="%(alt)s" loading="lazy" decoding="async">
@@ -759,26 +909,83 @@ def build_products():
             for i, (f, n) in enumerate(PRODUCT_NAV)
         ],
     }
+    tables = "".join("""
+    <h3 class="lib-head">%(label)s <span>&middot; %(n)d models</span></h3>
+    %(table)s""" % {"label": label, "n": len(rows),
+                    "table": spec_table(LIB_COLS, rows,
+                                        "Current Weihai tooling. Every model can be re-specced — "
+                                        "length, power, guides, seat, handle, cosmetics, packaging.")}
+        for label, rows in [
+            ("Spinning &amp; casting rods", library_rows("spinning")),
+            ("Carp rods", library_rows("carp")),
+            ("Boat &amp; bottom rods", library_rows("boat")),
+            ("Slow-pitch jigging rods", library_rows("jig")),
+            ("Rock &amp; surf rods", library_rows("surf")),
+        ])
+
+    comp_html = "".join("""
+    <details class="lib-details"%s>
+      <summary>%s <span>&middot; %d SKUs</span></summary>
+      %s
+    </details>""" % (" open" if i == 0 else "", label, len(rows),
+                     spec_table(COMP_COLS, rows, note))
+        for i, (label, rows, note) in enumerate([
+            ("Braid, leader &amp; mono", comp_rows(cat.LINES),
+             "Neutral-specification lines — we do not print a third-party brand on a spool we have "
+             "not been asked to. Branded spools from 1,000 pcs."),
+            ("Lures &amp; metal jigs", comp_rows(cat.LURES),
+             "Soft plastics, hard lures and metal jigs sourced to your species, method and price "
+             "point. Mixed selections in one carton are normal."),
+            ("Reels", comp_rows(cat.REELS),
+             "Reel sizes we can source alongside a rod program. Gear ratio, drag and weight are "
+             "specified per brief — tell us the target and we come back with options."),
+        ]))
+
     body = """
 <section class="section" style="padding-top:34px">
   <div class="container">
-    <span class="eyebrow">Product Range</span>
-    <h1>Fishing Rod Categories We Manufacture</h1>
-    <p class="lead">Four rod programs cover the volume segments of the B2B tackle market. Every
-    category ships from Weihai, Shandong with MOQ 300 pieces per model, 15–20 day sampling and
-    full OEM customization — blanks, components, cosmetics and packaging.</p>
+    <span class="eyebrow">Product Library</span>
+    <h1>Every Model We Build, With Its Real Numbers</h1>
+    <p class="lead">%(nrods)d rod models are tooled on our Weihai lines right now, alongside the
+    line, lure and reel ranges we source to go with them. These are production specifications, not
+    a wish list — pick one and the OEM builder opens with its measurements already filled in.</p>
     <div class="grid grid-2" style="margin-top:38px">%(items)s</div>
-    <div class="cta-band" style="margin-top:46px">
-      <h2>Not Sure Which Blank Fits Your Market?</h2>
-      <p>Send us your target species, price point and market. We'll spec two or three options with
-      quotes — no obligation.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">Rod Models</span>
+    <h2>The Full Specification Library</h2>
+    <p class="lead">Lengths, powers, line ratings and weights as they come off the line. Treat them
+    as a starting point: almost every OEM program changes something.</p>
+    %(tables)s
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Components</span>
+    <h2>What Goes in the Box With the Rod</h2>
+    <p class="lead">We are a rod builder, not a reel factory — so the components below are sourced
+    to your brief rather than made by us, and we say so. How they are labelled is your call.</p>
+    %(comp)s
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="cta-band">
+      <h2>Start From a Model, or Start From Scratch</h2>
+      <p>Found a model close to what you want? Open the builder with it preselected and change only
+      what needs changing. Nothing fits? Describe the rod and we will spec it from zero.</p>
       <div class="btn-row">
-        <a class="btn btn-accent" href="contact.html">Request a Quote</a>
-        <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp Us</a>
+        <a class="btn btn-accent" href="oem-builder.html">Open the OEM Builder &rarr;</a>
+        <a class="btn btn-outline" href="custom-rod.html">Build one rod for yourself</a>
       </div>
     </div>
   </div>
-</section>""" % {"items": items, "wa": wa_link()}
+</section>""" % {"items": items, "tables": tables, "comp": comp_html, "nrods": len(cat.RODS)}
     page("products.html", title, desc, kw, body,
          [ORG_LD, webpage_ld(title, desc, "products.html"),
           breadcrumb_ld([("index.html", "Home"), ("products.html", "Products")]), item_list_ld])
@@ -989,12 +1196,270 @@ def build_faq():
          [ORG_LD, webpage_ld(title, desc, "faq.html"), breadcrumb_ld(crumbs), faq_ld])
 
 
-def build_configurator():
+def build_oem_builder():
     import configurator as C
-    crumbs = [("index.html", "Home"), ("configure.html", "Build Your Rod")]
-    body = C.render_body(wa_link(), FORM_ENDPOINT)
-    page("configure.html", C.TITLE, C.DESC, C.KEYWORDS, body,
-         [ORG_LD, webpage_ld(C.TITLE, C.DESC, "configure.html"), breadcrumb_ld(crumbs)])
+    crumbs = [("index.html", "Home"), ("oem-builder.html", "OEM Rod Builder")]
+    body = C.render_body(wa_link(), FORM_ENDPOINT, path="oem")
+    page("oem-builder.html", C.TITLE_OEM, C.DESC_OEM, C.KEYWORDS_OEM, body,
+         [ORG_LD, webpage_ld(C.TITLE_OEM, C.DESC_OEM, "oem-builder.html"),
+          breadcrumb_ld(crumbs)])
+
+
+def build_custom_rod():
+    import configurator as C
+    crumbs = [("index.html", "Home"), ("custom-rod.html", "Custom Fishing Rod")]
+    body = C.render_body(wa_link(), FORM_ENDPOINT, path="custom")
+    page("custom-rod.html", C.TITLE_CUSTOM, C.DESC_CUSTOM, C.KEYWORDS_CUSTOM, body,
+         [ORG_LD, webpage_ld(C.TITLE_CUSTOM, C.DESC_CUSTOM, "custom-rod.html"),
+          breadcrumb_ld(crumbs)])
+
+
+def build_capabilities():
+    title = "Manufacturing Capability | Carbon Rod OEM | Entrol Fishing"
+    desc = ("What our Weihai partner lines build: 24T-46T carbon blanks, guide trains, reel "
+            "seats, handles, cosmetics, packaging and in-line QC for OEM rod programs.")
+    assert len(title) <= 65 and len(desc) <= 160
+    kw = ("fishing rod manufacturing capability, carbon blank OEM, rod building process, Fuji "
+          "guides OEM, custom rod packaging, fishing rod QC")
+    crumbs = [("index.html", "Home"), ("capabilities.html", "Manufacturing Capability")]
+    body = """
+<section class="section" style="padding-top:34px">
+  <div class="container">
+    <span class="eyebrow">Manufacturing Capability</span>
+    <h1>What the Lines in Weihai Can Actually Build</h1>
+    <p class="lead">Capability claims are easy to write and hard to verify, so this page sticks to
+    what our partner lines do every week. Each heading below is a decision you make on a rod
+    program — and each one has a cost, a lead time and a minimum attached to it. If you need
+    something that is not on this page, ask; the answer is often yes, just not on this line.</p>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">The Blank</span>
+    <h2>Carbon Grade, Taper and How They Are Chosen</h2>
+    <p class="lead">The blank is the rod. Everything else is fitted to it, and everything else can
+    be changed later — the taper cannot.</p>
+    <div class="grid grid-3" style="margin-top:30px">
+      <div class="card"><h3>24T–30T</h3><p>Tougher, more forgiving, cheaper. The right answer for
+      entry and mid-tier programs, heavy boat rods, and anywhere a rod is likely to be knocked
+      about. Slightly heavier for a given power.</p></div>
+      <div class="card"><h3>30T–40T</h3><p>The volume sweet spot: noticeably lighter and more
+      sensitive without becoming brittle. Most branded spinning and carp programs sit here.</p></div>
+      <div class="card"><h3>40T–46T</h3><p>Maximum sensitivity and the lowest weight, at the cost
+      of impact resistance and price. Used where feel sells the rod — finesse spinning, specimen
+      carp — and usually with a scrim or mixed layup for safety.</p></div>
+    </div>
+    <div class="card" style="margin-top:26px">
+      <h3 style="margin-top:0">Taper, not just tonnage</h3>
+      <p>Two rods built from identical cloth fish completely differently. Fast, moderate-fast and
+      parabolic tapers are produced by changing the mandrel and the ply schedule, which is why we
+      ask for a target species and a target retail price before we recommend a blank — the grade
+      follows the price, not the other way round.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Components</span>
+    <h2>Guide Train, Reel Seat and Handle</h2>
+    <div class="cfg-why" style="margin-top:26px">
+      <div class="card"><h4>Guide train</h4><p>Single-foot, double-foot, KW anti-tangle and micro
+      guide layouts. Rings in Alconite, SiC or Torzite on stainless or titanium frames. Guide count
+      and spacing are set from your length and line rating, not copied from a catalogue — a badly
+      spaced train is the most common cause of a rod that casts worse than its price suggests.</p></div>
+      <div class="card"><h4>Reel seat</h4><p>Screw-down seats in the patterns buyers already know
+      (VSS, ECS, ACS, TCS and their equivalents), plus custom collars and carbon inserts. Trigger
+      seats for baitcasting, slim profiles for carp, exposed-blank designs for finesse spinning.</p></div>
+      <div class="card"><h4>Handle</h4><p>Full grip, split grip or custom length. Cork (including
+      graded and composite cork), EVA in any density and colour, or shrink tube over carbon. Shaped
+      foregrips and butt caps made to your drawing.</p></div>
+      <div class="card"><h4>Wrapping &amp; cosmetics</h4><p>Thread colour, metallic trims, decals,
+      hydro-dip patterns, matte or gloss clear coat. Cosmetics are the cheapest way to make a rod
+      look like your brand and the easiest thing to get wrong — we send a photo of the first
+      wrapped blank before the run starts.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">Your Brand</span>
+    <h2>Logo Methods and Packaging</h2>
+    <div class="grid grid-2" style="margin-top:28px">
+      <div class="card">
+        <h3>Getting your name on the rod</h3>
+        <ul class="feature-list">
+          <li><strong>Silk-screen</strong> — the default. Any colour, low tooling cost, durable
+          under a clear coat.</li>
+          <li><strong>Laser engraving</strong> — permanent, no ink, works on reel seats and metal
+          parts. Also how single custom rods are personalised.</li>
+          <li><strong>Hydro-dip / water transfer</strong> — full patterns and camo across the
+          blank; higher set-up cost, better suited to longer runs.</li>
+          <li><strong>Decals &amp; badges</strong> — for complex artwork and multi-colour logos
+          that screen printing cannot hold.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>How it leaves the factory</h3>
+        <ul class="feature-list">
+          <li><strong>Rod bag</strong> — cloth or non-woven, printed with your logo.</li>
+          <li><strong>Tube or triangular carton</strong> — sized to the closed length, printed
+          retail artwork or plain.</li>
+          <li><strong>Retail box</strong> — full-colour print, barcode, hang tab, warning text in
+          your market's language.</li>
+          <li><strong>Master carton</strong> — specced for container efficiency, not just to
+          survive the trip.</li>
+        </ul>
+        <p class="form-hint" style="margin-top:10px">Printed packaging carries its own minimum
+        because the printer does — usually 500–1,000 units for a custom printed box.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Quality</span>
+    <h2>What We Check, and When You Hear About It</h2>
+    <p class="lead">Nobody can promise zero defects on a hand-finished product. What we can promise
+    is that you see the rod being built, and that a problem is our phone call to make, not yours to
+    discover on the shelf.</p>
+    <div class="grid grid-4" style="margin-top:30px">
+      <div class="card"><h3>Incoming</h3><p>Blanks checked for straightness, weight and finish;
+      components counted and inspected before they reach the line.</p></div>
+      <div class="card"><h3>In-line</h3><p>Guide alignment, wrapping tension and epoxy checked
+      during assembly, not only at the end of it.</p></div>
+      <div class="card"><h3>Pre-shipment</h3><p>Photo report plus a defect-rate summary against an
+      AQL you set. Third-party inspection welcomed and coordinated by us.</p></div>
+      <div class="card"><h3>Documents</h3><p>Packing list, commercial invoice, certificate of
+      origin and any market-specific paperwork agreed up front.</p></div>
+    </div>
+    <div class="cta-band" style="margin-top:36px">
+      <h2>Want the Capability List as a Document?</h2>
+      <p>We keep a one-page capability sheet with the ranges, minimums and lead times for each
+      process above. It is easier to forward to a colleague than a web page.</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="contact.html">Request the Capability Sheet</a>
+        <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">Or ask on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>""" % {"wa": wa_link()}
+    page("capabilities.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "capabilities.html"), breadcrumb_ld(crumbs)])
+
+
+def build_process():
+    title = "How We Work | OEM Rod Process & Lead Times | Entrol Fishing"
+    desc = ("From first inquiry to landed goods: RFQ, quotation, sampling, production, inspection "
+            "and shipment for OEM fishing rod programs built in Weihai, China.")
+    assert len(title) <= 65 and len(desc) <= 160
+    kw = ("fishing rod OEM process, rod sampling lead time, FOB Qingdao fishing rods, rod "
+          "production lead time, OEM rod shipping, How to import fishing rods")
+    crumbs = [("index.html", "Home"), ("process.html", "How We Work")]
+    body = """
+<section class="section" style="padding-top:34px">
+  <div class="container">
+    <span class="eyebrow">How We Work</span>
+    <h1>From First Message to Landed Goods</h1>
+    <p class="lead">Six stages, and you know where the order is in all six. The numbers below are
+    the ones we actually work to — a sample in 15–20 days, production 35–45 days after you approve
+    it — but they move with the season, so treat them as planning figures and confirm on the quote.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="grid grid-3" style="margin-top:0">
+      <div class="card"><h3>1 · Enquiry</h3><p>Send a spec, a reference rod, or just the species
+      and the price point. The configurator on the OEM page produces the most useful first
+      message, but an email or a photo works too.</p>
+      <p class="form-hint">You hear back within one business day (GMT+8).</p></div>
+      <div class="card"><h3>2 · Quotation</h3><p>A costed build sheet: blank, components,
+      cosmetics, packaging, labour, MOQ, sample cost and an estimated freight figure. Each part on
+      its own line so you can see what the reel costs against the rod.</p></div>
+      <div class="card"><h3>3 · Sample</h3><p>One pre-production sample built to the agreed spec,
+      ready in 15–20 days. Sample cost is normally credited against the production order.</p></div>
+      <div class="card"><h3>4 · Approval</h3><p>You test it. Changes at this stage are normal and
+      cheap — changing a guide layout after 3,000 rods are wrapped is neither.</p></div>
+      <div class="card"><h3>5 · Production</h3><p>35–45 days after sample approval. Photo reports
+      at blank, wrapping and finishing milestones; pre-shipment inspection against an agreed
+      AQL.</p></div>
+      <div class="card"><h3>6 · Shipment</h3><p>Consolidated sea or air from Qingdao with full
+      export documentation. We track until it is on the water and confirm the arrival estimate.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">Lead Times</span>
+    <h2>Where the Weeks Actually Go</h2>
+    <div class="table-wrap">
+      <table class="spec">
+        <thead><tr><th>Stage</th><th>Typical duration</th><th>What can delay it</th></tr></thead>
+        <tbody>
+          <tr><td>Quotation</td><td>1 business day</td><td>A spec that needs component makers to price — reels and line add two to three days.</td></tr>
+          <tr><td>Sample build</td><td>15–20 days</td><td>Custom blanks, hydro-dip patterns and printed packaging each add time.</td></tr>
+          <tr><td>Sample shipping</td><td>3–7 days by air</td><td>Customs clearance at your end, which we cannot control.</td></tr>
+          <tr><td>Production</td><td>35–45 days</td><td>Peak season (roughly September to February for the following spring), or a change of spec mid-run.</td></tr>
+          <tr><td>Sea freight</td><td>15–20 days to Australia, 30–40 days to Northern Europe</td><td>Port congestion and transhipment.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Plan backwards from the date the rods need to be on the shelf. For a
+    European spring season, the conversation starts in the autumn.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container grid grid-2">
+    <div class="card">
+      <h3 style="margin-top:0">Trade terms &amp; payment</h3>
+      <ul class="feature-list">
+        <li><strong>EXW / FOB Qingdao</strong> — the default for volume orders. You control the
+        freight forwarder, or we quote one.</li>
+        <li><strong>CIF / DDP</strong> — available to major ports and, for DDP, selected markets.
+        Slower to quote and worth it mainly for first-time importers.</li>
+        <li><strong>Payment</strong> — 30%% deposit with the order, balance against bill of lading.
+        Other structures are negotiable on repeat programs.</li>
+        <li><strong>Samples</strong> — paid up front, credited back when a production order is
+        placed.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">What slows a program down</h3>
+      <ul class="feature-list">
+        <li>A target retail price that is not shared — every component decision then has to be
+        re-quoted twice.</li>
+        <li>Choosing a carbon grade before choosing the species and method.</li>
+        <li>Printed packaging approved late; the printer is usually the longest lead item.</li>
+        <li>Compliance questions raised after tooling, especially REACH for the EU and UKCA for
+        Great Britain.</li>
+      </ul>
+      <p class="form-hint" style="margin-top:10px">Tell us these four things in the first email and
+      the quote will be right the first time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="cta-band">
+      <h2>Start With a Specification, Not a Price List</h2>
+      <p>The OEM builder takes about two minutes and gives us everything we need for an accurate
+      first quote — including the two answers that matter most: how many, and what it sells for.</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="oem-builder.html">Open the OEM Builder &rarr;</a>
+        <a class="btn btn-outline" href="contact.html">Or just send us a message</a>
+      </div>
+    </div>
+  </div>
+</section>""" % {}
+    page("process.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "process.html"), breadcrumb_ld(crumbs)])
 
 
 def build_contact():
@@ -1104,18 +1569,13 @@ def build_assets():
         f.write(logo)
     print("wrote assets/logo.svg")
 
-    sitemap_urls = ["", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
-                    "rock-surf-rods.html", "products.html", "configure.html", "about.html",
-                    "faq.html", "contact.html"]
     urls = "".join("""
   <url>
     <loc>%s/%s</loc>
     <lastmod>%s</lastmod>
     <changefreq>monthly</changefreq>
     <priority>%s</priority>
-  </url>""" % (DOMAIN, u, TODAY,
-               "1.0" if u in ("", "configure.html", "spinning-rods.html", "carp-rods.html") else "0.8")
-        for u in sitemap_urls)
+  </url>""" % (DOMAIN, u, TODAY, pri) for u, pri in ALL_PAGES)
     sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">%s\n</urlset>\n' % urls
     with open(os.path.join(ROOT, "sitemap.xml"), "w", encoding="utf-8", newline="\n") as f:
         f.write(sitemap)
@@ -1139,7 +1599,10 @@ if __name__ == "__main__":
     build_saltwater()
     build_rocksurf()
     build_products()
-    build_configurator()
+    build_capabilities()
+    build_process()
+    build_oem_builder()
+    build_custom_rod()
     build_about()
     build_faq()
     build_contact()

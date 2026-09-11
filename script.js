@@ -139,6 +139,19 @@
     var rodSel = cfgForm.querySelector('select[name="rod_type"]');
     if (preset && ROD_PRESET[preset[1]] && rodSel) rodSel.value = ROD_PRESET[preset[1]];
 
+    // ?model=CRS741MF — arriving from a model card, so start from that rod
+    var modelParam = /[?&]model=([A-Za-z0-9\-]+)/.exec(location.search);
+    var modelSel = cfgForm.querySelector('select[name="base_model"]');
+    if (modelParam && modelSel) {
+      var wanted = modelParam[1].toUpperCase();
+      for (var mi = 0; mi < modelSel.options.length; mi++) {
+        if (modelSel.options[mi].value.toUpperCase() === wanted) {
+          modelSel.value = modelSel.options[mi].value;
+          break;
+        }
+      }
+    }
+
     /* ---------- two paths: OEM program vs a single custom rod ---------- */
     var CATALOG = [];
     try {
@@ -148,7 +161,13 @@
 
     function currentPath() {
       var r = cfgForm.querySelector('input[name="build_path"]:checked');
-      return r ? r.value : 'oem';
+      if (r) return r.value;
+      // Dedicated pages (oem-builder / custom-rod) have no switch — the path
+      // arrives in a hidden field instead.
+      var fx = cfgForm.getAttribute('data-path');
+      if (fx) return fx;
+      var h = cfgForm.querySelector('input[name="build_path"][type="hidden"]');
+      return h ? h.value : 'oem';
     }
 
     function applyPath() {
@@ -820,6 +839,7 @@
 
     buildKit();
     applyPath();
+    if (modelSel && modelSel.value) applyModel();
     cfgForm.addEventListener('change', renderSummary);
     renderSummary();
     syncKit();

@@ -18,8 +18,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PORT = 8907
 
 PAGES = ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
-         "configure.html",
-         "rock-surf-rods.html", "products.html", "about.html", "faq.html", "contact.html",
+         "rock-surf-rods.html", "products.html", "oem-builder.html", "custom-rod.html",
+         "capabilities.html", "process.html", "about.html", "faq.html", "contact.html",
          "styles.css", "script.js", "product-gallery.css", "product-gallery.js",
          "robots.txt", "assets/logo.svg"]
 IMAGES = sorted(os.path.relpath(p, ROOT).replace("\\", "/")
@@ -89,7 +89,8 @@ try:
     HTML_PAGES = [x for x in PAGES if x.endswith(".html")]
     check("[sitemap]", len(locs) == len(HTML_PAGES), "lists %d urls (expected %d)" % (len(locs), len(HTML_PAGES)))
     for p in ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
-              "rock-surf-rods.html", "products.html", "about.html", "faq.html", "contact.html"]:
+              "rock-surf-rods.html", "products.html", "oem-builder.html", "custom-rod.html",
+              "capabilities.html", "process.html", "about.html", "faq.html", "contact.html"]:
         check("[sitemap]", any(l.endswith("/" + p) or (p == "index.html" and l.rstrip("/").endswith("entrol-fishing.com") or l.rstrip("/").endswith("/")) for l in locs), p)
 except Exception as e:
     fail += 1

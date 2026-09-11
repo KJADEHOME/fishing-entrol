@@ -1,7 +1,7 @@
 # 配置器两条路径设计说明
 
 更新日期：2026-09-12
-适用范围：`configure.html`（`scripts/configurator.py` + `script.js`）
+适用范围：`oem-builder.html`（OEM 量产路径）与 `custom-rod.html`（个人定制路径），由 `scripts/configurator.py` 按 `path` 渲染 + `script.js` 驱动
 
 ---
 

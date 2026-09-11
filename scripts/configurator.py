@@ -473,18 +473,126 @@ def _field_html(f):
             % (cls, name, label, ctl, hint))
 
 
-def render_body(wa_url, form_endpoint):
+PAGE_META = {
+    None: {
+        "eyebrow": "Rod Configurator",
+        "h1": "Build Your Rod — We Quote What You Choose",
+        "lead": "Pick what matters to you and skip the rest. Every option below is something our "
+                "Weihai lines actually build, so the specification you create here goes straight "
+                "into a quotation — no generic catalogue, no waiting for someone to guess your "
+                "market. You will get pricing, MOQ, sample cost and a freight estimate within one "
+                "business day.",
+        "second": "<p><strong>If two of your choices will not work together, the site tells you "
+                  "here and now.</strong> A spinning blank with a baitcasting reel, a 2-metre rod "
+                  "asked to throw 100 g, PE 0.6 behind a heavy shore jig — each of those is a rod "
+                  "that breaks, casts badly or injures someone, and each one is caught before it "
+                  "reaches a production order. Watch the summary panel as you go.</p>",
+    },
+    "oem": {
+        "eyebrow": "OEM Program",
+        "h1": "Define the Rod Your Brand Sells",
+        "lead": "This is the form for a production program: you are deciding what goes on your "
+                "shelves, in your carton and under your logo. Work through the groups below and we "
+                "come back with a costed build sheet — blank, components, cosmetics, packaging, "
+                "MOQ, sample cost and freight — within one business day.",
+        "second": "<p><strong>Two answers shape everything else: how many, and what it has to sell "
+                  "for.</strong> Give us the quantity per model and the retail price you are aiming "
+                  "at, and we engineer towards that number instead of quoting a rod you then have "
+                  "to talk down. If two of your choices will not work together — a baitcasting reel "
+                  "on a spinning blank, PE 0.6 behind a heavy shore jig — the page flags it here, "
+                  "before it reaches a production order.</p>",
+    },
+    "custom": {
+        "eyebrow": "One Custom Rod",
+        "h1": "One Rod, Built Around How You Fish",
+        "lead": "This is the form for a single rod, or two — yours, not a shelf full of them. "
+                "Choose the blank and the components, add the reel, line and lures you want "
+                "alongside it, tell us what to engrave, and we quote the whole thing before "
+                "anything is built.",
+        "second": "<p><strong>There is no minimum, and there is no stock to pick from.</strong> "
+                  "Your rod is made after you order it — which is also why a rod carrying your own "
+                  "engraving cannot be returned. We send photos before it ships, but the rod is "
+                  "yours the moment it is built. If two of your choices will not work together, "
+                  "the page flags it here and now.</p>",
+    },
+}
+
+CUSTOM_KIT_BLOCK = """
+<section class="section">
+  <div class="container">
+    <div class="center">
+      <span class="eyebrow">What Comes With It</span>
+      <h2>Rod, Reel, Line and Lures — You Decide How Much</h2>
+      <p class="lead">A custom rod does not have to arrive alone. Add a reel, line or a starter set
+      of lures and we source them to the same brief, then ship the lot in one package. We do not
+      put our own badge on someone else's reel: the rod is ours to build, the components are
+      sourced to what you asked for.</p>
+    </div>
+    <div class="cfg-why" style="margin-top:30px">
+      <div class="card"><h4>Rod (built for you)</h4><p>Your blank, guides, seat, handle, wrapping
+      colours and engraving. One is enough — there is no minimum on this page.</p></div>
+      <div class="card"><h4>Reel (sourced to your brief)</h4><p>Size, gear ratio, drag and budget.
+      We come back with two or three options and you pick; add more than one if you fish two
+      methods.</p></div>
+      <div class="card"><h4>Line &amp; leader</h4><p>Braid and fluorocarbon at the rating the page
+      recommends for your rod, in as many spools as you want. We can spool it on the reel before
+      shipping.</p></div>
+      <div class="card"><h4>Lures &amp; terminal tackle</h4><p>Soft plastics, metal jigs or hard
+      lures chosen for your species and method. Tell us how many of each — mixed selections are
+      normal.</p></div>
+    </div>
+
+    <div class="card" style="margin-top:30px">
+      <h3 style="margin-top:0">Three things to know before you send this</h3>
+      <ul class="feature-list">
+        <li><strong>Lead time.</strong> A single custom rod takes about 20–25 days to build, plus
+        shipping to your country. We confirm the date before you pay anything.</li>
+        <li><strong>Deposit.</strong> Custom builds start on a 50% deposit, with the balance due
+        before shipment. Photos of the finished rod go out first.</li>
+        <li><strong>No returns on engraved rods.</strong> Once your name or text is on the blank it
+        cannot be sold to anyone else, so custom rods are not returnable. Damage in transit is of
+        course a different matter — we sort that out with the carrier.</li>
+      </ul>
+      <p class="form-hint" style="margin-top:12px">Freight for a single rod is quoted to your door
+      before the build starts. On a long, one-piece blank it can be a real share of the total, so
+      it is worth seeing that number first.</p>
+    </div>
+
+    <div class="center" style="margin-top:28px">
+      <a class="btn btn-accent" href="contact.html">Ask a Question First</a>
+    </div>
+  </div>
+</section>
+"""
+
+
+def render_body(wa_url, form_endpoint, path=None):
+    """Render the configurator form.
+
+    path=None  -> combined page with the OEM / personal switch at the top
+    path=oem   -> OEM program page only (switch replaced by a hidden field)
+    path=custom-> personal rod page only
+    """
+    fixed = path in ("oem", "custom")
     groups = []
     for g in GROUPS:
-        fields = "".join(_field_html(f) for f in g["fields"])
-        path_attr = ' data-path="%s"' % g["path"] if g.get("path") else ""
+        if fixed and g.get("step") == 0:
+            continue
+        if fixed and g.get("path") and g["path"] != path:
+            continue
+        fl = g["fields"]
+        if fixed:
+            fl = [f for f in fl if not f.get("path") or f["path"] == path]
+        if not fl:
+            continue
+        fields = "".join(_field_html(f) for f in fl)
         groups.append("""
-      <fieldset class="cfg-group"%s>
+      <fieldset class="cfg-group">
         <h3><span class="cfg-step">%d</span>%s</h3>
         <p class="cfg-note">%s</p>
         <div class="cfg-fields">%s</div>
         %s
-      </fieldset>""" % (path_attr, g["step"], g["title"], g["note"], fields, g.get("extra", "")))
+      </fieldset>""" % (g["step"], g["title"], g["note"], fields, g.get("extra", "")))
 
     # The page needs rods (for the "start from a model" prefill) and the line,
     # lure and reel rows (for the accessory picker), so ship a slimmed full
@@ -495,27 +603,24 @@ def render_body(wa_url, form_endpoint):
     catalog_payload = json.dumps(slim, ensure_ascii=False,
                                  separators=(",", ":")).replace("</", "<\\/")
 
-    return """
+    meta = PAGE_META.get(path, PAGE_META[None])
+    path_field = ('<input type="hidden" name="build_path" value="%s">' % path) if fixed else ""
+    body = """
 <script type="application/json" id="catalog-data">%(catalog)s</script>
 
 <section class="section" style="padding-top:34px">
   <div class="container">
-    <span class="eyebrow">Rod Configurator</span>
-    <h1>Build Your Rod — We Quote What You Choose</h1>
-    <p class="lead">Pick what matters to you and skip the rest. Every option below is something our
-    Weihai lines actually build, so the specification you create here goes straight into a quotation
-    — no generic catalogue, no waiting for someone to guess your market. You will get pricing, MOQ,
-    sample cost and a freight estimate within one business day.</p>
-    <p><strong>If two of your choices will not work together, the site tells you here and now.</strong>
-    A spinning blank with a baitcasting reel, a 2-metre rod asked to throw 100 g, PE 0.6 behind a
-    heavy shore jig — each of those is a rod that breaks, casts badly or injures someone, and each
-    one is caught before it reaches a production order. Watch the summary panel as you go.</p>
+    <span class="eyebrow">%(eyebrow)s</span>
+    <h1>%(h1)s</h1>
+    <p class="lead">%(lead)s</p>
+    %(second)s
   </div>
 </section>
 
 <section class="section" style="padding-top:0">
   <div class="container cfg-layout">
-    <form id="cfg-form" class="cfg-form" action="%(form)s" method="POST">
+    <form id="cfg-form" class="cfg-form" action="%(form)s" method="POST" data-path="%(pathattr)s">
+      %(pathfield)s
       <div class="hp-field" aria-hidden="true">
         <label>Leave this field empty<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
       </div>
@@ -557,6 +662,7 @@ def render_body(wa_url, form_endpoint):
   </div>
 </section>
 
+<!-- kits:start -->
 <section class="section">
   <div class="container">
     <div class="center">
@@ -613,6 +719,7 @@ def render_body(wa_url, form_endpoint):
   </div>
 </section>
 
+<!-- kits:end -->
 <section class="section section-alt">
   <div class="container">
     <span class="eyebrow">Why Bother Specifying</span>
@@ -639,7 +746,30 @@ def render_body(wa_url, form_endpoint):
     </div>
   </div>
 </section>""" % {"form": form_endpoint, "groups": "".join(groups), "wa": wa_url,
-                 "catalog": catalog_payload}
+                 "catalog": catalog_payload,
+                 "eyebrow": meta["eyebrow"], "h1": meta["h1"], "lead": meta["lead"],
+                 "second": meta["second"], "pathattr": path or "", "pathfield": path_field}
+
+    if path == "custom":
+        start = body.index("<!-- kits:start -->")
+        end = body.index("<!-- kits:end -->") + len("<!-- kits:end -->")
+        body = body[:start] + CUSTOM_KIT_BLOCK + body[end:]
+    return body
+
+
+TITLE_OEM = "OEM Rod Builder | Define a Production Rod | Entrol Fishing"
+DESC_OEM = ("Define a production fishing rod for your brand: blank, guide train, reel seat, handle, "
+            "cosmetics and packaging. MOQ 300 pcs per model, samples in 15-20 days. Quoted within "
+            "one business day.")
+KEYWORDS_OEM = ("fishing rod OEM program, private label fishing rods, custom rod specification, "
+                "rod manufacturer MOQ, bulk fishing rods wholesale, OEM carbon rod builder")
+
+TITLE_CUSTOM = "Custom Fishing Rod | Built to Your Measurements | Entrol Fishing"
+DESC_CUSTOM = ("Order a single custom fishing rod built to your measurements — blank, guides, "
+               "handle, wrapping colours and engraving. Add a reel, line and lures. No minimum "
+               "order, quoted before anything is built.")
+KEYWORDS_CUSTOM = ("custom fishing rod, bespoke fishing rod, custom built carp rod, one off fishing "
+                   "rod, personalised fishing rod, custom rod builder")
 
 
 TITLE = "Build Your Rod | OEM & Custom Rod Configurator | Entrol Fishing"

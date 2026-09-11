@@ -132,7 +132,7 @@
       (d) 若暂时供不了，先在 `scripts/configurator.py` 里把该字段收窄为 Rod only
 - [ ] **MOQ 三档已写进页面，需与工厂实际口径对齐**：竿 300 pcs/model / 竿+配套件 500 pcs /
       配套件也贴客户牌 1,000 pcs。目前数字是**按行业惯例预设的**，工厂确认前不要拿去对客报价
-- [ ] **配置器真实提交测试**：在 `configure.html` 填一份完整规格提交，确认 wangyan@entrol.com 收到全部字段（现为 33 个 select，字段多，需确认 FormSubmit 邮件不截断）
+- [ ] **配置器真实提交测试**：在 `oem-builder.html` 与 `custom-rod.html` 各填一份完整规格提交，确认 wangyan@entrol.com 收到全部字段（OEM 页含 model_count/target_price 等生产批量字段、custom 页含 kit_lines 配件明细，字段多，需确认 FormSubmit 邮件不截断）
 - [ ] **GTM 后台建 `configurator_submit` 转化标签**（dataLayer 已埋，含 `options_selected` 与 `spec_summary`）；建议把「选了 ≥5 项」设为高质量询盘信号
 - [ ] **兼容性预警规则复查**：13 条规则（轮型×竿型、竿长×饵重、线号×饵重、硬度×饵重、导环×前导、鱼种×前导等）为行业常识推断，**请让懂行的工厂技术或老客户过一遍**，特别是 PE 号数对应的安全抛投上限
 - [ ] 联系三处一致（浮动按钮 / 页脚 / 表单页）：WhatsApp +8615263130999 / WeChat 15263130999 / sales@entrol-fishing.com
