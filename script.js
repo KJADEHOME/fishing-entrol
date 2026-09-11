@@ -204,13 +204,14 @@
         if (sel.parentNode) sel.parentNode.appendChild(info);
       }
       if (!sel.value) { info.textContent = ''; return; }
+      // CATALOG is the slim form: {s:sku, c:category, b:subcategory, n:name, p:specs}
       var rod = null;
       for (var i = 0; i < CATALOG.length; i++) {
-        if (CATALOG[i].sku === sel.value) { rod = CATALOG[i]; break; }
+        if (CATALOG[i].s === sel.value) { rod = CATALOG[i]; break; }
       }
       if (!rod) { info.textContent = ''; return; }
-      var s = rod.specs || {};
-      setSel('rod_type', MODEL_TYPE[rod.subcategory]);
+      var s = rod.p || {};
+      setSel('rod_type', MODEL_TYPE[rod.b]);
       if (typeof s.length_m === 'number') {
         setSel('length', s.length_m.toFixed(2) + ' m (' + s.length_ft + ')');
       }
@@ -222,14 +223,163 @@
       setSel('line_rating', s.line_rating);
       setSel('reel_type', s.reel_type);
       setSel('handle_material', s.handle);
-      info.textContent = 'Loaded ' + rod.sku + ' — ' + rod.name
+      info.textContent = 'Loaded ' + rod.s + ' — ' + rod.n
         + '. Everything below is now editable.';
+    }
+
+    /* ---------- accessory list: model x quantity, one row per model ---------- */
+    // A personal build is not a shop — nothing here shows a price. It exists so
+    // an angler can say "that reel, and one more of the other one, three spools
+    // of that line" without writing an email about it.
+    var KIT_CATS = [
+      { c: 'reel', label: 'Reels', unit: 'sets', add: 'Add another reel' },
+      { c: 'line', label: 'Line', unit: 'spools', add: 'Add another spool' },
+      { c: 'lure', label: 'Lures', unit: 'packs', add: 'Add another lure' }
+    ];
+
+    function kitOptions(cat) {
+      return CATALOG.filter(function (p) { return p.c === cat; });
+    }
+
+    function kitRow(cat, unit) {
+      var row = document.createElement('div');
+      row.className = 'kit-row';
+      row.setAttribute('data-cat', cat);
+
+      var sel = document.createElement('select');
+      sel.className = 'kit-sku';
+      sel.setAttribute('aria-label', 'Model');
+      var none = document.createElement('option');
+      none.value = '';
+      none.textContent = '— none —';
+      sel.appendChild(none);
+      kitOptions(cat).forEach(function (p) {
+        var o = document.createElement('option');
+        o.value = p.s;
+        o.textContent = p.n;
+        sel.appendChild(o);
+      });
+
+      var qty = document.createElement('input');
+      qty.type = 'number';
+      qty.className = 'kit-qty';
+      qty.min = '1';
+      qty.max = '99';
+      qty.step = '1';
+      qty.value = '1';
+      qty.setAttribute('aria-label', 'Quantity');
+
+      var u = document.createElement('span');
+      u.className = 'kit-unit';
+      u.textContent = unit;
+
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'kit-del';
+      del.textContent = '×';
+      del.title = 'Remove this row';
+      del.addEventListener('click', function () {
+        if (row.parentNode) row.parentNode.removeChild(row);
+        syncKit();
+      });
+
+      sel.addEventListener('change', syncKit);
+      qty.addEventListener('input', syncKit);
+
+      row.appendChild(sel);
+      row.appendChild(qty);
+      row.appendChild(u);
+      row.appendChild(del);
+      return row;
+    }
+
+    function buildKit() {
+      var host = document.getElementById('kit-lines');
+      if (!host || host.childNodes.length) return;
+      KIT_CATS.forEach(function (k) {
+        var grp = document.createElement('div');
+        grp.className = 'kit-group';
+        grp.setAttribute('data-cat', k.c);
+        var lab = document.createElement('span');
+        lab.className = 'kit-lab';
+        lab.textContent = k.label;
+        var rows = document.createElement('div');
+        rows.className = 'kit-rows';
+        rows.appendChild(kitRow(k.c, k.unit));
+        var add = document.createElement('button');
+        add.type = 'button';
+        add.className = 'kit-add';
+        add.textContent = '+ ' + k.add;
+        add.addEventListener('click', function () {
+          rows.appendChild(kitRow(k.c, k.unit));
+          syncKit();
+        });
+        grp.appendChild(lab);
+        grp.appendChild(rows);
+        grp.appendChild(add);
+        host.appendChild(grp);
+      });
+    }
+
+    function syncKit() {
+      var input = document.getElementById('kit-lines-input');
+      var box = document.getElementById('cfg-kit');
+      var list = document.getElementById('cfg-kit-list');
+      var total = document.getElementById('cfg-kit-total');
+      if (!input) return;
+
+      var parts = [];
+      var items = [];
+      var pieces = 0;
+
+      // the rod itself is specified above, its count lives in quantity_custom
+      var rods = cfgForm.querySelector('select[name="quantity_custom"]');
+      if (rods && rods.value && !rods.disabled) {
+        var n = parseInt(String(rods.value).replace(/[^\d]/g, ''), 10);
+        if (n > 0) {
+          items.push(['Rods', rods.value]);
+          parts.push('Rods: ' + rods.value);
+          pieces += n;
+        }
+      }
+
+      KIT_CATS.forEach(function (k) {
+        var picked = [];
+        cfgForm.querySelectorAll('.kit-row[data-cat="' + k.c + '"]').forEach(function (row) {
+          var sel = row.querySelector('.kit-sku');
+          var q = row.querySelector('.kit-qty');
+          if (!sel || sel.disabled || !sel.value) return;
+          var n = parseInt(q.value, 10);
+          if (!n || n < 1) n = 1;
+          picked.push(sel.value + ' ×' + n);
+          parts.push(k.label + ': ' + sel.value + ' ×' + n);
+          pieces += n;
+        });
+        if (picked.length) items.push([k.label, picked.join(', ')]);
+      });
+
+      input.value = parts.join(' | ');
+
+      if (list) {
+        list.innerHTML = items.map(function (it) {
+          return '<li><span class="k">' + esc(it[0]) + '</span><span class="v">'
+            + esc(it[1]) + '</span></li>';
+        }).join('');
+      }
+      if (total) {
+        total.textContent = parts.length
+          ? pieces + ' piece' + (pieces === 1 ? '' : 's') + ' — priced on request, '
+            + 'quoted with the rod before anything is built.'
+          : '';
+      }
+      if (box) box.hidden = !parts.length;
     }
 
     cfgForm.addEventListener('change', function (e) {
       if (!e.target) return;
-      if (e.target.name === 'build_path') { applyPath(); renderSummary(); }
+      if (e.target.name === 'build_path') { applyPath(); renderSummary(); syncKit(); }
       if (e.target.name === 'base_model') { applyModel(); renderSummary(); }
+      if (e.target.name === 'quantity_custom') { syncKit(); }
     });
 
     var listEl = document.getElementById('cfg-list');
@@ -668,9 +818,11 @@
       el.innerHTML = html;
     }
 
+    buildKit();
     applyPath();
     cfgForm.addEventListener('change', renderSummary);
     renderSummary();
+    syncKit();
 
     cfgForm.addEventListener('submit', function (e) {
       risks = [];

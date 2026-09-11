@@ -454,3 +454,32 @@ table.spec td:first-child { font-weight: 700; color: var(--color-primary-dark); 
 .cfg-path-t { display: block; font-weight: 700; font-size: 0.92rem; color: #123; }
 .cfg-path-s { display: block; font-size: 0.78rem; color: #5B6B75; margin-top: 3px; line-height: 1.45; }
 @media (max-width: 640px) { .cfg-path-row { grid-template-columns: 1fr; } }
+
+/* configurator: accessory list (model x quantity, one row per model) */
+.kit-group { border: 1px solid #E2E8EB; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; background: #FCFDFE; }
+.kit-lab { display: block; font-weight: 700; font-size: 0.86rem; color: #123; margin-bottom: 8px; }
+.kit-rows { display: flex; flex-direction: column; gap: 8px; }
+.kit-row { display: flex; align-items: center; gap: 8px; }
+.kit-row .kit-sku { flex: 1 1 auto; min-width: 0; }
+.kit-row .kit-qty { width: 72px; flex: 0 0 72px; }
+.kit-unit { font-size: 0.78rem; color: #5B6B75; width: 52px; flex: 0 0 52px; }
+.kit-del { flex: 0 0 28px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+  border: 1px solid #CFE1E9; background: #fff; color: #8A99A2; font-size: 1rem; line-height: 1; }
+.kit-del:hover { border-color: #C0392B; color: #C0392B; }
+.kit-add { margin-top: 8px; padding: 6px 12px; font-size: 0.78rem; font-weight: 700; cursor: pointer;
+  background: #fff; border: 1px dashed #9DB6C2; border-radius: 20px; color: #0E6E8C; }
+.kit-add:hover { border-style: solid; background: #F2F8FA; }
+@media (max-width: 560px) {
+  .kit-row { flex-wrap: wrap; }
+  .kit-row .kit-sku { flex: 1 1 100%; }
+}
+
+/* configurator: "in the box" summary panel */
+.cfg-kit { margin-top: 16px; padding-top: 14px; border-top: 1px solid #E2E8EB; }
+.cfg-kit h4 { margin: 0 0 6px; font-size: 0.86rem; }
+.cfg-kit ul { list-style: none; margin: 0; padding: 0; }
+.cfg-kit li { display: flex; justify-content: space-between; gap: 10px; font-size: 0.8rem;
+  padding: 3px 0; border-bottom: 1px dashed #E2E8EB; }
+.cfg-kit li .k { color: #5B6B75; }
+.cfg-kit li .v { font-weight: 700; text-align: right; }
+.cfg-kit-total { font-size: 0.76rem; color: #5B6B75; margin: 8px 0 0; }

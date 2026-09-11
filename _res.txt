@@ -1,0 +1,3 @@
+﻿smoke=========== RESULT: 291 passed, 0 failed ==========
+jsdom fail=0 ok=44
+faq=2

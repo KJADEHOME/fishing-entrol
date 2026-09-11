@@ -912,6 +912,15 @@ FAQS = [
     ("How long does a sample take?",
      "Pre-production samples take 15–20 days from specification confirmation, depending on blank "
      "tooling and component availability. Bulk production takes 35–45 days after sample approval."),
+    ("Can I buy just one rod for myself?",
+     "You can commission one, but you cannot buy one off a shelf — there is no stock, no cart and "
+     "no online checkout. Every rod is built to order, so a single rod is quoted the same way a "
+     "container is: you tell us the water, the fish, the length and feel you want, plus any reels, "
+     "line and lures you want sent with it, and we come back with a price and a build time. A "
+     "single build runs 20–25 days before it ships, and freight is quoted to your country "
+     "separately. It costs more per rod than a production order because there is no run to spread "
+     "the set-up across — and because it is built to your measurements, it cannot be returned or "
+     "exchanged unless it arrives damaged."),
     ("Can you build rods to my own specification?",
      "Yes — that is the core of our business. Send a reference rod, a competitor spec, or simply "
      "your target species and price point. We engineer the blank, guide train, reel seat, handle, "

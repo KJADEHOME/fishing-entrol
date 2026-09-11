@@ -17,6 +17,7 @@ product exists, so the picker, the spec tables and the compatibility engine
 can never drift apart. Change the catalogue, rebuild, and both follow.
 """
 import html
+import json
 import os
 import sys
 
@@ -290,11 +291,16 @@ GROUPS = [
                 "Cloth rod sock", "Hard PVC tube", "Sock + hard tube", "No case — rod only",
                 "Advise me"],
                 hint="A hard tube is worth it for anything travelling by air freight."),
-            dict(name="kit_option_custom", label="Do you want it rigged and ready?", opts=[
+    dict(name="kit_option_custom", label="Do you want it rigged and ready?", opts=[
                 "Rod only", "Rod + reel", "Rod + reel + line spooled",
                 "Rod + reel + line + starter lures", "Advise me"],
                 hint="Components are sourced to your budget and shipped under a neutral or "
                      "component-maker label — we do not put our own badge on them."),
+            dict(name="spool_service", label="Spool the line onto the reel?", opts=[
+                "Yes — spool it and tie the leader", "Yes — line only, I will rig it",
+                "No — send the spool separately", "Not ordering line", "Advise me"],
+                hint="A reel spooled by hand with the right backing and the right amount of line "
+                     "behaves differently from one filled at random — worth doing properly."),
             dict(name="ship_to", label="Shipping country", kind="text",
                  placeholder="e.g. Australia, Germany, Japan",
                  hint="Freight on a single rod is quoted per destination before we start."),
@@ -302,7 +308,33 @@ GROUPS = [
     },
     {
         "step": 7,
-        "title": "Quantity &amp; Contact",
+        "title": "What Else Goes in the Box",
+        "path": "custom",
+        "note": "Pick the reels, line and lures you want with the rod and say how many of each. "
+                "Add a second row when you want two different models — a 2500 for the estuary and "
+                "a 4000 for the rocks, or two line strengths for two different waters.",
+        "extra": ('<input type="hidden" name="kit_lines" id="kit-lines-input" value="">'
+                  '<div class="kit-lines" id="kit-lines"></div>'
+                  '<p class="form-hint">Leave a row on "none" if you do not want that item. '
+                  'Everything here is a neutral-specification component bought in from component '
+                  'makers, so it ships under a neutral label — not ours, and not a brand we '
+                  'invented.</p>'),
+        "fields": [
+            dict(name="budget", label="Budget for the whole order", opts=[
+                "Under $150", "$150–300", "$300–500", "$500–800", "$800 or more",
+                "Not sure — quote me and I will decide"],
+                hint="This is what decides whether a 40T blank with titanium guides makes sense or "
+                     "whether a 30T build puts the money where you will actually feel it."),
+            dict(name="urgency", label="When do you want it in your hands?", opts=[
+                "As soon as possible", "Within a month", "2–3 months is fine",
+                "No rush — I am planning ahead", "It is a gift — I have a date"],
+                hint="A single build runs 20–25 days before it ships. If you have a date, say so "
+                     "and we will tell you honestly whether we can hit it."),
+        ],
+    },
+    {
+        "step": 8,
+        "title": "Quantity, Timing &amp; Contact",
         "note": '<span id="cfg-qty-note">Two different minimums apply, and it is worth knowing which '
                 'one you are buying before we quote: rod-only programs run from 300 pieces per model, '
                 'while anything that puts a reel, line or lures in the carton starts at 500 — and '
@@ -313,8 +345,38 @@ GROUPS = [
             dict(name="quantity", label="Quantity per model", path="oem", opts=[
                 "300 pcs", "500 pcs", "1,000 pcs", "3,000 pcs", "5,000 pcs or more",
                 "Sample order first", "Not decided yet"]),
+            dict(name="model_count", label="How many models in this order", path="oem", opts=[
+                "1 model", "2–3 models", "4–6 models", "7 or more", "Not decided yet"],
+                hint="Each model is its own mandrel and its own print run, which is why the "
+                     "minimum is quoted per model rather than per order."),
+            dict(name="target_price", label="Target retail price per rod", path="oem", opts=[
+                "Under $30", "$30–60", "$60–100", "$100–200", "$200 and up",
+                "Tell me what my spec costs first"],
+                hint="The single most useful number you can give us. It decides the blank, the "
+                     "guide train and the packaging before we quote anything."),
+            dict(name="annual_volume", label="Expected volume over 12 months", path="oem", opts=[
+                "This is a first trial", "1,000–5,000 pcs", "5,000–20,000 pcs",
+                "20,000 pcs or more", "Not decided yet"],
+                hint="Tells us whether to quote a one-off or a program price, and whether "
+                     "dedicated tooling pays for itself."),
+            dict(name="ship_window", label="When do you need it on the water", path="oem", opts=[
+                "As soon as possible", "Within 3 months", "Within 6 months",
+                "Next season", "No fixed date yet"],
+                hint="Rod programs run 35–45 days after sample approval, plus freight. Season "
+                     "deadlines are the usual reason a program slips, so tell us early."),
+            dict(name="compliance", label="Certification you need", path="oem", opts=[
+                "REACH (EU)", "UKCA (UK)", "CPSIA / CA Prop 65 (US)", "EN71 (if sold as toy)",
+                "None specified yet", "Not sure — advise me"],
+                hint="Compliance testing is booked against your market, not ours — telling us now "
+                     "avoids a shipment held at the border."),
+            dict(name="trade_terms", label="Preferred terms", path="oem", opts=[
+                "FOB Qingdao", "EXW", "CIF", "DDP to my warehouse", "Not sure — advise me"]),
+            dict(name="sample_plan", label="How do you want to start?", path="oem", opts=[
+                "Send a pre-production sample first", "Quote only for now",
+                "I will send you a reference rod", "Ready to order", "Not decided yet"]),
             dict(name="quantity_custom", label="How many rods", path="custom", opts=[
-                "1 rod", "2 rods", "3–5 rods", "More than 5", "Not decided yet"]),
+                "1 rod", "2 rods", "3 rods", "4 rods", "5 rods", "6–10 rods",
+                "More than 10", "Not decided yet"]),
             dict(name="target_market", label="Target market", opts=[
                 "Australia", "United Kingdom", "Europe (EU)", "Japan", "South Korea",
                 "North America", "Other"]),
@@ -325,8 +387,9 @@ GROUPS = [
             dict(name="company", label="Company / brand", path="oem", kind="text",
                  placeholder="Company name"),
             dict(name="notes", label="Anything else we should know", kind="textarea", full=True,
-                 placeholder="Reference product or link, target retail price, timeline, "
-                             "certifications you need (REACH, UKCA), or a spec sheet you want matched."),
+                 placeholder="A reference product or link, a spec sheet you want matched, a rod "
+                             "you already fish and want changed, or anything the questions above "
+                             "did not cover."),
         ],
     },
 ]
@@ -423,11 +486,14 @@ def render_body(wa_url, form_endpoint):
         %s
       </fieldset>""" % (path_attr, g["step"], g["title"], g["note"], fields, g.get("extra", "")))
 
-    # Rods only: the configurator prefills from rod specs, so shipping the whole
-    # 71-row catalogue into the page would be dead weight.
-    rod_json = html.escape(
-        __import__("json").dumps(cat.RODS, ensure_ascii=False, separators=(",", ":")),
-        quote=False)
+    # The page needs rods (for the "start from a model" prefill) and the line,
+    # lure and reel rows (for the accessory picker), so ship a slimmed full
+    # catalogue: short keys, no fields the browser never reads.
+    slim = [dict(s=p["sku"], c=p["category"], b=p["subcategory"], n=p["name"], p=p["specs"])
+            for p in cat.PRODUCTS]
+    # </ inside a <script> block would end the element early; \/ is valid JSON.
+    catalog_payload = json.dumps(slim, ensure_ascii=False,
+                                 separators=(",", ":")).replace("</", "<\\/")
 
     return """
 <script type="application/json" id="catalog-data">%(catalog)s</script>
@@ -478,6 +544,12 @@ def render_body(wa_url, form_endpoint):
         <p class="cfg-combo-lead" id="cfg-combo-lead">Pick a target species or lure type and we
         will suggest the matching taper, line and reel size here.</p>
         <ul id="cfg-combo-list"></ul>
+      </div>
+
+      <div class="cfg-kit" id="cfg-kit" hidden>
+        <h4>In the box</h4>
+        <ul id="cfg-kit-list"></ul>
+        <p class="cfg-kit-total" id="cfg-kit-total"></p>
       </div>
 
       <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">Or chat on WhatsApp</a>
@@ -567,7 +639,7 @@ def render_body(wa_url, form_endpoint):
     </div>
   </div>
 </section>""" % {"form": form_endpoint, "groups": "".join(groups), "wa": wa_url,
-                 "catalog": rod_json}
+                 "catalog": catalog_payload}
 
 
 TITLE = "Build Your Rod | OEM & Custom Rod Configurator | Entrol Fishing"

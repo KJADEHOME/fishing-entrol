@@ -1,0 +1,66 @@
+﻿
+== compatibility warnings ==
+  ok    spinning blank + baitcasting reel [risk]
+  ok    casting blank + spinning reel [risk]
+  ok    carp rod + baitcasting reel [caution]
+  ok    short rod asked to cast 100 g [risk]
+  ok    heavy cast on PE 0.6 [risk]
+  ok    braid + no leader + heavy cast [caution]
+  ok    ultra-light power with 50 g cast [risk]
+  ok    heavy power with 3 g lure [caution]
+  ok    micro guides with heavy leader [caution]
+  ok    trigger grip + spinning reel [caution]
+  ok    pike without wire leader [risk]
+  ok    one-piece 4.2 m rod [risk]
+  ok    light lure on heavy line [caution]
+
+== clean combination (must NOT warn) ==
+  ok    clean spec reports no conflicts
+
+== one-click fix buttons ==
+  ok    fix button applied -> Spinning reel
+
+== MOQ split ==
+  ok    kit "Rod only" highlights /300 pcs \/ model/
+  ok    kit "Rod + reel combo" highlights /500 pcs/
+  ok    kit "Full retail kit (rod, re" highlights /1,000 pcs/
+
+== embedded product catalogue ==
+  ok    catalogue embedded in page: 71 rods
+  ok    model picker lists every rod + blank (23)
+  ok    catalogue also carries line/lure/reel for the accessory picker
+
+== start from an existing model ==
+  ok    CRS741MF prefills length, power, action, line, reel and handle
+  ok    model confirmation line shown
+
+== two commercial paths ==
+  ok    default path is OEM (branding shown, personal hidden)
+  ok    switching to custom swaps the groups
+  ok    hidden-path fields are disabled
+  ok    custom path shows single-rod terms, not MOQ tiers
+  ok    summary labels the path for the sales team
+  ok    a disabled OEM field does not leak into the enquiry
+  ok    switching back restores the MOQ table
+
+== accessory list: model x quantity, one row per model ==
+  ok    one empty row each for reel, line and lure
+  ok    in-the-box panel stays hidden while nothing is picked
+  ok    reel 脳2 recorded in kit_lines
+  ok    can add a second reel row
+  ok    two different reels, each with its own quantity
+  ok    line 脳3 spools recorded
+  ok    rod count joins the same list
+  ok    in-the-box panel shows the running total
+  ok    no price shown anywhere 鈥?quote only
+  ok    remove-row works
+  ok    accessory list is disabled on the OEM path
+
+== OEM commercial fields ==
+  ok    OEM path asks model count, target price, volume, timing, compliance, terms, sampling
+  ok    personal path asks budget and timing instead
+
+== kit_brand field ==
+  ok    kit_brand has all 4 branding routes (6 options)
+
+done.

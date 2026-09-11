@@ -170,6 +170,29 @@
 - [ ] 产品库字段如后续要加（例如交货港口、装箱数、HS 编码），
       改 `catalog_data.py` → 跑 `catalog.py seed` 重新生成 seed.sql，**不要手改 seed.sql**
 
+## 5.2 配置器双路径 + 数量逻辑（2026-09-12 定稿，详见 `docs/configurator-paths.md`）
+
+**已定死的边界（后续改动不许越线）：**
+- [ ] **不零售、不标价、不在线支付**。全站无价格、无购物车、无结账。一律询价。
+      产品库 `price_*` 全为 null，空价格渲染成 "quoted per build"
+- [ ] **不做"寄样品给达人/买家试用"**——定制竿逐支生产，做出来就是订单本身，没有余量可寄
+- [ ] **不写第三方品牌名**（线/饵/轮中性规格 SKU）
+- [ ] **个人定制不可退换**（刻字+按身材做=无法二次销售），页面已明示，发货前拍照留档
+- [ ] 隐藏的那半路径会被 `disabled`，不会进询盘（已有测试守着）
+
+**数量在两条路径里是两个概念（已实现）：**
+- OEM = 生产批量：`quantity`（每型号支数）+ `model_count`（几个型号）+ `annual_volume` + `ship_window`
+- Personal = 件数明细：`quantity_custom`（竿几根，主场景 1–2 支）+ 配件清单
+  （轮/线/饵各可加多行，每行独立选型号+填数量，汇总进隐藏字段 `kit_lines`）
+
+**OEM 新增商务字段（已上线）：** `model_count` / `target_price`（目标零售价，最能决定配置）/
+`annual_volume` / `ship_window` / `compliance` / `trade_terms` / `sample_plan`
+**Personal 新增：** `budget` / `urgency` / `spool_service` / 配件清单
+
+- [ ] **上面对客文案里有 3 处是商业承诺，需你确认**：
+      ① "20–25 天出货" ② "50% 定金" ③ "刻字后不可退换"。改文案在 `script.js` 的 `renderMoq()`
+- [ ] FAQ 已新增一问 "Can I buy just one rod for myself?"，明确**无库存、无购物车、按订单生产**
+
 ## 6. 已知限制（MVP 范围外，不要在原型阶段补）
 
 - 无博客、无多语言、无国家落地页（按 prompt 第二节要求砍掉）

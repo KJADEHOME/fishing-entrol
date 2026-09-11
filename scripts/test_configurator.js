@@ -164,9 +164,13 @@ function pass(m) { console.log('  ok    ' + m); }
   try { CAT = JSON.parse((rawCat && rawCat.textContent) || '[]'); } catch (e) { CAT = []; }
   if (CAT.length >= 20) pass('catalogue embedded in page: ' + CAT.length + ' rods');
   else fail('catalogue missing or too small: ' + CAT.length);
+  const RODS = CAT.filter(p => p.c === 'rod');
   const optCount = form.querySelectorAll('select[name="base_model"] option').length;
-  if (optCount === CAT.length + 1) pass('model picker lists every rod + blank (' + optCount + ')');
-  else fail('model picker has ' + optCount + ' options for ' + CAT.length + ' rods');
+  if (optCount === RODS.length + 1) pass('model picker lists every rod + blank (' + optCount + ')');
+  else fail('model picker has ' + optCount + ' options for ' + RODS.length + ' rods');
+  if (RODS.length >= 20 && CAT.length > RODS.length) {
+    pass('catalogue also carries line/lure/reel for the accessory picker');
+  } else fail('catalogue missing component rows');
 
   console.log('\n== start from an existing model ==');
   form.querySelectorAll('select[name]').forEach(s => { s.value = ''; });
@@ -232,6 +236,86 @@ function pass(m) { console.log('  ok    ' + m); }
       else fail('MOQ table did not come back');
     }
   }
+
+  console.log('\n== accessory list: model x quantity, one row per model ==');
+  pathRadio('custom').checked = true;
+  fire(pathRadio('custom'));
+  const kitIn = doc.getElementById('kit-lines-input');
+  const kitBox = doc.getElementById('cfg-kit');
+  if (!kitIn) { fail('kit_lines hidden input missing'); }
+  else {
+    const rows0 = doc.querySelectorAll('#kit-lines .kit-row');
+    if (rows0.length === 3) pass('one empty row each for reel, line and lure');
+    else fail('expected 3 default rows, got ' + rows0.length);
+
+    if (kitBox && kitBox.hidden) pass('in-the-box panel stays hidden while nothing is picked');
+    else fail('panel shown with an empty list');
+
+    function row(cat, n) {
+      return doc.querySelectorAll('#kit-lines .kit-row[data-cat="' + cat + '"]')[n || 0];
+    }
+    const r0 = row('reel', 0);
+    r0.querySelector('.kit-sku').value = 'REEL-SPIN-2500';
+    fire(r0.querySelector('.kit-sku'));
+    r0.querySelector('.kit-qty').value = '2';
+    r0.querySelector('.kit-qty').dispatchEvent(new window.Event('input', { bubbles: true }));
+    if (/Reels: REEL-SPIN-2500 ×2/.test(kitIn.value)) pass('reel ×2 recorded in kit_lines');
+    else fail('kit_lines wrong: "' + kitIn.value + '"');
+
+    const addBtn = doc.querySelector('#kit-lines .kit-group[data-cat="reel"] .kit-add');
+    addBtn.dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+    if (doc.querySelectorAll('#kit-lines .kit-row[data-cat="reel"]').length === 2) {
+      pass('can add a second reel row');
+    } else fail('add-row button did not add a row');
+
+    const r1 = row('reel', 1);
+    r1.querySelector('.kit-sku').value = 'REEL-BAIT-200';
+    fire(r1.querySelector('.kit-sku'));
+    if (/REEL-SPIN-2500 ×2/.test(kitIn.value) && /REEL-BAIT-200 ×1/.test(kitIn.value)) {
+      pass('two different reels, each with its own quantity');
+    } else fail('second reel not recorded: ' + kitIn.value);
+
+    const l0 = row('line', 0);
+    l0.querySelector('.kit-sku').value = 'LINE-PE08-8S-150M';
+    fire(l0.querySelector('.kit-sku'));
+    l0.querySelector('.kit-qty').value = '3';
+    l0.querySelector('.kit-qty').dispatchEvent(new window.Event('input', { bubbles: true }));
+    if (/Line: LINE-PE08-8S-150M ×3/.test(kitIn.value)) pass('line ×3 spools recorded');
+    else fail('line row wrong: ' + kitIn.value);
+
+    setVals({ quantity_custom: '2 rods' });
+    if (/Rods: 2 rods/.test(kitIn.value)) pass('rod count joins the same list');
+    else fail('rod count missing: ' + kitIn.value);
+
+    if (kitBox && !kitBox.hidden && /pieces/.test(doc.getElementById('cfg-kit-total').textContent)) {
+      pass('in-the-box panel shows the running total');
+    } else fail('panel did not show: ' + (doc.getElementById('cfg-kit-total') || {}).textContent);
+
+    if (!/\$/.test(doc.getElementById('cfg-kit').textContent)) pass('no price shown anywhere — quote only');
+    else fail('a price leaked into the accessory panel');
+
+    row('reel', 1).querySelector('.kit-del')
+      .dispatchEvent(new window.MouseEvent('click', { bubbles: true }));
+    if (doc.querySelectorAll('#kit-lines .kit-row[data-cat="reel"]').length === 1) {
+      pass('remove-row works');
+    } else fail('remove button did not remove');
+
+    pathRadio('oem').checked = true;
+    fire(pathRadio('oem'));
+    if (kitIn.disabled) pass('accessory list is disabled on the OEM path');
+    else fail('accessory list still active on the OEM path');
+  }
+
+  console.log('\n== OEM commercial fields ==');
+  const oemFields = ['model_count', 'target_price', 'annual_volume', 'ship_window',
+                     'compliance', 'trade_terms', 'sample_plan'];
+  const missOem = oemFields.filter(n => !form.querySelector('select[name="' + n + '"]'));
+  if (!missOem.length) pass('OEM path asks model count, target price, volume, timing, compliance, terms, sampling');
+  else fail('OEM fields missing: ' + missOem.join(', '));
+  const customOnly = ['budget', 'urgency'];
+  const missCus = customOnly.filter(n => !form.querySelector('select[name="' + n + '"]'));
+  if (!missCus.length) pass('personal path asks budget and timing instead');
+  else fail('personal fields missing: ' + missCus.join(', '));
 
   console.log('\n== kit_brand field ==');
   const kb = form.querySelector('select[name="kit_brand"]');
