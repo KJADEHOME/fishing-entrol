@@ -20,6 +20,9 @@ PORT = 8907
 PAGES = ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
          "rock-surf-rods.html", "products.html", "oem-builder.html", "custom-rod.html",
          "capabilities.html", "process.html", "about.html", "faq.html", "contact.html",
+         "blog.html", "australia-fishing-rod-oem-guide.html",
+         "australian-surf-rod-specification-guide.html",
+         "fishing-rod-oem-moq-sampling-guide.html", "carbon-fishing-rod-blank-guide.html",
          "styles.css", "script.js", "product-gallery.css", "product-gallery.js",
          "robots.txt", "assets/logo.svg"]
 IMAGES = sorted(os.path.relpath(p, ROOT).replace("\\", "/")
@@ -88,9 +91,7 @@ try:
     locs = [e.text for e in tree.findall(".//s:url/s:loc", ns)]
     HTML_PAGES = [x for x in PAGES if x.endswith(".html")]
     check("[sitemap]", len(locs) == len(HTML_PAGES), "lists %d urls (expected %d)" % (len(locs), len(HTML_PAGES)))
-    for p in ["index.html", "spinning-rods.html", "carp-rods.html", "saltwater-rods.html",
-              "rock-surf-rods.html", "products.html", "oem-builder.html", "custom-rod.html",
-              "capabilities.html", "process.html", "about.html", "faq.html", "contact.html"]:
+    for p in HTML_PAGES:
         check("[sitemap]", any(l.endswith("/" + p) or (p == "index.html" and l.rstrip("/").endswith("fishing.entrol.com") or l.rstrip("/").endswith("/")) for l in locs), p)
 except Exception as e:
     fail += 1
@@ -108,6 +109,9 @@ for p in [x for x in PAGES if x.endswith(".html")]:
     check("[gtm]", "www.googletagmanager.com/gtm.js" in t and "GTM-T3ZXMRHS" in t, p)
     check("[canonical]", 'rel="canonical"' in t, p)
     check("[og]", 'property="og:image"' in t, p)
+    if p.endswith("-guide.html"):
+        check("[article]", '"@type": "Article"' in t, p)
+        check("[guide-links]", 'href="oem-builder.html"' in t and 'href="contact.html"' in t, p)
 # gallery image counts
 for slug, fname in [("spinning-rod", "spinning-rods.html"), ("carp-rod", "carp-rods.html"),
                     ("saltwater-rod", "saltwater-rods.html"), ("rock-surf-rod", "rock-surf-rods.html")]:

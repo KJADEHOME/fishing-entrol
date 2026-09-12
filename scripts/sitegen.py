@@ -46,6 +46,13 @@ COMPANY_NAV = [
     ("faq.html", "FAQ"),
     ("contact.html", "Contact"),
 ]
+BLOG_NAV = [
+    ("blog.html", "All Guides"),
+    ("australia-fishing-rod-oem-guide.html", "Australia OEM Buying Guide"),
+    ("australian-surf-rod-specification-guide.html", "Australian Surf Rod Guide"),
+    ("fishing-rod-oem-moq-sampling-guide.html", "MOQ & Sampling Guide"),
+    ("carbon-fishing-rod-blank-guide.html", "Carbon Blank Guide"),
+]
 # (file, label, submenu) — submenu files also mark the parent as active
 NAV = [
     ("index.html", "Home", []),
@@ -53,6 +60,7 @@ NAV = [
     ("capabilities.html", "Capabilities", CAPABILITY_NAV),
     ("oem-builder.html", "OEM Builder", []),
     ("custom-rod.html", "Custom Rod", []),
+    ("blog.html", "Guides", BLOG_NAV),
     ("about.html", "About", COMPANY_NAV),
 ]
 # Every URL the site publishes — sitemap and internal-link checks come from here.
@@ -70,6 +78,11 @@ ALL_PAGES = [
     ("about.html", "0.7"),
     ("faq.html", "0.7"),
     ("contact.html", "0.8"),
+    ("blog.html", "0.8"),
+    ("australia-fishing-rod-oem-guide.html", "0.8"),
+    ("australian-surf-rod-specification-guide.html", "0.8"),
+    ("fishing-rod-oem-moq-sampling-guide.html", "0.8"),
+    ("carbon-fishing-rod-blank-guide.html", "0.8"),
 ]
 # category slug -> configurator preset key (read by script.js from ?rod=)
 CFG_KEY = {
@@ -310,6 +323,7 @@ def footer_html():
     prog = "".join('<li><a href="%s">%s</a></li>' % (f, l) for f, l in [
         ("oem-builder.html", "OEM Rod Program"),
         ("custom-rod.html", "One Custom Rod"),
+        ("blog.html", "Buyer Guides"),
         ("capabilities.html", "Manufacturing Capability"),
         ("process.html", "How We Work"),
         ("about.html", "About Us"),
@@ -1656,4 +1670,6 @@ if __name__ == "__main__":
     build_about()
     build_faq()
     build_contact()
+    import blog_pages
+    blog_pages.build_all(sys.modules[__name__])
     print("\nAll pages generated.")
