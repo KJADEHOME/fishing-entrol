@@ -679,6 +679,8 @@
     /* ---------- compatibility warnings ---------- */
     var POWER_IX = { 'Ultra-Light': 1, 'Light': 2, 'Medium-Light': 3, 'Medium': 4,
                      'Medium-Heavy': 5, 'Heavy': 6, 'Extra-Heavy': 7 };
+    var compatibilityRiskCount = 0;
+    var compatibilityRiskSignature = '';
 
     function allNum(s) { return (String(s).match(/[\d.]+/g) || []).map(Number); }
     function maxNum(s) { var a = allNum(s); return a.length ? Math.max.apply(null, a) : 0; }
@@ -692,6 +694,9 @@
       var line = val('main_line'), ld = val('leader'), reel = val('reel_type');
       var guide = val('guide_type'), handle = val('handle_style'), sec = val('sections');
       var sp = val('target_species'), hook = val('hook_keeper');
+      var kitSkus = Array.prototype.map.call(
+        cfgForm.querySelectorAll('.kit-sku'), function (s) { return s.value || ''; }
+      ).filter(Boolean);
 
       var lenM = firstNum(len);
       var wMax = maxNum(lw);
@@ -841,6 +846,64 @@
           'main_line', 'PE 3.0');
       }
 
+      if (/Trout|perch/.test(sp) && wMax >= 50) {
+        add('risk', 'This cast weight is outside normal trout and perch use',
+          'A 50 g or heavier lure range overwhelms the light tips and lines normally used for trout and perch. ' +
+          'Choose a lighter casting range or change the target species before sampling.',
+          'lure_weight', '5–21 g');
+      }
+      if (/Bream|flathead/.test(sp) && wMax >= 100) {
+        add('caution', 'This is unusually heavy for bream and flathead',
+          'Most bream and flathead work uses substantially lighter lures. Confirm that this is a special-purpose ' +
+          'heavy-water brief rather than a general inshore range.',
+          'lure_weight', '10–30 g');
+      }
+      if (/Snapper|grouper|Cod|ling/.test(sp) && pe && pe < 1) {
+        add('caution', 'The selected braid is light for this target',
+          'Reef and bottom species load the line around structure. Move up at least one line class and validate ' +
+          'leader strength during the sample test.',
+          'main_line', 'PE 2.0');
+      }
+
+      var slowJig = kitSkus.some(function (s) { return /^LURE-METAL-SLOW-(100|150)$/.test(s); });
+      var assistHook = kitSkus.some(function (s) { return /^TERM-ASSIST-/.test(s); });
+      var softLure = kitSkus.some(function (s) { return /^LURE-SOFT-/.test(s); });
+      var softHook = kitSkus.some(function (s) { return /^TERM-(JIG|EWG)-/.test(s); });
+      var egi = kitSkus.some(function (s) { return /^LURE-GLOW-EGI-/.test(s); });
+      var selectedLureMax = kitSkus.reduce(function (n, s) {
+        var p = CATALOG.find(function (item) { return item.s === s && item.c === 'lure'; });
+        return p ? Math.max(n, maxNum(p.n)) : n;
+      }, 0);
+      if (selectedLureMax && wMax && selectedLureMax > wMax) {
+        add('risk', 'A selected lure exceeds the rod casting range',
+          'The heaviest lure in the kit is ' + selectedLureMax + ' g, while the selected rod range ends at ' +
+          wMax + ' g. Casting it can overload the blank. Choose a lighter lure or a higher casting range.');
+      }
+      if (slowJig && !assistHook) {
+        add('caution', 'Slow-pitch jig selected without an assist hook',
+          'A slow-pitch metal jig normally needs a correctly sized assist-hook rig. Add one to the kit or tell us ' +
+          'that the buyer will supply terminal tackle separately.');
+      }
+      if (softLure && !softHook) {
+        add('caution', 'Soft lure selected without a matching hook or jig head',
+          'The soft-plastic lure cannot be fished as packed without an EWG hook or jig head. Add suitable terminal ' +
+          'tackle or confirm that it will be sold separately.');
+      }
+      if (egi && sp && !/Squid/.test(sp)) {
+        add('caution', 'Squid jig does not match the selected target species',
+          'An egi is a squid-specific lure. Keep it only if the kit is deliberately multi-species, otherwise choose ' +
+          'a lure that matches the stated target.');
+      }
+
+      var riskSignature = w.filter(function (r) { return r.level === 'risk'; })
+        .map(function (r) { return r.title; }).sort().join('|');
+      var ack = document.getElementById('cfg-risk-ack');
+      var ackWrap = document.getElementById('cfg-risk-ack-wrap');
+      if (riskSignature !== compatibilityRiskSignature && ack) ack.checked = false;
+      compatibilityRiskSignature = riskSignature;
+      compatibilityRiskCount = riskSignature ? riskSignature.split('|').length : 0;
+      if (ackWrap) ackWrap.hidden = compatibilityRiskCount === 0;
+
       if (!w.length) {
         box.innerHTML = picks >= 4
           ? '<div class="cfg-warn-none">No conflicts in what you have picked so far — this combination can be built as specified.</div>'
@@ -927,6 +990,19 @@
       if (isCompactGibberish(name)) flag(2, 'name is compact gibberish');
 
       var items = renderSummary();
+      var riskAck = document.getElementById('cfg-risk-ack');
+      if (compatibilityRiskCount > 0 && (!riskAck || !riskAck.checked)) {
+        e.preventDefault();
+        var riskStatus = cfgForm.querySelector('.form-status');
+        if (riskStatus) {
+          riskStatus.textContent = 'Please review the red compatibility warnings and confirm that you understand them before sending this specification.';
+          riskStatus.style.background = '#FDF1F0';
+          riskStatus.style.color = '#96281B';
+          riskStatus.classList.add('show');
+        }
+        if (riskAck) riskAck.focus();
+        return;
+      }
       var score = risks.reduce(function (s, r) { return s + r.pts; }, 0);
       track('configurator_submit', {
         options_selected: items.length,

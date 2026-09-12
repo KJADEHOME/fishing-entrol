@@ -349,5 +349,5 @@ async function testPage(file, mode) {
     await testPage(p.file, p.path);
   }
   console.log('\n==== ' + passCount + ' passed, ' + failCount + ' failed ====');
-  if (fail) process.exitCode = 1;
+  if (failCount) process.exitCode = 1;
 })().catch(e => { console.error('ERROR', e); process.exitCode = 1; });
