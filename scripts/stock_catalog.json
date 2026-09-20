@@ -99,6 +99,11 @@
           "power": "Medium-Heavy",
           "sku": "RS-F30-S1103MH"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/f30-1.jpg",
+        "assets/images/stock/detail/f30-2.jpg",
+        "assets/images/stock/detail/f30-3.jpg"
       ]
     },
     {
@@ -187,6 +192,10 @@
           "power": "Extra-Heavy",
           "sku": "RS-G30-S702XH"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/g30-1.jpg",
+        "assets/images/stock/detail/g30-2.jpg"
       ]
     },
     {
@@ -268,6 +277,11 @@
           "power": "Medium-Heavy",
           "sku": "RS-R30-S902ML/MH-ST"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/r30-1.jpg",
+        "assets/images/stock/detail/r30-2.jpg",
+        "assets/images/stock/detail/r30-3.jpg"
       ]
     },
     {
@@ -340,6 +354,11 @@
           "power": "Medium-Heavy",
           "sku": "RS-T30-S96M/MH-6"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/t30-1.jpg",
+        "assets/images/stock/detail/t30-2.jpg",
+        "assets/images/stock/detail/t30-3.jpg"
       ]
     },
     {
@@ -422,6 +441,12 @@
           "power": "Medium-Heavy",
           "sku": "RS-X20-S662M/MH"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/x20-1.jpg",
+        "assets/images/stock/detail/x20-2.jpg",
+        "assets/images/stock/detail/x20-3.jpg",
+        "assets/images/stock/detail/x20-4.jpg"
       ]
     },
     {
@@ -621,6 +646,12 @@
           "power": "Medium-Heavy",
           "sku": "RS-X30-S1103MH"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/x30-1.jpg",
+        "assets/images/stock/detail/x30-2.jpg",
+        "assets/images/stock/detail/x30-3.jpg",
+        "assets/images/stock/detail/x30-4.jpg"
       ]
     },
     {
@@ -740,6 +771,11 @@
           "power": "Light",
           "sku": "RS-X40-S610L+"
         }
+      ],
+      "gallery": [
+        "assets/images/stock/detail/x40-1.jpg",
+        "assets/images/stock/detail/x40-2.jpg",
+        "assets/images/stock/detail/x40-3.jpg"
       ]
     }
   ],

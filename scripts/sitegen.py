@@ -964,9 +964,17 @@ def _ready_card(s):
             "<p class=\"rod-name\"><em>Source: authorised retailer listing.</em></p>")
     img = ('<figure class="pg-item"><img src="%s" alt="%s" loading="lazy" decoding="async"></figure>' %
            (s["image"], s["series"] + " carbon lure rod")) if s["image"] else ""
+    thumbs = ""
+    if s.get("gallery"):
+        tfigs = "".join(
+            '<figure class="pg-item rod-thumb"><img src="%s" alt="%s detail view %d" '
+            'loading="lazy" decoding="async"></figure>' % (g, s["series"], i + 1)
+            for i, g in enumerate(s["gallery"]))
+        thumbs = '<div class="rod-thumbs">%s</div>' % tfigs
     return """
       <article class="card rod-card" id="series-%(slug)s" data-pg-gallery data-pg-caption="%(name)s">
         %(img)s
+        %(thumbs)s
         <div class="rod-body">
           <h3>%(name)s</h3>
           <p class="rod-name">%(blurb)s</p>
@@ -974,7 +982,8 @@ def _ready_card(s):
           %(flag)s
           %(table)s
         </div>
-      </article>""" % {"slug": s["slug"].lower(), "img": img, "name": s["name_en"],
+      </article>""" % {"slug": s["slug"].lower(), "img": img, "thumbs": thumbs,
+                       "name": s["name_en"],
                        "blurb": s["blurb"], "specs": dl, "flag": flag, "table": table}
 
 
