@@ -1,0 +1,110 @@
+{
+  "reels": [
+    {
+      "code": "GAL", "slug": "galaxy", "name_en": "Galaxy Spinning Reel",
+      "blurb": "Carbon-mixed aluminium spinning reel in three sizes, built for long casting with braided line. One-piece line roller keeps the line path smooth under load.",
+      "image": "assets/images/stock/reels-lures/galaxy-1.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-galaxy.jpg",
+                  "assets/images/stock/reels-lures/galaxy-1.jpg",
+                  "assets/images/stock/reels-lures/galaxy-2.jpg",
+                  "assets/images/stock/reels-lures/galaxy-3.jpg"],
+      "specs": {"Gear ratio": "5.2:1", "Body": "Carbon-mixed aluminium", "Drag": "Front drag", "Sizes": "C1000S / C2000S / C2500S"},
+      "variants": [
+        {"sku": "RS-RL-GAL-C1000S", "model": "C1000S"},
+        {"sku": "RS-RL-GAL-C2000S", "model": "C2000S"},
+        {"sku": "RS-RL-GAL-C2500S", "model": "C2500S"}
+      ]
+    },
+    {
+      "code": "HUM", "slug": "hummingbird", "name_en": "Hummingbird Finesse Reel",
+      "blurb": "Ultra-light finesse spinning reel for stream and micro-species work. 9+1 bearings, 3 kg front drag and an interchangeable left/right handle at 154 g total.",
+      "image": "assets/images/stock/reels-lures/hummingbird-1.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-hummingbird.jpg",
+                  "assets/images/stock/reels-lures/hummingbird-1.jpg",
+                  "assets/images/stock/reels-lures/hummingbird-2.jpg",
+                  "assets/images/stock/reels-lures/hummingbird-3.jpg"],
+      "specs": {"Gear ratio": "5.2:1", "Bearings": "9+1", "Weight": "154 g", "Drag force": "3 kg", "Line capacity": "0.14 mm - 90 m"},
+      "variants": [
+        {"sku": "RS-RL-HUM-C800", "model": "C800"}
+      ]
+    },
+    {
+      "code": "J20", "slug": "j20", "name_en": "J-20 Baitcasting Reel",
+      "blurb": "Anti-backlash baitcaster with a magnetic dual-brake system and three-stage adjustment. Electroplated metal body with a CNC-machined handle for long, flat casts.",
+      "image": "assets/images/stock/reels-lures/j20-1.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-j20.jpg",
+                  "assets/images/stock/reels-lures/j20-1.jpg",
+                  "assets/images/stock/reels-lures/j20-2.jpg",
+                  "assets/images/stock/reels-lures/j20-3.jpg",
+                  "assets/images/stock/reels-lures/j20-4.jpg"],
+      "specs": {"Gear ratio": "7.2:1", "Bearings": "8", "Brake": "Magnetic dual brake", "Body": "Metal, electroplated"},
+      "variants": [
+        {"sku": "RS-RL-J20-LH", "model": "J-20 Left hand"},
+        {"sku": "RS-RL-J20-RH", "model": "J-20 Right hand"}
+      ]
+    },
+    {
+      "code": "VEN", "slug": "venom", "name_en": "Venom Baitcasting Reel",
+      "blurb": "Carbon-composite baitcaster with the magnetic storm brake and a silicon-alloy ultra-light spool. Two versions - finesse and the limited insect edition - each in left or right hand.",
+      "image": "assets/images/stock/reels-lures/venom-2.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-venom.jpg",
+                  "assets/images/stock/reels-lures/venom-1.jpg",
+                  "assets/images/stock/reels-lures/venom-2.jpg",
+                  "assets/images/stock/reels-lures/venom-3.jpg",
+                  "assets/images/stock/reels-lures/venom-4.jpg"],
+      "specs": {"Gear ratio": "7.6:1", "Bearings": "8", "Body": "Carbon composite", "Brake": "Magnetic storm brake"},
+      "variants": [
+        {"sku": "RS-RL-VEN-CL", "model": "Classic finesse, left hand"},
+        {"sku": "RS-RL-VEN-CR", "model": "Classic finesse, right hand"},
+        {"sku": "RS-RL-VEN-IL", "model": "Limited insect, left hand"},
+        {"sku": "RS-RL-VEN-IR", "model": "Limited insect, right hand"}
+      ]
+    },
+    {
+      "code": "CYB", "slug": "cyber", "name_en": "Cyber Baitcasting Reel",
+      "blurb": "High-speed 8.0:1 baitcaster with an adaptive floating magnetic brake. Aluminium-alloy body in silver or yellow, 155 g on the scale, built for long precision casts.",
+      "image": "assets/images/stock/reels-lures/cyber-1.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-cyber.jpg",
+                  "assets/images/stock/reels-lures/cyber-1.jpg",
+                  "assets/images/stock/reels-lures/cyber-2.jpg",
+                  "assets/images/stock/reels-lures/cyber-3.jpg"],
+      "specs": {"Gear ratio": "8.0:1", "Weight": "155 g", "Body": "Aluminium alloy", "Brake": "Adaptive floating magnetic"},
+      "variants": [
+        {"sku": "RS-RL-CYB-SL", "model": "Silver, left hand"},
+        {"sku": "RS-RL-CYB-SR", "model": "Silver, right hand"},
+        {"sku": "RS-RL-CYB-YL", "model": "Yellow, left hand"},
+        {"sku": "RS-RL-CYB-YR", "model": "Yellow, right hand"}
+      ]
+    }
+  ],
+  "lures": [
+    {
+      "code": "CRB", "slug": "crescent-blade", "name_en": "Crescent-Blade Spinnerbait Set",
+      "blurb": "Willowing-blade vibration lure fitted with a treble hook, in three weights with a three-piece display box. Alternating-flash blade and long-cast weight transfer.",
+      "image": "assets/images/stock/reels-lures/crescent-3.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-crescent.jpg",
+                  "assets/images/stock/reels-lures/crescent-1.jpg",
+                  "assets/images/stock/reels-lures/crescent-3.jpg",
+                  "assets/images/stock/reels-lures/crescent-4.jpg"],
+      "specs": {"Type": "Vibration / spinnerbait", "Hook": "Treble, fitted", "Target": "Topmouth, pale chub, stream species", "Packaging": "3-piece display box"},
+      "variants": [
+        {"sku": "RS-LR-CRB-7G5", "model": "7.5 g set"},
+        {"sku": "RS-LR-CRB-11G", "model": "11 g set"},
+        {"sku": "RS-LR-CRB-15G", "model": "15 g set"}
+      ]
+    },
+    {
+      "code": "SPN", "slug": "micro-spoon-rig", "name_en": "Micro Spoon + Fly-Hook Rig",
+      "blurb": "Pre-tied micro spoon rig for topmouth and pale chub - gold or silver blade on a fine-wire barbed hook, board-mounted and tangle-free. Ready to fish straight from the pack.",
+      "image": "assets/images/stock/reels-lures/spoon-1.jpg",
+      "gallery": ["assets/images/stock/reels-lures/spec-spoon.jpg",
+                  "assets/images/stock/reels-lures/spoon-1.jpg",
+                  "assets/images/stock/reels-lures/spoon-2.jpg",
+                  "assets/images/stock/reels-lures/spoon-4.jpg"],
+      "specs": {"Line size": "#1.0", "Leader": "60 cm", "Line dia": "0.17 mm", "Hook": "#4 barbed", "Strength": "2.0 kg"},
+      "variants": [
+        {"sku": "RS-LR-SPN-STD", "model": "Standard rig, gold / silver"}
+      ]
+    }
+  ]
+}

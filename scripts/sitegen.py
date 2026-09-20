@@ -34,6 +34,9 @@ MANIFEST = json.load(open(os.path.join(ROOT, "scripts", "product_images_manifest
 # distribute. Kept apart from the OEM rod list: these are the maker's own
 # published models, sold as-is, not an anonymous pattern we re-brand for a buyer.
 STOCK = json.load(open(os.path.join(ROOT, "scripts", "stock_catalog.json"), encoding="utf-8"))
+# Ready-made reels and lures from the same authorised partner. Same trade-integration
+# position as the ready-ship rods: existing models, our SKU prefix, no maker branding.
+RL = json.load(open(os.path.join(ROOT, "scripts", "reels_lures_site.json"), encoding="utf-8"))
 
 PRODUCT_NAV = [
     ("spinning-rods.html", "Spinning & Casting Rods"),
@@ -41,6 +44,8 @@ PRODUCT_NAV = [
     ("saltwater-rods.html", "Saltwater & Boat Rods"),
     ("rock-surf-rods.html", "Rock & Surf Rods"),
     ("ready-ship-rods.html", "Ready-Ship Rods"),
+    ("ready-ship-reels.html", "Ready-Ship Reels"),
+    ("ready-ship-lures.html", "Ready-Ship Lures"),
 ]
 CAPABILITY_NAV = [
     ("capabilities.html", "Manufacturing Capability"),
@@ -76,6 +81,8 @@ ALL_PAGES = [
     ("saltwater-rods.html", "0.9"),
     ("rock-surf-rods.html", "0.9"),
     ("ready-ship-rods.html", "0.8"),
+    ("ready-ship-reels.html", "0.8"),
+    ("ready-ship-lures.html", "0.8"),
     ("products.html", "0.9"),
     ("capabilities.html", "0.8"),
     ("process.html", "0.8"),
@@ -1065,6 +1072,142 @@ def build_ready_ship_rods():
          [ORG_LD, webpage_ld(title, desc, "ready-ship-rods.html"), breadcrumb_ld(crumbs)])
 
 
+def _rl_card(e, unit):
+    """Ready-ship reel or lure card: photo, spec summary, variant table, gallery."""
+    dl = "".join('<div class="rod-spec"><span>%s</span><strong>%s</strong></div>'
+                 % (k, v) for k, v in e["specs"].items())
+    vrows = [[v["sku"], v["model"]] for v in e["variants"]]
+    table = spec_table(["Our SKU", "Model / Option"], vrows,
+                       "Order by our SKU. Tell us the SKU mix and quantity and we "
+                       "quote within one business day.")
+    img = ('<figure class="pg-item"><img src="%s" alt="%s" loading="lazy" decoding="async"></figure>'
+           % (e["image"], e["name_en"])) if e.get("image") else ""
+    thumbs = ""
+    if e.get("gallery"):
+        tfigs = "".join(
+            '<figure class="pg-item rod-thumb"><img src="%s" alt="%s detail view %d" '
+            'loading="lazy" decoding="async"></figure>' % (g, e["name_en"], i + 1)
+            for i, g in enumerate(e["gallery"]))
+        thumbs = '<div class="rod-thumbs">%s</div>' % tfigs
+    return """
+      <article class="card rod-card" id="item-%(slug)s" data-pg-gallery data-pg-caption="%(name)s">
+        %(img)s
+        %(thumbs)s
+        <div class="rod-body">
+          <h3>%(name)s</h3>
+          <p class="rod-name">%(blurb)s</p>
+          <div class="rod-specs">%(specs)s</div>
+          %(table)s
+        </div>
+      </article>""" % {"slug": e["slug"].lower(), "img": img, "thumbs": thumbs,
+                       "name": e["name_en"], "blurb": e["blurb"], "specs": dl, "table": table}
+
+
+_RL_HERO = """
+<section class="section" style="padding-top:34px">
+  <div class="container">
+    <span class="eyebrow">Weihai &middot; Shandong &middot; China</span>
+    <h1>%(h1)s</h1>
+    <p class="lead">%(lead)s</p>
+    <p class="lead">Every specification below is transcribed from the maker's published
+    product data. All items are available for immediate shipment - tell us your SKU mix
+    and quantity and we will come back with a quotation within one business day.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="contact.html">Request Wholesale Pricing</a>
+      <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp +86 152 6313 0999</a>
+    </div>
+  </div>
+</section>
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">The Range</span>
+    <h2>%(n)d Items, %(k)d Product Lines</h2>
+    <div class="grid grid-2 rod-grid">%(cards)s</div>
+  </div>
+</section>
+<section class="section">
+  <div class="container grid grid-2">
+    <div>
+      <span class="eyebrow">Buy it as it is</span>
+      <h2>Resale &amp; Distribution</h2>
+      <ul class="feature-list">
+        <li><strong>Ready to sell:</strong> existing models with retail packaging - no tooling, no sampling cycle</li>
+        <li><strong>Shipped from stock:</strong> ask us for current availability and the minimum order</li>
+        <li><strong>Order by our SKU:</strong> every variant carries an RS code, so nothing traces back to the maker</li>
+        <li><strong>Export handling:</strong> consolidated cartons, documentation and freight from Weihai</li>
+      </ul>
+    </div>
+    <div>
+      <span class="eyebrow">One more thing</span>
+      <h2>Matched Rod Programs</h2>
+      <p class="lead">These %(unit)s come from the same partner network as our Ready-Ship
+      rod series, so we can put together matched rod + %(unit)s packages for your market -
+      one shipment, one set of export documents.</p>
+      <div class="btn-row"><a class="btn btn-outline" href="ready-ship-rods.html">See the Ready-Ship Rods</a></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <h2>Ask for the %(unit)s Price List</h2>
+      <p>Tell us which SKUs you want and we will come back with wholesale pricing,
+      carton quantities and a landed-cost estimate for your port.</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="contact.html">Request a Quotation</a>
+        <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
+def build_ready_ship_reels():
+    title = "Ready-to-Ship Fishing Reels | Spinning & Baitcasting | Entrol Fishing"
+    desc = ("Ready-to-ship fishing reels from our Weihai partner network: Galaxy and "
+            "Hummingbird spinning reels, J-20, Venom and Cyber baitcasters. Wholesale "
+            "and matched rod-and-reel programs.")
+    kw = ("ready to ship fishing reels, spinning reel wholesale China, baitcasting reel "
+          "supplier, fishing reel distributor, finesse reel wholesale, fishing reel exporter")
+    items = RL["reels"]
+    cards = "".join(_rl_card(e, "reel") for e in items)
+    body = _RL_HERO % {
+        "h1": "Ready-Ship Spinning &amp; Baitcasting Reels",
+        "lead": "Five reel lines from our Weihai partner network, sold as finished goods "
+                "under our own RS codes: two spinning reels for finesse and all-round use, "
+                "three baitcasters from 7.2:1 up to a high-speed 8.0:1.",
+        "wa": wa_link(), "cards": cards, "n": sum(len(e["variants"]) for e in items),
+        "k": len(items), "unit": "reel",
+    }
+    crumbs = [("index.html", "Home"), ("products.html", "Products"),
+              ("ready-ship-reels.html", "Ready-Ship Reels")]
+    page("ready-ship-reels.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "ready-ship-reels.html"), breadcrumb_ld(crumbs)])
+
+
+def build_ready_ship_lures():
+    title = "Ready-to-Ship Lures & Rigs | Spinnerbaits & Micro Rigs | Entrol Fishing"
+    desc = ("Ready-to-ship lures and pre-tied rigs from our Weihai partner network: "
+            "crescent-blade spinnerbait sets in three weights and micro spoon fly-hook "
+            "rigs. Mixed-SKU cartons welcome.")
+    kw = ("ready to ship fishing lures, spinnerbait wholesale China, fishing lure supplier, "
+          "micro lure rig wholesale, fishing lure distributor, terminal tackle exporter")
+    items = RL["lures"]
+    cards = "".join(_rl_card(e, "lure") for e in items)
+    body = _RL_HERO % {
+        "h1": "Ready-Ship Lures &amp; Rigs",
+        "lead": "Two lure lines that pair with our micro-rod programs: the "
+                "crescent-blade spinnerbait set in 7.5 / 11 / 15 g and a pre-tied micro "
+                "spoon rig. Low unit weight makes these easy to consolidate with a rod order.",
+        "wa": wa_link(), "cards": cards, "n": sum(len(e["variants"]) for e in items),
+        "k": len(items), "unit": "lure",
+    }
+    crumbs = [("index.html", "Home"), ("products.html", "Products"),
+              ("ready-ship-lures.html", "Ready-Ship Lures")]
+    page("ready-ship-lures.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "ready-ship-lures.html"), breadcrumb_ld(crumbs)])
+
+
 def build_products():
     title = "Rod Models & Components | OEM Spec Library | Entrol Fishing"
     desc = ("Rod and component reference library: 22 carbon rod specifications, braid, leader, "
@@ -1795,6 +1938,8 @@ if __name__ == "__main__":
     build_saltwater()
     build_rocksurf()
     build_ready_ship_rods()
+    build_ready_ship_reels()
+    build_ready_ship_lures()
     build_products()
     build_capabilities()
     build_process()
