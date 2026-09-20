@@ -101,9 +101,9 @@
         }
       ],
       "gallery": [
+        "assets/images/stock/detail/spec-f30.jpg",
         "assets/images/stock/detail/f30-1.jpg",
-        "assets/images/stock/detail/f30-2.jpg",
-        "assets/images/stock/detail/f30-3.jpg"
+        "assets/images/stock/detail/f30-2.jpg"
       ]
     },
     {
@@ -194,8 +194,8 @@
         }
       ],
       "gallery": [
-        "assets/images/stock/detail/g30-1.jpg",
-        "assets/images/stock/detail/g30-2.jpg"
+        "assets/images/stock/detail/spec-g30.jpg",
+        "assets/images/stock/detail/g30-1.jpg"
       ]
     },
     {
@@ -279,9 +279,8 @@
         }
       ],
       "gallery": [
-        "assets/images/stock/detail/r30-1.jpg",
-        "assets/images/stock/detail/r30-2.jpg",
-        "assets/images/stock/detail/r30-3.jpg"
+        "assets/images/stock/detail/spec-r30.jpg",
+        "assets/images/stock/detail/r30-2.jpg"
       ]
     },
     {
@@ -356,7 +355,7 @@
         }
       ],
       "gallery": [
-        "assets/images/stock/detail/t30-1.jpg",
+        "assets/images/stock/detail/spec-t30.jpg",
         "assets/images/stock/detail/t30-2.jpg",
         "assets/images/stock/detail/t30-3.jpg"
       ]
@@ -443,10 +442,10 @@
         }
       ],
       "gallery": [
+        "assets/images/stock/detail/spec-x20.jpg",
         "assets/images/stock/detail/x20-1.jpg",
         "assets/images/stock/detail/x20-2.jpg",
-        "assets/images/stock/detail/x20-3.jpg",
-        "assets/images/stock/detail/x20-4.jpg"
+        "assets/images/stock/detail/x20-3.jpg"
       ]
     },
     {
@@ -648,8 +647,7 @@
         }
       ],
       "gallery": [
-        "assets/images/stock/detail/x30-1.jpg",
-        "assets/images/stock/detail/x30-2.jpg",
+        "assets/images/stock/detail/spec-x30.jpg",
         "assets/images/stock/detail/x30-3.jpg",
         "assets/images/stock/detail/x30-4.jpg"
       ]
@@ -773,8 +771,7 @@
         }
       ],
       "gallery": [
-        "assets/images/stock/detail/x40-1.jpg",
-        "assets/images/stock/detail/x40-2.jpg",
+        "assets/images/stock/detail/spec-x40.jpg",
         "assets/images/stock/detail/x40-3.jpg"
       ]
     }
