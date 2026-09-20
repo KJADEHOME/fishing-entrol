@@ -32,6 +32,7 @@
         el.value = value;
       };
       setField('_subject', subject);
+      setField('_cc', 'nathanwang@entrol.com');
       setField('_captcha', 'false');
       setField('_template', 'table');
       setField('_next', window.location.origin + '/contact.html?sent=1');
