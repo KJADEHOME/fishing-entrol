@@ -12,6 +12,36 @@
   // A success message is shown only when Supabase confirms that the lead was stored.
   var ENTROL_LEAD_API_URL = 'https://jipgzavuxvnaisgxcvts.supabase.co/functions/v1/entrol-submit-lead';
 
+  /* Email fallback: if the lead API is unreachable the form is posted straight
+     to our mailbox, so an inquiry is never silently lost. */
+  var LEAD_FALLBACK_ACTION = 'https://formsubmit.co/wangyan@entrol.com';
+
+  function leadFallbackSubmit(formEl, subject) {
+    if (!formEl) return false;
+    try {
+      formEl.setAttribute('action', LEAD_FALLBACK_ACTION);
+      formEl.setAttribute('method', 'POST');
+      var setField = function (name, value) {
+        var el = formEl.querySelector('input[name="' + name + '"]');
+        if (!el) {
+          el = document.createElement('input');
+          el.type = 'hidden';
+          el.name = name;
+          formEl.appendChild(el);
+        }
+        el.value = value;
+      };
+      setField('_subject', subject);
+      setField('_captcha', 'false');
+      setField('_template', 'table');
+      setField('_next', window.location.origin + '/contact.html?sent=1');
+      formEl.submit();
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
   function requestId() {
     if (window.crypto && typeof window.crypto.randomUUID === 'function') return window.crypto.randomUUID();
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -163,6 +193,7 @@
         if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_path: 'contact' });
         form.reset();
       }).catch(function () {
+        if (leadFallbackSubmit(form, 'New fishing rod OEM inquiry - fishing.entrol.com')) { return; }
         if (status) {
           status.textContent = 'We could not save your inquiry. Please retry, email wangyan@entrol.com, or contact us on WhatsApp.';
           status.style.background = '#FDECEA';
@@ -175,7 +206,17 @@
     });
   }
 
-  /* ---------- OEM rod configurator ---------- */
+  
+  /* Confirmation banner when the email fallback redirects back with ?sent=1 */
+  (function () {
+    if (!/[?&]sent=1/.test(window.location.search)) return;
+    var st = document.querySelector('.form-status');
+    if (!st) return;
+    st.textContent = 'Thank you - your inquiry has been received. We reply within one business day (GMT+8).';
+    st.classList.add('show');
+  })();
+
+/* ---------- OEM rod configurator ---------- */
   var cfgForm = document.getElementById('cfg-form');
   if (cfgForm) {
     var ROD_PRESET = {
@@ -1045,6 +1086,7 @@
         track('inquiry_success', { form_path: path, page: location.pathname, options_selected: items.length });
         if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { form_path: path });
       }).catch(function () {
+        if (leadFallbackSubmit(cfgForm, 'New rod specification - fishing.entrol.com')) { return; }
         if (st) {
           st.textContent = 'We could not save your inquiry. Please retry, email wangyan@entrol.com, or contact us on WhatsApp.';
           st.style.background = '#FDECEA';
