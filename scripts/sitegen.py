@@ -399,13 +399,18 @@ FLOAT_HTML = """
 def page(fname, title, desc, keywords, body, ld_blocks, hero=None):
     path = fname if fname != "index.html" else ""
     crumbs = [("index.html", "Home")]
+    if fname in {f for f, _ in PRODUCT_NAV}:
+        crumbs.append(("products.html", "Products"))
     if fname != "index.html":
         crumbs.append((fname, title.split("|")[0].strip()))
     head_html = head(title, desc, keywords, path, jsonld(ld_blocks))
-    breadcrumb = "" if fname == "index.html" else (
-        '<nav class="breadcrumb container" aria-label="Breadcrumb">%s</nav>'
-        % " &rsaquo; ".join('<a href="%s">%s</a>' % (f, n) for f, n in crumbs[:-1])
-        + ' &rsaquo; <span aria-current="page">%s</span>' % crumbs[-1][1])
+    if fname == "index.html":
+        breadcrumb = ""
+    else:
+        _inner = " &rsaquo; ".join('<a href="%s">%s</a>' % (f, n) for f, n in crumbs[:-1])
+        _inner += ' &rsaquo; <span aria-current="page">%s</span>' % crumbs[-1][1]
+        breadcrumb = ('<nav class="breadcrumb container" aria-label="Breadcrumb">%s</nav>'
+                      % _inner)
     html = """<!DOCTYPE html>
 <html lang="en">
 <head>
