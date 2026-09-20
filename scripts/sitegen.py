@@ -962,10 +962,10 @@ def _ready_card(s):
     flag = ("<p class=\"rod-name\"><em>Source: the maker's own store listing.</em></p>"
             if s["official_store"] else
             "<p class=\"rod-name\"><em>Source: authorised retailer listing.</em></p>")
-    img = ('<img src="%s" alt="%s" loading="lazy" decoding="async">' %
+    img = ('<figure class="pg-item"><img src="%s" alt="%s" loading="lazy" decoding="async"></figure>' %
            (s["image"], s["series"] + " carbon lure rod")) if s["image"] else ""
     return """
-      <article class="card rod-card" id="series-%(slug)s">
+      <article class="card rod-card" id="series-%(slug)s" data-pg-gallery data-pg-caption="%(name)s">
         %(img)s
         <div class="rod-body">
           <h3>%(name)s</h3>
