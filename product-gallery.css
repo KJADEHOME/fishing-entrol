@@ -77,6 +77,8 @@
   background: var(--color-bg-alt, #F2EDE4);
   aspect-ratio: 1 / 1;
   cursor: zoom-in;
+  user-select: none;
+  -webkit-user-select: none;
   box-shadow: 0 1px 6px rgba(44, 36, 22, 0.06);
   transition: transform 0.35s ease, box-shadow 0.35s ease;
 }
@@ -90,6 +92,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  -webkit-user-drag: none;
   transition: transform 0.5s ease;
 }
 .pg-item:hover img { transform: scale(1.05); }
@@ -146,6 +149,9 @@
   object-fit: contain;
   border-radius: 4px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
 }
 .pg-lb-close,
 .pg-lb-nav {
