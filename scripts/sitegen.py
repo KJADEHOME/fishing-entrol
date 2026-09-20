@@ -30,12 +30,17 @@ OG_IMAGE = DOMAIN + "/assets/images/spinning-rod-01.webp"
 TODAY = "2026-09-11"
 
 MANIFEST = json.load(open(os.path.join(ROOT, "scripts", "product_images_manifest.json"), encoding="utf-8"))
+# Ready-made rods from a partner production line that we are authorised to
+# distribute. Kept apart from the OEM rod list: these are the maker's own
+# published models, sold as-is, not an anonymous pattern we re-brand for a buyer.
+STOCK = json.load(open(os.path.join(ROOT, "scripts", "stock_catalog.json"), encoding="utf-8"))
 
 PRODUCT_NAV = [
     ("spinning-rods.html", "Spinning & Casting Rods"),
     ("carp-rods.html", "Carp Rods"),
     ("saltwater-rods.html", "Saltwater & Boat Rods"),
     ("rock-surf-rods.html", "Rock & Surf Rods"),
+    ("ready-ship-rods.html", "Ready-Ship Rods"),
 ]
 CAPABILITY_NAV = [
     ("capabilities.html", "Manufacturing Capability"),
@@ -70,6 +75,7 @@ ALL_PAGES = [
     ("carp-rods.html", "0.9"),
     ("saltwater-rods.html", "0.9"),
     ("rock-surf-rods.html", "0.9"),
+    ("ready-ship-rods.html", "0.8"),
     ("products.html", "0.9"),
     ("capabilities.html", "0.8"),
     ("process.html", "0.8"),
@@ -933,6 +939,123 @@ def comp_rows(items):
 COMP_COLS = ["SKU", "Description", "Specification"]
 
 
+def _ready_card(s):
+    """One ready-ship series: photo, published spec summary and its full model table."""
+    rows = [("Rod weight", ("%s g" % s["weight_g"]) if s["weight_g"] else "—"),
+            ("Material", s["material"] or "—"),
+            ("Action", s["action"] or "—"),
+            ("Sections", s["sections"] or "—")]
+    dl = "".join('<div class="rod-spec"><span>%s</span><strong>%s</strong></div>'
+                 % (lab, val) for lab, val in rows)
+    if s["variants"]:
+        vrows = [[v["sku"], v["code"], v["reel"] or "—",
+                  "%.2f m (%s)" % (v["length_m"], v["length_ft"]),
+                  v["power"] or "—",
+                  ("%s g" % v["lure_g"]) if v.get("lure_g") else "—"] for v in s["variants"]]
+        table = spec_table(["Our SKU", "Model", "Type", "Length", "Power", "Lure"], vrows,
+                           "Order by our SKU. The model code next to it is the maker's "
+                           "own reference for the same rod. Lure range shown where the "
+                           "maker publishes it — ask us for the full model sheet.")
+    else:
+        table = ('<p class="table-note">The maker publishes the variant list for this '
+                 'series on its own store page — ask us for the current model sheet.</p>')
+    flag = ("<p class=\"rod-name\"><em>Source: the maker's own store listing.</em></p>"
+            if s["official_store"] else
+            "<p class=\"rod-name\"><em>Source: authorised retailer listing.</em></p>")
+    img = ('<img src="%s" alt="%s" loading="lazy" decoding="async">' %
+           (s["image"], s["series"] + " carbon lure rod")) if s["image"] else ""
+    return """
+      <article class="card rod-card" id="series-%(slug)s">
+        %(img)s
+        <div class="rod-body">
+          <h3>%(name)s</h3>
+          <p class="rod-name">%(blurb)s</p>
+          <div class="rod-specs">%(specs)s</div>
+          %(flag)s
+          %(table)s
+        </div>
+      </article>""" % {"slug": s["slug"].lower(), "img": img, "name": s["name_en"],
+                       "blurb": s["blurb"], "specs": dl, "flag": flag, "table": table}
+
+
+def build_ready_ship_rods():
+    title = "Ready-to-Ship Carbon Lure Rods | Wholesale from Weihai | Entrol Fishing"
+    desc = ("Ready-to-ship carbon lure rods from a Weihai partner line: F30 long-cast, "
+            "X20 / X30 / X40 finesse, T30 travel, R30 ajing and G30 big-bait. "
+            "57–128 g carbon blanks, 1.8–3.35 m, 52 models. Wholesale and OEM enquiries welcome.")
+    kw = ("ready to ship fishing rods, carbon lure rod supplier China, Weihai lure rod factory, "
+          "finesse rod wholesale, lure rod distributor, ajing rod supplier")
+    series = STOCK["series"]
+    total = sum(len(s["variants"]) for s in series)
+    cards = "".join(_ready_card(s) for s in series)
+    body = """
+<section class="section" style="padding-top:34px">
+  <div class="container">
+    <span class="eyebrow">Weihai &middot; Shandong &middot; China</span>
+    <h1>Ready-Ship Lure Rod Series</h1>
+    <p class="lead">Ready-made rods from one of Weihai's carbon-rod lines, which we are
+    authorised to distribute. No tooling, no sampling cycle — you pick a model code and
+    we ship. Or take the same pattern and build it under your own brand.</p>
+    <p class="lead">Every figure below is transcribed from the maker's own published
+    product data: blank weight, material, action, section count and the full model
+    list. All models are available for immediate shipment — tell us your model mix
+    and quantity and we will come back with a quotation within one business day.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="contact.html">Request Wholesale Pricing</a>
+      <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp +86 152 6313 0999</a>
+    </div>
+  </div>
+</section>
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">The Range</span>
+    <h2>%(n)d Published Models Across %(k)d Series</h2>
+    <p class="lead">Spinning and casting versions, 1.8 m finesse rods up to 3.35 m
+    long-cast rods. Model codes are the maker's own, so you can order by code.</p>
+    <div class="grid grid-2 rod-grid">%(cards)s</div>
+  </div>
+</section>
+<section class="section">
+  <div class="container grid grid-2">
+    <div>
+      <span class="eyebrow">Buy it as it is</span>
+      <h2>Resale &amp; Distribution</h2>
+      <ul class="feature-list">
+        <li><strong>Ready to sell:</strong> existing models with retail packaging — no tooling and no sampling cycle</li>
+        <li><strong>Shipped from stock:</strong> ask us for current availability and the minimum order</li>
+        <li><strong>Order by our SKU:</strong> every model carries an RS code, so nothing traces back to the maker</li>
+        <li><strong>Export handling:</strong> consolidated cartons, documentation and freight from Weihai</li>
+      </ul>
+    </div>
+    <div>
+      <span class="eyebrow">Or build it as yours</span>
+      <h2>OEM Version of the Same Pattern</h2>
+      <p class="lead">Because we work with the same production line, any model on this
+      page can be the starting point of your own program — same blank and taper, your
+      cosmetics, your model codes, from 300 pieces per model.</p>
+      <div class="btn-row"><a class="btn btn-outline" href="oem-builder.html">Open the OEM Rod Builder</a></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <h2>Ask for the Ready-Ship Price List</h2>
+      <p>Tell us which series and which model codes you want and we will come back with
+      wholesale pricing, carton quantities and a landed-cost estimate for your port.</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="contact.html">Request a Quotation</a>
+        <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>""" % {"wa": wa_link(), "cards": cards, "n": total, "k": len(series)}
+    crumbs = [("index.html", "Home"), ("products.html", "Products"),
+              ("ready-ship-rods.html", "Ready-Ship Rods")]
+    page("ready-ship-rods.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "ready-ship-rods.html"), breadcrumb_ld(crumbs)])
+
+
 def build_products():
     title = "Rod Models & Components | OEM Spec Library | Entrol Fishing"
     desc = ("Rod and component reference library: 22 carbon rod specifications, braid, leader, "
@@ -1662,6 +1785,7 @@ if __name__ == "__main__":
     build_carp()
     build_saltwater()
     build_rocksurf()
+    build_ready_ship_rods()
     build_products()
     build_capabilities()
     build_process()

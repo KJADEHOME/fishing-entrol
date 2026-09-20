@@ -1,0 +1,748 @@
+{
+  "brand": "",
+  "producer": "Weihai partner production line",
+  "note": "Ready-made rods from a partner production line we are authorised to distribute. Specifications transcribed from the maker's published product data - no value is estimated. Variant lists and R30 lengths were transcribed from the product detail-page parameter blocks; T30 open lengths are read from the manufacturer model-code length digits. Per-model lure range, rod weight, closed length, action code and guide count are transcribed from the maker's spec-table images where captured (7 models verified so far; remaining models pending - the maker's full spec sheets sit in the lazy-loaded section of the detail pages).",
+  "series": [
+    {
+      "slug": "F30",
+      "series": "F30",
+      "name_en": "F30 Long-Cast Lure Rod",
+      "blurb": "Two-piece carbon long-cast rod built for snakehead, pike-perch and sea bass. SiC guide train, 85 g blank, the volume seller of the range.",
+      "image": "assets/images/stock/rod-f30.jpg",
+      "item_code": "JYF30",
+      "weight_g": "85",
+      "material": "Carbon fiber",
+      "action": "Medium-Fast",
+      "sections": "2",
+      "retail_cny": "199",
+      "market_price_cny": "199",
+      "official_store": true,
+      "source_shop": "brand flagship store",
+      "variants": [
+        {
+          "code": "C732MH",
+          "reel": "Casting",
+          "length_m": 2.21,
+          "length_ft": "7'3\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-F30-C732MH"
+        },
+        {
+          "code": "C762MH+",
+          "reel": "Casting",
+          "length_m": 2.28,
+          "length_ft": "7'6\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-F30-C762MH+"
+        },
+        {
+          "code": "C802H",
+          "reel": "Casting",
+          "length_m": 2.44,
+          "length_ft": "8'0\"",
+          "power": "Heavy",
+          "sku": "RS-F30-C802H"
+        },
+        {
+          "code": "S732L+",
+          "reel": "Spinning",
+          "length_m": 2.21,
+          "length_ft": "7'3\"",
+          "power": "Light",
+          "sku": "RS-F30-S732L+"
+        },
+        {
+          "code": "S792ML",
+          "reel": "Spinning",
+          "length_m": 2.36,
+          "length_ft": "7'9\"",
+          "power": "Medium-Light",
+          "sku": "RS-F30-S792ML"
+        },
+        {
+          "code": "S812M",
+          "reel": "Spinning",
+          "length_m": 2.46,
+          "length_ft": "8'1\"",
+          "power": "Medium",
+          "sku": "RS-F30-S812M"
+        },
+        {
+          "code": "S902MH",
+          "reel": "Spinning",
+          "length_m": 2.74,
+          "length_ft": "9'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-F30-S902MH"
+        },
+        {
+          "code": "S1002M",
+          "reel": "Spinning",
+          "length_m": 3.05,
+          "length_ft": "10'0\"",
+          "power": "Medium",
+          "sku": "RS-F30-S1002M"
+        },
+        {
+          "code": "S1002MH",
+          "reel": "Spinning",
+          "length_m": 3.05,
+          "length_ft": "10'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-F30-S1002MH"
+        },
+        {
+          "code": "S1103MH",
+          "reel": "Spinning",
+          "length_m": 3.35,
+          "length_ft": "11'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-F30-S1103MH"
+        }
+      ]
+    },
+    {
+      "slug": "G30",
+      "series": "G30",
+      "name_en": "G30 Big-Bait Rod",
+      "blurb": "Heavy two-piece composite-carbon big-bait rod for large hard baits and powerful saltwater fish.",
+      "image": "assets/images/stock/rod-g30.jpg",
+      "item_code": "JYGLYJR",
+      "weight_g": "128",
+      "material": "Carbon fiber",
+      "action": "Medium-Fast",
+      "sections": "2",
+      "retail_cny": "238",
+      "market_price_cny": "338",
+      "official_store": true,
+      "source_shop": "brand flagship store",
+      "variants": [
+        {
+          "code": "C702ML+",
+          "reel": "Casting",
+          "length_m": 2.13,
+          "length_ft": "7'0\"",
+          "power": "Medium-Light",
+          "sku": "RS-G30-C702ML+",
+          "lure_g": "5-21",
+          "rod_weight_g": 128,
+          "closed_cm": 111,
+          "sections": "2",
+          "action_code": "RF",
+          "guides": 10
+        },
+        {
+          "code": "C702M",
+          "reel": "Casting",
+          "length_m": 2.13,
+          "length_ft": "7'0\"",
+          "power": "Medium",
+          "sku": "RS-G30-C702M"
+        },
+        {
+          "code": "C702MH",
+          "reel": "Casting",
+          "length_m": 2.13,
+          "length_ft": "7'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-G30-C702MH"
+        },
+        {
+          "code": "C610XH",
+          "reel": "Casting",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Extra-Heavy",
+          "sku": "RS-G30-C610XH"
+        },
+        {
+          "code": "C69XXH",
+          "reel": "Casting",
+          "length_m": 2.05,
+          "length_ft": "6'9\"",
+          "power": "Extra-Heavy",
+          "sku": "RS-G30-C69XXH"
+        },
+        {
+          "code": "C69XXH-LH",
+          "reel": "Casting",
+          "length_m": 2.05,
+          "length_ft": "6'9\"",
+          "power": "Extra-Heavy",
+          "sku": "RS-G30-C69XXH-LH"
+        },
+        {
+          "code": "S722MH/H",
+          "reel": "Spinning",
+          "length_m": 2.18,
+          "length_ft": "7'2\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-G30-S722MH/H"
+        },
+        {
+          "code": "S702XH",
+          "reel": "Spinning",
+          "length_m": 2.13,
+          "length_ft": "7'0\"",
+          "power": "Extra-Heavy",
+          "sku": "RS-G30-S702XH"
+        }
+      ]
+    },
+    {
+      "slug": "R30",
+      "series": "R30",
+      "name_en": "R30 Light Rock-Fishing (Ajing) Rod",
+      "blurb": "57 g ultra-light rod for rock fishing and ajing in both fresh and salt water, Fuji SiC top guide.",
+      "image": "assets/images/stock/rod-r30.jpg",
+      "item_code": "JYR30LYG",
+      "weight_g": "57",
+      "material": "Carbon fiber",
+      "action": "Fast",
+      "sections": "2",
+      "retail_cny": "199",
+      "market_price_cny": "199",
+      "official_store": true,
+      "source_shop": "brand flagship store",
+      "variants": [
+        {
+          "code": "S622UL-ST",
+          "reel": "Spinning",
+          "length_m": 1.88,
+          "length_ft": "6'2\"",
+          "power": "Light",
+          "sku": "RS-R30-S622UL-ST",
+          "lure_g": "0.4-5",
+          "rod_weight_g": 57,
+          "sections": "2",
+          "action_code": "XF",
+          "guides": 8
+        },
+        {
+          "code": "S610UL/L-ST",
+          "reel": "Spinning",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Light",
+          "sku": "RS-R30-S610UL/L-ST",
+          "lure_g": "0.8-7",
+          "rod_weight_g": 67,
+          "sections": "2",
+          "action_code": "XF",
+          "guides": 9
+        },
+        {
+          "code": "S732L-ST",
+          "reel": "Spinning",
+          "length_m": 2.21,
+          "length_ft": "7'3\"",
+          "power": "Light",
+          "sku": "RS-R30-S732L-ST",
+          "lure_g": "2-11",
+          "rod_weight_g": 79,
+          "sections": "2",
+          "action_code": "XF",
+          "guides": 9
+        },
+        {
+          "code": "S762L/ML-ST",
+          "reel": "Spinning",
+          "length_m": 2.28,
+          "length_ft": "7'6\"",
+          "power": "Medium-Light",
+          "sku": "RS-R30-S762L/ML-ST"
+        },
+        {
+          "code": "S792L/M-ST",
+          "reel": "Spinning",
+          "length_m": 2.36,
+          "length_ft": "7'9\"",
+          "power": "Medium",
+          "sku": "RS-R30-S792L/M-ST"
+        },
+        {
+          "code": "S902ML/MH-ST",
+          "reel": "Spinning",
+          "length_m": 2.74,
+          "length_ft": "9'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-R30-S902ML/MH-ST"
+        }
+      ]
+    },
+    {
+      "slug": "T30",
+      "series": "T30",
+      "name_en": "T30 Travel Rod",
+      "blurb": "Five-section travel rod that packs down small for airline and backpack transport without giving up a fast taper.",
+      "image": "assets/images/stock/rod-t30.jpg",
+      "item_code": "",
+      "weight_g": "86",
+      "material": "Carbon fiber",
+      "action": "Fast",
+      "sections": "5–6",
+      "retail_cny": "260",
+      "market_price_cny": "299",
+      "official_store": false,
+      "source_shop": "authorised retailer",
+      "variants": [
+        {
+          "code": "C66ML/M-5",
+          "reel": "Casting",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium-Light",
+          "sku": "RS-T30-C66ML/M-5",
+          "lure_g": "3.5-21",
+          "rod_weight_g": 86,
+          "closed_cm": 52,
+          "sections": "5",
+          "action_code": "F",
+          "guides": 10
+        },
+        {
+          "code": "C68MH/H-5",
+          "reel": "Casting",
+          "length_m": 2.03,
+          "length_ft": "6'8\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-T30-C68MH/H-5"
+        },
+        {
+          "code": "C66XH-5",
+          "reel": "Casting",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Extra-Heavy",
+          "sku": "RS-T30-C66XH-5"
+        },
+        {
+          "code": "S610ML/M-5",
+          "reel": "Spinning",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Medium-Light",
+          "sku": "RS-T30-S610ML/M-5"
+        },
+        {
+          "code": "S88ML/M-5",
+          "reel": "Spinning",
+          "length_m": 2.64,
+          "length_ft": "8'8\"",
+          "power": "Medium-Light",
+          "sku": "RS-T30-S88ML/M-5"
+        },
+        {
+          "code": "S96M/MH-6",
+          "reel": "Spinning",
+          "length_m": 2.9,
+          "length_ft": "9'6\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-T30-S96M/MH-6"
+        }
+      ]
+    },
+    {
+      "slug": "X20",
+      "series": "X20",
+      "name_en": "X20 Finesse Lure Rod",
+      "blurb": "Ultra-fast 62 g carbon finesse rod for perch, mandarin fish and bass. Sold in both spinning and casting configurations.",
+      "image": "assets/images/stock/rod-x20.jpg",
+      "item_code": "JYX20",
+      "weight_g": "62",
+      "material": "Carbon",
+      "action": "Fast",
+      "sections": "2",
+      "retail_cny": "138",
+      "market_price_cny": "138",
+      "official_store": true,
+      "source_shop": "brand flagship store",
+      "variants": [
+        {
+          "code": "C632L",
+          "reel": "Casting",
+          "length_m": 1.91,
+          "length_ft": "6'3\"",
+          "power": "Light",
+          "sku": "RS-X20-C632L"
+        },
+        {
+          "code": "C652ML",
+          "reel": "Casting",
+          "length_m": 1.95,
+          "length_ft": "6'5\"",
+          "power": "Medium-Light",
+          "sku": "RS-X20-C652ML"
+        },
+        {
+          "code": "C662M",
+          "reel": "Casting",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium",
+          "sku": "RS-X20-C662M"
+        },
+        {
+          "code": "C672MH",
+          "reel": "Casting",
+          "length_m": 2.01,
+          "length_ft": "6'7\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X20-C672MH"
+        },
+        {
+          "code": "C610H",
+          "reel": "Casting",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Heavy",
+          "sku": "RS-X20-C610H"
+        },
+        {
+          "code": "S662L",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Light",
+          "sku": "RS-X20-S662L"
+        },
+        {
+          "code": "S662ML",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium-Light",
+          "sku": "RS-X20-S662ML"
+        },
+        {
+          "code": "S662M/MH",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X20-S662M/MH"
+        }
+      ]
+    },
+    {
+      "slug": "X30",
+      "series": "X30",
+      "name_en": "X30 Finesse Lure Rod",
+      "blurb": "Lightweight finesse rod range covering 1.91–2.08 m, fast to medium-fast taper, built for soft-plastics and small hard baits.",
+      "image": "assets/images/stock/rod-x30.jpg",
+      "item_code": "X30",
+      "weight_g": "60",
+      "material": "Carbon",
+      "action": "Extra-Fast",
+      "sections": "2",
+      "retail_cny": "169",
+      "market_price_cny": "599",
+      "official_store": false,
+      "source_shop": "authorised retailer",
+      "variants": [
+        {
+          "code": "C632L",
+          "reel": "Casting",
+          "length_m": 1.91,
+          "length_ft": "6'3\"",
+          "power": "Light",
+          "sku": "RS-X30-C632L",
+          "lure_g": "2-11",
+          "rod_weight_g": 63,
+          "sections": "2",
+          "action_code": "XF",
+          "guides": 9
+        },
+        {
+          "code": "C652ML",
+          "reel": "Casting",
+          "length_m": 1.95,
+          "length_ft": "6'5\"",
+          "power": "Medium-Light",
+          "sku": "RS-X30-C652ML"
+        },
+        {
+          "code": "C662M",
+          "reel": "Casting",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium",
+          "sku": "RS-X30-C662M"
+        },
+        {
+          "code": "C672MH",
+          "reel": "Casting",
+          "length_m": 2.01,
+          "length_ft": "6'7\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-C672MH"
+        },
+        {
+          "code": "C610H",
+          "reel": "Casting",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Heavy",
+          "sku": "RS-X30-C610H"
+        },
+        {
+          "code": "C702H",
+          "reel": "Casting",
+          "length_m": 2.13,
+          "length_ft": "7'0\"",
+          "power": "Heavy",
+          "sku": "RS-X30-C702H"
+        },
+        {
+          "code": "C732MH",
+          "reel": "Casting",
+          "length_m": 2.21,
+          "length_ft": "7'3\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-C732MH"
+        },
+        {
+          "code": "C762MH+",
+          "reel": "Casting",
+          "length_m": 2.28,
+          "length_ft": "7'6\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-C762MH+"
+        },
+        {
+          "code": "C802H",
+          "reel": "Casting",
+          "length_m": 2.44,
+          "length_ft": "8'0\"",
+          "power": "Heavy",
+          "sku": "RS-X30-C802H"
+        },
+        {
+          "code": "S662L",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Light",
+          "sku": "RS-X30-S662L"
+        },
+        {
+          "code": "S662ML",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium-Light",
+          "sku": "RS-X30-S662ML"
+        },
+        {
+          "code": "S662M/MH",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-S662M/MH"
+        },
+        {
+          "code": "S732L+",
+          "reel": "Spinning",
+          "length_m": 2.21,
+          "length_ft": "7'3\"",
+          "power": "Light",
+          "sku": "RS-X30-S732L+"
+        },
+        {
+          "code": "S792ML",
+          "reel": "Spinning",
+          "length_m": 2.36,
+          "length_ft": "7'9\"",
+          "power": "Medium-Light",
+          "sku": "RS-X30-S792ML"
+        },
+        {
+          "code": "S812M",
+          "reel": "Spinning",
+          "length_m": 2.46,
+          "length_ft": "8'1\"",
+          "power": "Medium",
+          "sku": "RS-X30-S812M"
+        },
+        {
+          "code": "S882ML+",
+          "reel": "Spinning",
+          "length_m": 2.64,
+          "length_ft": "8'8\"",
+          "power": "Medium-Light",
+          "sku": "RS-X30-S882ML+"
+        },
+        {
+          "code": "S902MH",
+          "reel": "Spinning",
+          "length_m": 2.74,
+          "length_ft": "9'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-S902MH"
+        },
+        {
+          "code": "S962M+",
+          "reel": "Spinning",
+          "length_m": 2.9,
+          "length_ft": "9'6\"",
+          "power": "Medium",
+          "sku": "RS-X30-S962M+"
+        },
+        {
+          "code": "S1002M",
+          "reel": "Spinning",
+          "length_m": 3.05,
+          "length_ft": "10'0\"",
+          "power": "Medium",
+          "sku": "RS-X30-S1002M"
+        },
+        {
+          "code": "S1002MH",
+          "reel": "Spinning",
+          "length_m": 3.05,
+          "length_ft": "10'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-S1002MH"
+        },
+        {
+          "code": "S1003MH",
+          "reel": "Spinning",
+          "length_m": 3.05,
+          "length_ft": "10'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-S1003MH"
+        },
+        {
+          "code": "S1103MH",
+          "reel": "Spinning",
+          "length_m": 3.35,
+          "length_ft": "11'0\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X30-S1103MH"
+        }
+      ]
+    },
+    {
+      "slug": "X40",
+      "series": "X40",
+      "name_en": "X40 Competition Finesse Rod",
+      "blurb": "Top of the range: 85 g carbon, fast / extra-fast taper, Fuji or SiC guides, single-piece \"pit\" versions for competition fishing.",
+      "image": "assets/images/stock/rod-x40.jpg",
+      "item_code": "X40",
+      "weight_g": "85",
+      "material": "Carbon",
+      "action": "Fast",
+      "sections": "",
+      "retail_cny": "334",
+      "market_price_cny": "399",
+      "official_store": false,
+      "source_shop": "authorised retailer",
+      "variants": [
+        {
+          "code": "C511MH",
+          "reel": "Casting",
+          "length_m": 1.8,
+          "length_ft": "5'11\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X40-C511MH"
+        },
+        {
+          "code": "C631M+",
+          "reel": "Casting",
+          "length_m": 1.91,
+          "length_ft": "6'3\"",
+          "power": "Medium",
+          "sku": "RS-X40-C631M+"
+        },
+        {
+          "code": "C631MH+",
+          "reel": "Casting",
+          "length_m": 1.91,
+          "length_ft": "6'3\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X40-C631MH+"
+        },
+        {
+          "code": "C632L",
+          "reel": "Casting",
+          "length_m": 1.91,
+          "length_ft": "6'3\"",
+          "power": "Light",
+          "sku": "RS-X40-C632L",
+          "lure_g": "2-11",
+          "rod_weight_g": 64,
+          "sections": "2",
+          "action_code": "XF",
+          "guides": 9
+        },
+        {
+          "code": "C632MH+",
+          "reel": "Casting",
+          "length_m": 1.91,
+          "length_ft": "6'3\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X40-C632MH+"
+        },
+        {
+          "code": "C652ML",
+          "reel": "Casting",
+          "length_m": 1.95,
+          "length_ft": "6'5\"",
+          "power": "Medium-Light",
+          "sku": "RS-X40-C652ML"
+        },
+        {
+          "code": "C661H",
+          "reel": "Casting",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Heavy",
+          "sku": "RS-X40-C661H"
+        },
+        {
+          "code": "C662M",
+          "reel": "Casting",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium",
+          "sku": "RS-X40-C662M"
+        },
+        {
+          "code": "C672MH",
+          "reel": "Casting",
+          "length_m": 2.01,
+          "length_ft": "6'7\"",
+          "power": "Medium-Heavy",
+          "sku": "RS-X40-C672MH"
+        },
+        {
+          "code": "C610H+",
+          "reel": "Casting",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Heavy",
+          "sku": "RS-X40-C610H+"
+        },
+        {
+          "code": "S662ML+",
+          "reel": "Spinning",
+          "length_m": 1.98,
+          "length_ft": "6'6\"",
+          "power": "Medium-Light",
+          "sku": "RS-X40-S662ML+"
+        },
+        {
+          "code": "S610L+",
+          "reel": "Spinning",
+          "length_m": 2.08,
+          "length_ft": "6'10\"",
+          "power": "Light",
+          "sku": "RS-X40-S610L+"
+        }
+      ]
+    }
+  ],
+  "sku_prefix": "RS",
+  "sku_note": "SKU codes are ours: RS-<series>-<model>."
+}
