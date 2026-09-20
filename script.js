@@ -14,7 +14,7 @@
 
   /* Email fallback: if the lead API is unreachable the form is posted straight
      to our mailbox, so an inquiry is never silently lost. */
-  var LEAD_FALLBACK_ACTION = 'https://formsubmit.co/wangyan@entrol.com';
+  var LEAD_FALLBACK_ACTION = 'https://formsubmit.co/5dc5f6116cc8c7d3c7280ac008322da9';
 
   function leadFallbackSubmit(formEl, subject) {
     if (!formEl) return false;
