@@ -151,8 +151,8 @@ SURF_ROWS = cat.spec_rows("surf")
 SURF_COLS = ["Model", "Length", "Closed Length", "Sections", "Weight", "Action",
              "Tip / Butt Dia.", "Cast Weight", "Handle", "Carbon Grade"]
 
-MOQ_NOTE = ("MOQ 300 pcs per model (500 for kits) · Sample lead time 15–20 days · Production "
-            "lead time 35–45 days after sample approval. Custom length, action, components and "
+MOQ_NOTE = ("MOQ 300 pcs per model (500 for kits) · Sample lead time 20 days · Production "
+            "lead time 45 days after sample approval. Custom length, action, components and "
             "branding available on request.")
 
 
@@ -454,7 +454,7 @@ def build_index():
     title = "Carbon Fiber Fishing Rod Manufacturer | OEM From Weihai"
     assert len(title) <= 65
     desc = ("OEM/ODM carbon fiber rods from Weihai, China — spinning, carp, boat and surf rods. "
-            "MOQ 300 pcs/model, samples in 15–20 days. Get a quote today.")
+            "MOQ 300 pcs/model, samples in 20 days. Get a quote today.")
     assert len(desc) <= 160
     kw = ("carbon fiber fishing rod manufacturer, fishing rod OEM supplier China, custom fishing rod "
           "manufacturer, Weihai fishing rod factory, spinning rod OEM, carp rod manufacturer")
@@ -591,9 +591,9 @@ def build_index():
     <div class="grid grid-4" style="margin-top:36px">
       <div class="card"><h3>1 &middot; Specification</h3><p>Send a reference rod, a spec table or just
       your target fish and price point. We translate it into a buildable blank spec.</p></div>
-      <div class="card"><h3>2 &middot; Sample</h3><p>Pre-production sample in 15–20 days. Test it on
+      <div class="card"><h3>2 &middot; Sample</h3><p>Pre-production sample in 20 days. Test it on
       the water before you commit to volume.</p></div>
-      <div class="card"><h3>3 &middot; Production</h3><p>35–45 days after sample approval, with
+      <div class="card"><h3>3 &middot; Production</h3><p>45 days after sample approval, with
       in-line QC and photo reports at each milestone.</p></div>
       <div class="card"><h3>4 &middot; Delivery</h3><p>Consolidated sea or air freight, full export
       documentation, and after-shipment support.</p></div>
@@ -741,7 +741,7 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
 def build_spinning():
     title = "Spinning Rod OEM & ODM | Carbon Bass Rods | Entrol Fishing"
     desc = ("Custom spinning and casting rods from Weihai, China. 2.13–2.29 m carbon blanks, cork "
-            "handles, 4–25 lb. MOQ 300/model, samples 15–20 days. Request a quotation.")
+            "handles, 4–25 lb. MOQ 300/model, samples 20 days. Request a quotation.")
     kw = ("spinning rod OEM, spinning rod manufacturer China, custom bass rod, carbon casting rod "
           "supplier, Weihai fishing rod factory, lure rod ODM")
     intro = """
@@ -827,7 +827,7 @@ def build_carp():
 def build_saltwater():
     title = "Boat Rod Manufacturer | 20–200 lb Saltwater Rods OEM | Entrol Fishing"
     desc = ("Saltwater boat rods and slow jigging rods from Weihai, China. 20–200 lb class blanks, "
-            "corrosion-resistant components, MOQ 300/model. Samples in 15–20 days.")
+            "corrosion-resistant components, MOQ 300/model. Samples in 20 days.")
     kw = ("boat rod manufacturer, saltwater fishing rod OEM, slow jigging rod supplier, deep sea rod "
           "China, 200 lb game rod manufacturer, Weihai boat rod factory")
     intro = """
@@ -1461,14 +1461,14 @@ FAQS = [
      "labelled: your brand from 1,000 pieces, the component maker's own brand, an unbranded neutral "
      "pack, or a house brand we propose to your target price point."),
     ("How long does a sample take?",
-     "Pre-production samples take 15–20 days from specification confirmation, depending on blank "
-     "tooling and component availability. Bulk production takes 35–45 days after sample approval."),
+     "Pre-production samples take 20 days from specification confirmation, depending on blank "
+     "tooling and component availability. Bulk production takes 45 days after sample approval."),
     ("Can I buy just one rod for myself?",
      "You can commission one, but you cannot buy one off a shelf — there is no stock, no cart and "
      "no online checkout. Every rod is built to order, so a single rod is quoted the same way a "
      "container is: you tell us the water, the fish, the length and feel you want, plus any reels, "
      "line and lures you want sent with it, and we come back with a price and a build time. A "
-     "single build runs 20–25 days before it ships, and freight is quoted to your country "
+     "single build runs 20 days before it ships, and freight is quoted to your country "
      "separately. It costs more per rod than a production order because there is no run to spread "
      "the set-up across — and because it is built to your measurements, it cannot be returned or "
      "exchanged unless it arrives damaged."),
@@ -1500,7 +1500,7 @@ FAQS = [
 
 def build_faq():
     title = "Fishing Rod OEM FAQ | MOQ, Samples, Lead Times | Entrol Fishing"
-    desc = ("Answers on fishing rod OEM: MOQ 300 pcs/model, 15–20 day samples, 35–45 day production, "
+    desc = ("Answers on fishing rod OEM: MOQ 300 pcs/model, 20-day samples, 45-day production, "
             "private label, freight times to Australia and Europe, QC and factory visits.")
     kw = ("fishing rod OEM FAQ, fishing rod MOQ, fishing rod sample lead time, private label fishing "
           "rods, fishing rod factory China questions")
@@ -1709,7 +1709,7 @@ def build_process():
     <span class="eyebrow">How We Work</span>
     <h1>From First Message to Landed Goods</h1>
     <p class="lead">Six stages, and you know where the order is in all six. The numbers below are
-    the ones we actually work to — a sample in 15–20 days, production 35–45 days after you approve
+    the ones we actually work to — a sample in 20 days, production 45 days after you approve
     it — but they move with the season, so treat them as planning figures and confirm on the quote.</p>
   </div>
 </section>
@@ -1725,10 +1725,10 @@ def build_process():
       cosmetics, packaging, labour, MOQ, sample cost and an estimated freight figure. Each part on
       its own line so you can see what the reel costs against the rod.</p></div>
       <div class="card"><h3>3 · Sample</h3><p>One pre-production sample built to the agreed spec,
-      ready in 15–20 days. Sample cost is normally credited against the production order.</p></div>
+      ready in 20 days. Sample cost is normally credited against the production order.</p></div>
       <div class="card"><h3>4 · Approval</h3><p>You test it. Changes at this stage are normal and
       cheap — changing a guide layout after 3,000 rods are wrapped is neither.</p></div>
-      <div class="card"><h3>5 · Production</h3><p>35–45 days after sample approval. Photo reports
+      <div class="card"><h3>5 · Production</h3><p>45 days after sample approval. Photo reports
       at blank, wrapping and finishing milestones; pre-shipment inspection against an agreed
       AQL.</p></div>
       <div class="card"><h3>6 · Shipment</h3><p>Consolidated sea or air from Qingdao with full
@@ -1746,9 +1746,9 @@ def build_process():
         <thead><tr><th>Stage</th><th>Typical duration</th><th>What can delay it</th></tr></thead>
         <tbody>
           <tr><td>Quotation</td><td>1 business day</td><td>A spec that needs component makers to price — reels and line add two to three days.</td></tr>
-          <tr><td>Sample build</td><td>15–20 days</td><td>Custom blanks, hydro-dip patterns and printed packaging each add time.</td></tr>
+          <tr><td>Sample build</td><td>20 days</td><td>Custom blanks, hydro-dip patterns and printed packaging each add time.</td></tr>
           <tr><td>Sample shipping</td><td>3–7 days by air</td><td>Customs clearance at your end, which we cannot control.</td></tr>
-          <tr><td>Production</td><td>35–45 days</td><td>Peak season (roughly September to February for the following spring), or a change of spec mid-run.</td></tr>
+          <tr><td>Production</td><td>45 days</td><td>Peak season (roughly September to February for the following spring), or a change of spec mid-run.</td></tr>
           <tr><td>Sea freight</td><td>15–20 days to Australia, 30–40 days to Northern Europe</td><td>Port congestion and transhipment.</td></tr>
         </tbody>
       </table>
@@ -1809,7 +1809,7 @@ def build_process():
 def build_contact():
     title = "Request a Quote | Fishing Rod OEM Inquiry | Entrol Fishing"
     desc = ("Request a fishing rod OEM quotation from Weihai, China. MOQ 300 pcs/model, samples in "
-            "15–20 days. Reply within one business day, or WhatsApp +86 152 6313 0999.")
+            "20 days. Reply within one business day, or WhatsApp +86 152 6313 0999.")
     kw = ("fishing rod quote, fishing rod OEM inquiry, contact fishing rod manufacturer, Weihai rod "
           "factory contact, custom rod quotation")
     crumbs = [("index.html", "Home"), ("contact.html", "Contact")]

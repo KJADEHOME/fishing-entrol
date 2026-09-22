@@ -351,7 +351,7 @@ GROUPS = [
             dict(name="urgency", label="When do you want it in your hands?", opts=[
                 "As soon as possible", "Within a month", "2–3 months is fine",
                 "No rush — I am planning ahead", "It is a gift — I have a date"],
-                hint="A single build runs 20–25 days before it ships. If you have a date, say so "
+                hint="A single build runs 20 days before it ships. If you have a date, say so "
                      "and we will tell you honestly whether we can hit it."),
         ],
     },
@@ -385,7 +385,7 @@ GROUPS = [
             dict(name="ship_window", label="When do you need it on the water", path="oem", opts=[
                 "As soon as possible", "Within 3 months", "Within 6 months",
                 "Next season", "No fixed date yet"],
-                hint="Rod programs run 35–45 days after sample approval, plus freight. Season "
+                hint="Rod programs run 45 days after sample approval, plus freight. Season "
                      "deadlines are the usual reason a program slips, so tell us early."),
             dict(name="compliance", label="Certification you need", path="oem", opts=[
                 "REACH (EU)", "UKCA (UK)", "CPSIA / CA Prop 65 (US)", "EN71 (if sold as toy)",
@@ -568,7 +568,7 @@ CUSTOM_KIT_BLOCK = """
     <div class="card" style="margin-top:30px">
       <h3 style="margin-top:0">Three things to know before you send this</h3>
       <ul class="feature-list">
-        <li><strong>Lead time.</strong> A single custom rod takes about 20–25 days to build, plus
+        <li><strong>Lead time.</strong> A single custom rod takes about 20 days to build, plus
         shipping to your country. We confirm the date before you pay anything.</li>
         <li><strong>Deposit.</strong> Custom builds start on a 50% deposit, with the balance due
         before shipment. Photos of the finished rod go out first.</li>
@@ -788,7 +788,7 @@ def render_body(wa_url, form_endpoint, path=None):
 
 TITLE_OEM = "OEM Rod Builder | Define a Production Rod | Entrol Fishing"
 DESC_OEM = ("Define a production fishing rod for your brand: blank, guide train, reel seat, handle, "
-            "cosmetics and packaging. MOQ 300 pcs per model, samples in 15-20 days. Quoted within "
+            "cosmetics and packaging. MOQ 300 pcs per model, samples in 20 days. Quoted within "
             "one business day.")
 KEYWORDS_OEM = ("fishing rod OEM program, private label fishing rods, custom rod specification, "
                 "rod manufacturer MOQ, bulk fishing rods wholesale, OEM carbon rod builder")

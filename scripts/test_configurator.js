@@ -259,7 +259,7 @@ async function testPage(file, mode) {
 
   if (mode === 'custom') {
     console.log('\n== custom MOQ terms (no tiers) ==');
-    if (/1 rod/.test(moqText()) && /20–25 days/.test(moqText())) {
+    if (/1 rod/.test(moqText()) && /20 days/.test(moqText())) {
       pass('custom path shows single-rod terms, not MOQ tiers');
     } else fail('custom MOQ panel wrong: ' + moqText().slice(0, 90));
 

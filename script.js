@@ -978,7 +978,7 @@
         el.innerHTML = '<strong>One rod, priced before we start</strong>'
           + '<table class="inline">'
           + '<tr><td>Minimum</td><td>1 rod</td></tr>'
-          + '<tr><td>Build time</td><td>20–25 days, then shipping</td></tr>'
+          + '<tr><td>Build time</td><td>20 days, then shipping</td></tr>'
           + '<tr><td>Freight</td><td>Quoted to your country before we start</td></tr>'
           + '<tr><td>Payment</td><td>50% to book the build, balance before shipping</td></tr>'
           + '</table>'
