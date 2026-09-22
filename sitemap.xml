@@ -49,6 +49,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://fishing.entrol.com/ready-ship-tackle.html</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://fishing.entrol.com/products.html</loc>
     <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
