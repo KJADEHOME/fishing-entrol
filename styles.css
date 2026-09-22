@@ -589,3 +589,10 @@ table.spec td:first-child { font-weight: 700; color: var(--color-primary-dark); 
 .spec-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
 .spec-table th, .spec-table td { text-align: left; padding: 9px 10px; border-bottom: 1px solid #E2E8EB; }
 .spec-table th { background: #F4F7F8; font-size: 0.78rem; }
+
+/* supplier / existing-tooling galleries (global) */
+.catalog-reels { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+.catalog-reels figure { margin: 0; }
+.catalog-reels img { width: 100%; height: auto; display: block; border-radius: 8px; background: #eef2f3; }
+.supplier-reel { display: flex; flex-direction: column; gap: 6px; }
+.supplier-reel figcaption { font-size: 13px; line-height: 1.35; color: #33414a; }

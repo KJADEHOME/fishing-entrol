@@ -43,9 +43,9 @@ PRODUCT_NAV = [
     ("carp-rods.html", "Carp Rods"),
     ("saltwater-rods.html", "Saltwater & Boat Rods"),
     ("rock-surf-rods.html", "Rock & Surf Rods"),
-    ("ready-ship-rods.html", "Ready-Ship Rods"),
-    ("ready-ship-reels.html", "Ready-Ship Reels"),
-    ("ready-ship-lures.html", "Ready-Ship Lures"),
+    ("products.html", "Ready-Ship Rods"),
+    ("reels.html", "Ready-Ship Reels"),
+    ("lures.html", "Ready-Ship Lures"),
 ]
 CAPABILITY_NAV = [
     ("capabilities.html", "Manufacturing Capability"),
@@ -80,9 +80,9 @@ ALL_PAGES = [
     ("carp-rods.html", "0.9"),
     ("saltwater-rods.html", "0.9"),
     ("rock-surf-rods.html", "0.9"),
-    ("ready-ship-rods.html", "0.8"),
-    ("ready-ship-reels.html", "0.8"),
-    ("ready-ship-lures.html", "0.8"),
+    ("products.html", "0.8"),
+    ("reels.html", "0.8"),
+    ("lures.html", "0.8"),
     ("products.html", "0.9"),
     ("capabilities.html", "0.8"),
     ("process.html", "0.8"),
@@ -1072,9 +1072,9 @@ def build_ready_ship_rods():
   </div>
 </section>""" % {"wa": wa_link(), "cards": cards, "n": total, "k": len(series)}
     crumbs = [("index.html", "Home"), ("products.html", "Products"),
-              ("ready-ship-rods.html", "Ready-Ship Rods")]
-    page("ready-ship-rods.html", title, desc, kw, body,
-         [ORG_LD, webpage_ld(title, desc, "ready-ship-rods.html"), breadcrumb_ld(crumbs)])
+              ("products.html", "Ready-Ship Rods")]
+    page("products.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "products.html"), breadcrumb_ld(crumbs)])
 
 
 def _rl_card(e, unit):
@@ -1148,7 +1148,7 @@ _RL_HERO = """
       <p class="lead">These %(unit)s come from the same partner network as our Ready-Ship
       rod series, so we can put together matched rod + %(unit)s packages for your market -
       one shipment, one set of export documents.</p>
-      <div class="btn-row"><a class="btn btn-outline" href="ready-ship-rods.html">See the Ready-Ship Rods</a></div>
+      <div class="btn-row"><a class="btn btn-outline" href="products.html">See the Ready-Ship Rods</a></div>
     </div>
   </div>
 </section>
@@ -1185,9 +1185,9 @@ def build_ready_ship_reels():
         "k": len(items), "unit": "reel",
     }
     crumbs = [("index.html", "Home"), ("products.html", "Products"),
-              ("ready-ship-reels.html", "Ready-Ship Reels")]
-    page("ready-ship-reels.html", title, desc, kw, body,
-         [ORG_LD, webpage_ld(title, desc, "ready-ship-reels.html"), breadcrumb_ld(crumbs)])
+              ("reels.html", "Ready-Ship Reels")]
+    page("reels.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "reels.html"), breadcrumb_ld(crumbs)])
 
 
 def build_ready_ship_lures():
@@ -1208,9 +1208,9 @@ def build_ready_ship_lures():
         "k": len(items), "unit": "lure",
     }
     crumbs = [("index.html", "Home"), ("products.html", "Products"),
-              ("ready-ship-lures.html", "Ready-Ship Lures")]
-    page("ready-ship-lures.html", title, desc, kw, body,
-         [ORG_LD, webpage_ld(title, desc, "ready-ship-lures.html"), breadcrumb_ld(crumbs)])
+              ("lures.html", "Ready-Ship Lures")]
+    page("lures.html", title, desc, kw, body,
+         [ORG_LD, webpage_ld(title, desc, "lures.html"), breadcrumb_ld(crumbs)])
 
 
 def build_products():
