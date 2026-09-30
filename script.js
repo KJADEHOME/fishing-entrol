@@ -1,8 +1,7 @@
 /*!
  * Entrol Fishing — site behaviour
  * - mobile nav
- * - WeChat popup (WeChat button never deep-links)
- * - dataLayer events: whatsapp_click / wechat_click / rfq_submit (GTM)
+ * - dataLayer events: whatsapp_click / rfq_submit (GTM)
  * - RFQ form client-side spam screen (mirrors supabase/functions/fishing-submit-lead)
  */
 (function () {
@@ -106,23 +105,6 @@
     });
   });
 
-  /* ---------- WeChat popup ---------- */
-  var wcBtn = document.querySelector('.wc-float');
-  var wcModal = document.querySelector('.wc-modal');
-  if (wcBtn && wcModal) {
-    wcBtn.addEventListener('click', function () {
-      wcModal.classList.add('open');
-      track('wechat_click', { page: location.pathname });
-    });
-    var close = wcModal.querySelector('.wc-close');
-    if (close) close.addEventListener('click', function () { wcModal.classList.remove('open'); });
-    wcModal.addEventListener('click', function (e) {
-      if (e.target === wcModal) wcModal.classList.remove('open');
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') wcModal.classList.remove('open');
-    });
-  }
 
   /* ---------- RFQ form: client-side spam screen ---------- */
   var DISPOSABLE = ['mailinator.com', 'guerrillamail.com', '10minutemail.com', 'tempmail.com',
