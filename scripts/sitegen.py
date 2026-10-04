@@ -22,7 +22,6 @@ LEGAL = "Entrol Fishing — Weihai sourcing office"
 EMAIL = "wangyan@entrol.com"
 WA = "8615263130999"
 WA_TEXT = "Hi%20Entrol%20Fishing%2C%20I%27d%20like%20a%20quote%20for%20OEM%20fishing%20rods."
-WECHAT = "15263130999"
 GTM_ID = "GTM-T3ZXMRHS"
 GA4_ID = "G-5QK21JJ0G4"
 FORM_ENDPOINT = "#"
@@ -365,7 +364,6 @@ def footer_html():
       <ul class="footer-contact">
         <li><strong>Email:</strong> <a href="mailto:%(email)s">%(email)s</a></li>
         <li><strong>WhatsApp:</strong> <a href="%(wa)s">+86 152 6313 0999</a></li>
-        <li><strong>WeChat:</strong> %(wechat)s</li>
         <li><strong>Works:</strong> Weihai City, Shandong Province, China</li>
       </ul>
     </div>
@@ -375,25 +373,13 @@ def footer_html():
     <span>Carbon fishing rod OEM / ODM · Weihai, Shandong, China</span>
   </div>
 </div>""" % {"brand": BRAND, "prod": prod, "comp": prog, "email": EMAIL,
-             "wa": wa_link(), "wechat": WECHAT}
+             "wa": wa_link()}
 
 
 FLOAT_HTML = """
 <a class="wa-float" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp" aria-label="Chat on WhatsApp">
   <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 3C9.4 3 4 8.3 4 14.9c0 2.6.8 5 2.3 7L4 29l7.3-2.3c1.9 1 4 1.6 6.2 1.6h.5c6.6 0 12-5.3 12-11.9C30 8.3 22.6 3 16 3zm7 17c-.3.8-1.7 1.6-2.4 1.7-.6.1-1.4.1-2.2-.1-.5-.2-1.2-.4-2-.8-3.5-1.5-5.8-5-6-5.3-.2-.2-1.4-1.9-1.4-3.6 0-1.7.9-2.6 1.2-2.9.3-.3.7-.4 1-.4h.7c.2 0 .5-.1.8.6.3.8 1 2.7 1.1 2.9.1.2.2.4 0 .7-.1.2-.2.4-.4.6l-.6.7c-.2.2-.4.4-.2.8.2.4 1 1.7 2.2 2.7 1.5 1.4 2.8 1.8 3.2 2 .4.2.6.2.9-.1.2-.3 1-1.2 1.3-1.6.3-.4.5-.3.9-.2.4.1 2.3 1.1 2.7 1.3.4.2.6.3.7.5.1.2.1 1-.2 1.8z"/></svg>
-</a>
-<button class="wc-float" aria-label="WeChat contact" title="WeChat: %(wechat)s">
-  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M11.5 4C6.3 4 2 7.6 2 12.1c0 2.6 1.4 4.9 3.6 6.4l-.9 2.8 3.2-1.7c.9.3 1.8.4 2.8.5-.2-.6-.3-1.3-.3-2 0-4.3 4.1-7.7 9.1-7.7h.6C19.3 7 15.8 4 11.5 4zM8.6 8.2c.6 0 1.1.5 1.1 1.1S9.2 10.4 8.6 10.4s-1.1-.5-1.1-1.1.5-1.1 1.1-1.1zm5.8 0c.6 0 1.1.5 1.1 1.1s-.5 1.1-1.1 1.1-1.1-.5-1.1-1.1.5-1.1 1.1-1.1zM20 11.5c-4.4 0-8 3-8 6.7s3.6 6.7 8 6.7c.9 0 1.7-.1 2.5-.4l2.8 1.5-.8-2.4c1.9-1.2 3.5-3.2 3.5-5.4 0-3.7-3.6-6.7-8-6.7zm-2.7 3.7c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9zm5.4 0c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z"/></svg>
-</button>
-<div class="wc-modal" role="dialog" aria-modal="true" aria-label="WeChat contact">
-  <div class="wc-modal-card">
-    <button class="wc-close" aria-label="Close">&times;</button>
-    <h3>Chat on WeChat</h3>
-    <p class="form-hint">Add us on WeChat for fast answers on OEM rod programs (GMT+8).</p>
-    <div class="wc-id">%(wechat)s</div>
-    <p class="form-hint">Or email <a href="mailto:%(email)s">%(email)s</a></p>
-  </div>
-</div>""" % {"wa": wa_link(), "wechat": WECHAT, "email": EMAIL}
+</a>""" % {"wa": wa_link()}
 
 
 def page(fname, title, desc, keywords, body, ld_blocks, hero=None):
@@ -1825,7 +1811,6 @@ def build_contact():
       <ul class="feature-list" style="margin-top:22px">
         <li>Email: <strong>%(email)s</strong></li>
         <li>WhatsApp: <strong>+86 152 6313 0999</strong> (fastest response)</li>
-        <li>WeChat: <strong>%(wechat)s</strong></li>
         <li>Sales office &amp; factory visits: Weihai City, Shandong Province, China</li>
       </ul>
       <div class="btn-row">
@@ -1897,7 +1882,7 @@ def build_contact():
       <div class="form-status" role="status"></div>
     </div>
   </div>
-</section>""" % {"email": EMAIL, "wechat": WECHAT, "wa": wa_link(), "form": FORM_ENDPOINT}
+</section>""" % {"email": EMAIL, "wa": wa_link(), "form": FORM_ENDPOINT}
     page("contact.html", title, desc, kw, body,
          [ORG_LD, webpage_ld(title, desc, "contact.html"), breadcrumb_ld(crumbs)])
 
