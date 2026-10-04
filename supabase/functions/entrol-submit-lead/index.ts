@@ -348,7 +348,6 @@ function petCustomerReplyContent(row: ReplyLead) {
     "",
     "Best regards,",
     "Entrol Sales Team",
-    "Weihai Yuanchuang Import & Export Co., Ltd.",
   ].join("\n");
   const html = `<!doctype html>
 <html lang="en"><body style="margin:0;background:#f4f7f9;font-family:Arial,sans-serif;color:#1f2d38">
@@ -363,7 +362,7 @@ function petCustomerReplyContent(row: ReplyLead) {
     <p style="margin:0 0 14px;line-height:1.65">For small direct-ship orders, international freight can be relatively high. Bulk purchasing and consolidated shipments are usually more economical; the best option depends on the products and destination.</p>
     <p style="margin:18px 0;padding:12px 14px;border-left:4px solid #d69b2d;background:#fff8e8;line-height:1.55"><strong>Quotation notice:</strong> No price, stock level, production date or freight cost is confirmed until our sales team sends a written quotation.</p>
     <p style="margin:20px 0 0;line-height:1.65">Email: <a href="mailto:wangyan@entrol.com">wangyan@entrol.com</a><br>WhatsApp: <a href="https://wa.me/8615263130999">+86 152 6313 0999</a><br><a href="${contactUrl}">Contact Entrol</a></p>
-    <p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>Entrol Sales Team</strong><br>Weihai Yuanchuang Import &amp; Export Co., Ltd.</p>
+    <p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>Entrol Sales Team</strong></p>
   </div>
 </div>
 </body></html>`;
@@ -406,7 +405,6 @@ function socksCustomerReplyContent(row: ReplyLead) {
     "",
     "Best regards,",
     "Entrol Socks Team",
-    "Weihai Yuanchuang Import & Export Co., Ltd.",
   ].join("\n");
   const html = `<!doctype html>
 <html lang="en"><body style="margin:0;background:#f4f7f9;font-family:Arial,sans-serif;color:#1f2d38">
@@ -420,7 +418,7 @@ function socksCustomerReplyContent(row: ReplyLead) {
     <p style="margin:0 0 14px;line-height:1.65">OEM and ODM options depend on the selected construction, yarn, artwork, quantity and packaging. We will confirm the applicable MOQ, unit pricing, sample terms, production lead time and shipping options in a written quotation.</p>
     <p style="margin:18px 0;padding:12px 14px;border-left:4px solid #d69b2d;background:#fff8e8;line-height:1.55"><strong>Quotation notice:</strong> No price, MOQ, sample charge, production date or freight cost is confirmed until our sock sourcing team sends a written quotation.</p>
     <p style="margin:20px 0 0;line-height:1.65"><a href="${siteUrl}">Entrol Socks website</a><br>Email: <a href="mailto:wangyan@entrol.com">wangyan@entrol.com</a><br><a href="${contactUrl}">Contact Entrol Socks</a></p>
-    <p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>Entrol Socks Team</strong><br>Weihai Yuanchuang Import &amp; Export Co., Ltd.</p>
+    <p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>Entrol Socks Team</strong></p>
   </div>
 </div>
 </body></html>`;
@@ -452,7 +450,6 @@ function kjadehomeCustomerReplyContent(row: ReplyLead) {
     "",
     "Best regards,",
     "KJadeHome Sourcing Team",
-    "Weihai Yuanchuang Import & Export Co., Ltd.",
   ].join("\n");
   const html = `<!doctype html>
 <html lang="en"><body style="margin:0;background:#f4f7f9;font-family:Arial,sans-serif;color:#1f2d38">
@@ -465,7 +462,7 @@ function kjadehomeCustomerReplyContent(row: ReplyLead) {
     <p style="margin:0 0 14px;line-height:1.65">To prepare a relevant quotation, please reply with the product references or photos, materials, dimensions, estimated quantities, destination country and postal code, customization requirements and required delivery date.</p>
     <p style="margin:18px 0;padding:12px 14px;border-left:4px solid #c9a86a;background:#fff8e8;line-height:1.55"><strong>Quotation notice:</strong> MOQ, pricing, sample terms, production lead time and shipping options depend on the selected product and order requirements. They are not confirmed until our team sends a written quotation.</p>
     <p style="margin:20px 0 0;line-height:1.65"><a href="${siteUrl}">KJadeHome website</a><br>Email: <a href="mailto:wangyan@entrol.com">wangyan@entrol.com</a><br><a href="${contactUrl}">Contact KJadeHome</a></p>
-    <p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>KJadeHome Sourcing Team</strong><br>Weihai Yuanchuang Import &amp; Export Co., Ltd.</p>
+    <p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>KJadeHome Sourcing Team</strong></p>
   </div>
 </div>
 </body></html>`;
@@ -499,7 +496,6 @@ function fishingCustomerReplyContent(row: ReplyLead) {
     "Best regards,",
     "wangyan",
     "Entrol Fishing",
-    "Weihai Yuanchuang Import & Export Co., Ltd.",
   ].join("\n");
   const html = `<!doctype html>
 <html lang="en"><body style="margin:0;background:#f4f7f9;font-family:Arial,sans-serif;color:#1f2d38">
@@ -511,7 +507,7 @@ function fishingCustomerReplyContent(row: ReplyLead) {
 <p style="margin:0 0 14px;line-height:1.65">Please reply with any missing target market, estimated quantity, target price, branding, packaging or delivery requirements. We will confirm feasibility, MOQ, sample cost, production lead time and shipping terms in a written quotation.</p>
 <p style="margin:18px 0;padding:12px 14px;border-left:4px solid #d69b2d;background:#fff8e8;line-height:1.55"><strong>Quotation notice:</strong> No specification, price, MOQ, production date or freight cost is confirmed until our team issues a written quotation.</p>
 <p style="margin:20px 0 0;line-height:1.65"><a href="${siteUrl}">Entrol Fishing website</a><br>Email: <a href="mailto:wangyan@entrol.com">wangyan@entrol.com</a><br>WhatsApp: <a href="https://wa.me/8615263130999">+86 152 6313 0999</a><br><a href="${contactUrl}">Contact Entrol Fishing</a></p>
-<p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>wangyan</strong><br>Entrol Fishing<br>Weihai Yuanchuang Import &amp; Export Co., Ltd.</p>
+<p style="margin:24px 0 0;line-height:1.55">Best regards,<br><strong>wangyan</strong><br>Entrol Fishing</p>
 </div></div></body></html>`;
   return { subject, text, html };
 }

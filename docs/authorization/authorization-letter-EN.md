@@ -12,7 +12,7 @@ Unified Social Credit Code: `[      ]`
 Address: `[      ]`
 Contact: `[      ]`
 
-**Licensee (Party B):** `[Entity TBD, e.g. Weihai Yuanling Import & Export Co., Ltd.]`
+**Licensee (Party B):** `[Entity TBD, e.g. Weihai Yuanchuang Import & Export Co., Ltd.]`
 Unified Social Credit Code: `[      ]`
 Address: `[      ]`
 Contact: Wang Yan — +86 152 6313 0999 — wangyan@entrol.com
