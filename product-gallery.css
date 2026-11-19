@@ -96,6 +96,20 @@
   transition: transform 0.5s ease;
 }
 .pg-item:hover img { transform: scale(1.05); }
+.pg-item figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #22303a;
+  text-align: center;
+  pointer-events: none;
+}
 .pg-item::after {
   content: "\1F50D";
   position: absolute;
