@@ -636,17 +636,6 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
              custom_html, ld_extra):
     crumbs = [("index.html", "Home"), ("products.html", "Products"), (fname, h1)]
     crumb_ld = breadcrumb_ld(crumbs)
-    product_ld = {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        "name": h1,
-        "description": desc,
-        "image": [DOMAIN + "/" + m["file"] for m in MANIFEST.get(slug, [])][:6],
-        "brand": {"@type": "Brand", "name": BRAND},
-        "manufacturer": {"@type": "Organization", "name": BRAND, "url": DOMAIN + "/"},
-        "category": h1,
-        "material": "Carbon fiber composite",
-    }
     body = """
 %(breadcrumb)s
 <section class="section" style="padding-top:34px">
@@ -721,7 +710,7 @@ def cat_page(fname, slug, title, h1, desc, kw, intro_html, cols, rows, table_not
         "cards": rod_cards(CARD_KINDS.get(slug, ("spinning",))),
         "custom": custom_html, "moq": MOQ_NOTE,
     }
-    page(fname, title, desc, kw, body, [ORG_LD, webpage_ld(title, desc, fname), crumb_ld, product_ld])
+    page(fname, title, desc, kw, body, [ORG_LD, webpage_ld(title, desc, fname), crumb_ld])
 
 
 def build_spinning():
