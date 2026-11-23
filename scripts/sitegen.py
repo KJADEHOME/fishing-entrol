@@ -1067,10 +1067,15 @@ def _rl_card(e, unit):
     """Ready-ship reel or lure card: photo, spec summary, variant table, gallery."""
     dl = "".join('<div class="rod-spec"><span>%s</span><strong>%s</strong></div>'
                  % (k, v) for k, v in e["specs"].items())
-    vrows = [[v["sku"], v["model"]] for v in e["variants"]]
-    table = spec_table(["Our SKU", "Model / Option"], vrows,
-                       "Order by our SKU. Tell us the SKU mix and quantity and we "
-                       "quote within one business day.")
+    cols = e.get("variant_cols", ["Our SKU", "Model / Option"])
+    if "variant_rows" in e:
+        vrows = e["variant_rows"]
+    else:
+        vrows = [[v["sku"], v["model"]] for v in e["variants"]]
+    note = e.get("table_note",
+                 "Order by our SKU. Tell us the SKU mix and quantity and we "
+                 "quote within one business day.")
+    table = spec_table(cols, vrows, note)
     img = ('<figure class="pg-item"><img src="%s" alt="%s" loading="lazy" decoding="async"></figure>'
            % (e["image"], e["name_en"])) if e.get("image") else ""
     thumbs = ""
@@ -1153,22 +1158,81 @@ _RL_HERO = """
 </section>"""
 
 
+_REEL_HERO = """
+<section class="section" style="padding-top:34px">
+  <div class="container">
+    <span class="eyebrow">Weihai &middot; Shandong &middot; China</span>
+    <h1>%(h1)s</h1>
+    <p class="lead">%(lead)s</p>
+    <p class="lead">Figures shown follow confirmed factory written specifications where available. Availability, logo work and retail packaging are confirmed per model before quotation.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="contact.html">Request Wholesale Pricing</a>
+      <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">WhatsApp +86 152 6313 0999</a>
+    </div>
+  </div>
+</section>
+<section class="section oem-note">
+  <div class="container">
+    <p class="lead">These are existing reel platforms from our Weihai partner network. Pick any item as your starting point — we apply your brand logo, colour scheme and retail packaging. Availability and lead time are confirmed per model before quotation.</p>
+  </div>
+</section>
+<section class="section section-alt">
+  <div class="container">
+    <span class="eyebrow">The Range</span>
+    <h2>Five Reel Classes</h2>
+    <div class="grid grid-2 rod-grid">%(cards)s</div>
+  </div>
+</section>
+<section class="section">
+  <div class="container grid grid-2">
+    <div>
+      <span class="eyebrow">Buy it as it is</span>
+      <h2>Resale &amp; Distribution</h2>
+      <ul class="feature-list">
+        <li><strong>OEM-ready:</strong> existing reel platforms with your logo, colour scheme and packaging</li>
+        <li><strong>Availability by model:</strong> ask us for current stock status and the minimum order</li>
+        <li><strong>Order by model:</strong> tell us the model, quantity and destination port for a quotation</li>
+        <li><strong>Export handling:</strong> consolidated cartons, documentation and freight from Weihai</li>
+      </ul>
+    </div>
+    <div>
+      <span class="eyebrow">One more thing</span>
+      <h2>Matched Rod Programs</h2>
+      <p class="lead">These reels come from the same partner network as our existing
+      rod series, so we can put together matched rod + reel packages for your market -
+      one shipment, one set of export documents.</p>
+      <div class="btn-row"><a class="btn btn-outline" href="products.html">See the Rod Models</a></div>
+    </div>
+  </div>
+</section>
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <h2>Ask for the reel Price List</h2>
+      <p>Tell us which models you want and we will come back with wholesale pricing,
+      carton quantities and a landed-cost estimate for your port.</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="contact.html">Request a Quotation</a>
+        <a class="btn btn-outline" href="%(wa)s" target="_blank" rel="noopener" data-track="whatsapp">Chat on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
 def build_ready_ship_reels():
-    title = "Ready-to-Ship Fishing Reels | Spinning & Baitcasting | Entrol Fishing"
-    desc = ("Ready-to-ship fishing reels from our Weihai partner network: Galaxy and "
-            "Hummingbird spinning reels, J-20, Venom and Cyber baitcasters. Wholesale "
-            "and matched rod-and-reel programs.")
-    kw = ("ready to ship fishing reels, spinning reel wholesale China, baitcasting reel "
-          "supplier, fishing reel distributor, finesse reel wholesale, fishing reel exporter")
+    title = "Popular Spinning & Baitcasting Reels | Entrol Fishing"
+    desc = ("Five reel classes from our Weihai partner network: DC150 baitcasting, SW6000 "
+            "spinning, RX2-8000 and SG8000 offshore spinning, and SG14000 heavy offshore "
+            "spinning.")
+    kw = ("fishing reels OEM, DC150 baitcasting reel, SW6000 spinning reel, RX2-8000 "
+          "offshore reel, SG14000 spinning reel, fishing reel supplier")
     items = RL["reels"]
     cards = "".join(_rl_card(e, "reel") for e in items)
-    body = _RL_HERO % {
-        "h1": "Ready-Ship Spinning &amp; Baitcasting Reels",
-        "lead": "Five reel lines from our Weihai partner network, sold as finished goods "
-                "under our own RS codes: two spinning reels for finesse and all-round use, "
-                "three baitcasters from 7.2:1 up to a high-speed 8.0:1.",
-        "wa": wa_link(), "cards": cards, "n": sum(len(e["variants"]) for e in items),
-        "k": len(items), "unit": "reel",
+    body = _REEL_HERO % {
+        "h1": "Spinning &amp; Baitcasting Reels — Popular Classes",
+        "lead": "Five reel classes from our Weihai partner network, covering low-profile baitcasting, 6000 spinning and 8000/14000 offshore spinning. These are established reel platforms we can brand, pack and quote for your market.",
+        "wa": wa_link(), "cards": cards,
     }
     crumbs = [("index.html", "Home"), ("products.html", "Products"),
               ("reels.html", "Ready-Ship Reels")]
